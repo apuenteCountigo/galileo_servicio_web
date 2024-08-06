@@ -11,7 +11,7 @@ COPY package*.json ./
 COPY . .
 
 # Instalar las dependencias
-RUN npm install && ng --version && ng build --prod
+RUN npm install && npm run build --prod
 
 # Construir la aplicación Angular
 #RUN npm run build --prod
