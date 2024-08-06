@@ -53,12 +53,14 @@ jobs:
             ls &&
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
             CN=$(docker ps -a --filter name="servicio-${{ secrets.SERVICIO }}" --format "{{.Names}}") &&
-            IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME") &&
-            if [[ -n "$IMAGE_NAME" ]]; then
-              docker stop "$CONTAINER_NAME"  
-              docker rm "$CONTAINER_NAME"
-              docker rmi "$IMAGE_NAME"
-              echo "$IMAGE_NAME"
+            if [[ -n "$CN" ]]; then
+              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME") &&
+              if [[ -n "$IMAGE_NAME" ]]; then
+                docker stop "$CONTAINER_NAME"  
+                docker rm "$CONTAINER_NAME"
+                docker rmi "$IMAGE_NAME"
+                echo "$IMAGE_NAME"
+              fi
             fi &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d'
             exit
