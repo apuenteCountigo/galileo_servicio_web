@@ -23,7 +23,7 @@ FROM nginx:alpine
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copiar los archivos construidos por Angular al directorio de Nginx
-COPY --from=build /app/dist/[nombre-de-tu-app] /usr/share/nginx/html
+COPY --from=build /app/dist/galileo-frontend /usr/share/nginx/html
 
 # Exponer el puerto 80
 EXPOSE 80
