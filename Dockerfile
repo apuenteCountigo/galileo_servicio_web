@@ -10,14 +10,8 @@ COPY package*.json ./
 # Copiar el resto del código fuente
 COPY . .
 
-# Instalar las dependencias
+# Instalar las dependencias y Construir la aplicación Angular
 RUN npm install && npm run build --prod
-
-# Construir la aplicación Angular
-#RUN npm run build --prod
-#RUN ng --version
-
-#RUN ng build --prod
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
