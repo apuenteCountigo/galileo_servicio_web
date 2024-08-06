@@ -1,0 +1,206 @@
+<form nz-form [formGroup]="formModalBaliza">
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="clave">Clave</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="claveErrorTpl">
+      <input type="text" nz-input formControlName="clave" placeholder="Clave" maxlength="7" pattern="^[a-zA-Z0-9]+$" />
+      <ng-template #claveErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('pattern')">El campo clave debe contener solo letras y números
+        </ng-container>
+        <ng-container *ngIf="control.hasError('required')">Introduzca la clave</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="tipoBaliza">Tipo Baliza</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="tipoErrorTpl">
+      <nz-select formControlName="tipoBaliza" nzPlaceHolder="Tipo de Baliza">
+        <nz-option *ngFor="let tipoBaliza of tipoBalizaList" [nzValue]="tipoBaliza" [nzLabel]="tipoBaliza.descripcion!">
+        </nz-option>
+      </nz-select>
+      <ng-template #tipoErrorTpl let-control>
+        <!-- <ng-container *ngIf="control.hasError('required')">Seleccione el tipo de baliza</ng-container> -->
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="marca">Marca</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="marcaErrorTpl">
+      <input type="text" nz-input formControlName="marca" placeholder="Marca" maxlength="11" />
+      <ng-template #marcaErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca la marca</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="modelo">Modelo</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="modeloErrorTpl">
+      <input type="text" nz-input formControlName="modelo" placeholder="Modelo" maxlength="11" />
+      <ng-template #modeloErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el modelo</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="numSerie">Serie</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="numSerieErrorTpl">
+      <input type="text" nz-input formControlName="numSerie" placeholder="Número de Serie" maxlength="50" />
+      <ng-template #numSerieErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el número de serie</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="coordenada">Tipo de coordenada</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="coordenadaErrorTpl">
+      <input type="text" nz-input formControlName="coordenada" placeholder="Tipo de coordenada" />
+      <ng-template #coordenadaErrorTpl let-control>
+        <!-- <ng-container *ngIf="control.hasError('required')">Introduzca el tipo de coordenada</ng-container> -->
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="imei">Código IMEI</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="imeiErrorTpl">
+      <input type="text" nz-input formControlName="imei" placeholder="IMEI Code" [maxlength]="20" [minlength]="20" />
+      <ng-template #imeiErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el código IMEI</ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">El código IMEI debe contener exactamente 20 caracteres
+          numéricos
+        </ng-container>
+        <ng-container *ngIf="control.hasError('minlength')">El código IMEI debe contener exactamente 20 caracteres
+          numéricos
+        </ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">El código IMEI debe contener únicamente carácteres numéricos
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="telefono">Teléfono</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Introduzca un teléfono válido">
+      <!-- <input nz-input formControlName="telefono" inputrestriction="[0-9]" type="text" placeholder="Teléfono"
+        pattern="^\+?[1-9][0-9]{7,14}$" /> -->
+      <input nz-input formControlName="telefono" type="text" placeholder="Teléfono" (keypress)="validatePhone($event)"
+        pattern="^\+?[1-9][0-9]{7,14}$" />
+      <!-- <ng-template #telefonoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el teléfono</ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">Introduzca un teléfono válido</ng-container>
+      </ng-template> -->
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="tipoContrato">Tipo Contrato</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="contractoErrorTpl">
+      <nz-select formControlName="tipoContrato" nzPlaceHolder="Tipo Contrato">
+        <nz-option *ngFor="let contrato of tipoContratoList" [nzValue]="contrato" [nzLabel]="contrato.descripcion!">
+        </nz-option>
+      </nz-select>
+      <ng-template #contractoErrorTpl let-control>
+        <!-- <ng-container *ngIf="control.hasError('required')">Seleccione el tipo de contrato</ng-container> -->
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="compania">Compañía</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="contractoErrorTpl">
+      <input type="text" nz-input formControlName="compania" placeholder="Compañía" />
+      <ng-template #contractoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca la compañía</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="pin1">Pin 1</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="pin1ErrorTpl">
+      <input type="text" nz-input formControlName="pin1" placeholder="Pin 1" pattern="^[0-9]+$" maxlength="4"
+        minlength="4" />
+      <ng-template #pin1ErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('maxlength')">El campo Pin 1 debe tener 4 dígitos</ng-container>
+        <ng-container *ngIf="control.hasError('minlength')">El campo Pin 1 debe tener 4 dígitos</ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">El campo Pin 1 debe contener solo dígitos</ng-container>
+        <!-- <ng-container *ngIf="control.hasError('required')">El campo Pin 1 es requerido</ng-container> -->
+        <!-- <ng-container *ngIf="control.hasError('pattern')">El campo pin 1 debe contener solo 4 números</ng-container> -->
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="pin2">Pin 2</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="pin2ErrorTpl">
+      <input type="text" nz-input formControlName="pin2" placeholder="Pin 2" pattern="^[0-9]+$" minlength="4"
+        maxlength="4" />
+      <ng-template #pin2ErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('maxlength')">El campo Pin 2 debe tener 4 dígitos</ng-container>
+        <ng-container *ngIf="control.hasError('minlength')">El campo Pin 2 debe tener 4 dígitos</ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">El campo Pin 2 debe contener solo dígitos</ng-container>
+        <!-- <ng-container *ngIf="control.hasError('required')">El campo Pin 2 es requerido</ng-container> -->
+        <!-- <ng-container *ngIf="control.hasError('pattern')">El campo pin 2 debe contener solo 4 números</ng-container> -->
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="puk">Puk</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="pukErrorTpl">
+      <input type="text" nz-input formControlName="puk" placeholder="Puk" pattern="^[0-9]+$" maxlength="10"
+        minlength="10" />
+      <ng-template #pukErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('pattern')">El campo Puk debe contener solo dígitos</ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">El campo Puk debe tener 10 dígitos</ng-container>
+        <ng-container *ngIf="control.hasError('minlength')">El campo Puk debe tener 10 dígitos</ng-container>
+        <!-- <ng-container *ngIf="control.hasError('required')">Introduzca el puk</ng-container> -->
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="iccTarjeta">ICC Tarjeta</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="iccTarjetaErrorTpl">
+      <input type="text" nz-input formControlName="iccTarjeta" placeholder="ICC Tarjeta" maxlength="20" />
+      <ng-template #iccTarjetaErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('pattern')">La ICC Tarjeta debe contener solo dígitos</ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">La ICC Tarjeta debe tener hasta 20 dígitos</ng-container>
+        <!-- <ng-container *ngIf="control.hasError('required')">Introduzca la ICC Tarjeta</ng-container> -->
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="servidor">Servidor Dataminer</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="empleoErrorTpl">
+      <nz-select formControlName="servidor" nzPlaceHolder="Servidor Dataminer">
+        <nz-option *ngFor="let server of serverList" [nzValue]="server" [nzLabel]="server.ipServicio!"></nz-option>
+      </nz-select>
+      <ng-template #empleoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Seleccione el servidor</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="puerto">Puerto</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="puertoErrorTpl">
+      <input type="number" min="1" max="99999" nz-input formControlName="puerto" placeholder="Puerto" />
+      <ng-template #puertoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('max')">Debe Seleccionar un puerto válido entre 1 y 99999</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="notas">Notas</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea nz-input formControlName="notas" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+        <button nz-button nzType="primary" [disabled]="checkForm() || buttonSending" [nzLoading]="buttonSending"
+          (click)="submitForm()">
+          <i nz-icon [nzType]="button.icon" nzTheme="outline"></i>
+          <span>{{ button.label }}</span>
+        </button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

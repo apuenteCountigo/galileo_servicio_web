@@ -1,0 +1,103 @@
+<form nz-form [formGroup]="formModalOperacion">
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="descripcion">Nombre</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Introduzca el nombre">
+      <input type="text" nz-input formControlName="descripcion" placeholder="Nombre" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el nombre</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="fechaInicio">Fecha de Inicio
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="fechaErrorTpl">
+      <nz-date-picker [nzFormat]="dateFormat" formControlName="fechaInicio"
+        (ngModelChange)="onChange($event)">
+      </nz-date-picker>
+      <ng-template #fechaErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Elija una fecha de inicio</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="fechaFin">Fecha de Fin
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="fechaFinErrorTpl">
+      <nz-date-picker [nzDisabledDate]="disabledDateFin" [nzFormat]="dateFormat" formControlName="fechaFin">
+      </nz-date-picker>
+      <ng-template #fechaFinErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Elija una fecha de fin</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item *ngIf="!operacionToEdit">
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="servidor">Servidor Dataminer</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="empleoErrorTpl">
+      <nz-select formControlName="servidor" nzPlaceHolder="Servidor Dataminer">
+        <nz-option *ngFor="let server of serverList" [nzValue]="server" [nzLabel]="server.ipServicio!"></nz-option>
+      </nz-select>
+      <ng-template #empleoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Seleccione el servidor</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="juzgado">Autoridad judicial</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="juzgadoErrorTpl">
+      <nz-select formControlName="juzgado" nzPlaceHolder="Autoridad judicial">
+        <nz-option *ngFor="let juzgado of juzgadosList" [nzValue]="juzgado" [nzLabel]="juzgado.descripcion!">
+        </nz-option>
+      </nz-select>
+      <ng-template #juzgadoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Seleccione el juzgado de la operación</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="diligencias">Diligencias</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="diligenciaErrorTpl">
+      <input type="text" nz-input formControlName="diligencias" placeholder="Diligencias" maxlength="50" />
+      <ng-template #diligenciaErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el nombre</ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">El campo no debe exceder los 50 caracteres</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="estados">Situación</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="estadoErrorTpl">
+      <nz-select formControlName="estados" nzPlaceHolder="Situación" [nzDisabled]="!operacionToEdit">
+        <nz-option *ngFor="let estado of estadosList" [nzValue]="estado" [nzLabel]="estado.descripcion!"></nz-option>
+      </nz-select>
+      <ng-template #estadoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Seleccione la situación de la operación</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="observaciones">Observaciones</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea nz-input formControlName="observaciones" [nzAutosize]="{ minRows: 5, maxRows: 5 }"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+        <button nz-button nzType="primary" [disabled]="checkForm() || buttonSending" [nzLoading]="buttonSending"
+          (click)="submitForm()">
+          <i nz-icon [nzType]="button.icon" nzTheme="outline"></i>
+          <span>{{ button.label }}</span>
+        </button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

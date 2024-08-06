@@ -1,0 +1,78 @@
+<form nz-form [formGroup]="formModalOObjetivo">
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="descripcion">Nombre</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Introduzca el nombre">
+      <input type="text" nz-input formControlName="descripcion" placeholder="Nombre" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el nombre</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="urgencia">Urgencia</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="empleoErrorTpl">
+      <nz-select nzShowSearch [ngModel]="urgenciaSelected" formControlName="urgencia"
+        nzPlaceHolder="Seleccionar urgencia">
+        <nz-option *ngFor="let item of estadoConfiguracion" [nzValue]="item.descripcion" [nzLabel]="item.descripcion">
+        </nz-option>
+      </nz-select>
+      <ng-template #empleoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Seleccione la urgencia</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="finalAuto">Fecha de fin de autorización
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Introduzca la fecha de fin de autorización">
+      <nz-date-picker [nzDisabledDate]="disabledDate" [nzFormat]="dateFormat" formControlName="finalAuto">
+      </nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="emailIncidenciaJud">Correo Inc. Jud</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="objetivoErrorTpl">
+      <input type="text" nz-input formControlName="emailIncidenciaJud" placeholder="Correo incidencia Jud"
+        pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$" />
+      <ng-template #objetivoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el correo de incidencia judicial</ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">Introduzca un correo válido</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="balizas">Balizas</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select nzShowSearch nzAllowClear [ngModel]="balizaSelected" formControlName="balizas"
+        nzPlaceHolder="Seleccionar baliza">
+        <nz-option *ngFor="let item of listBalizaz" [nzValue]="item" [nzLabel]="item.clave"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="observaciones">Observaciones</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="observacionErrorTpl">
+      <textarea nz-input formControlName="observaciones" [nzAutosize]="{ minRows: 5, maxRows: 5 }"></textarea>
+    </nz-form-control>
+    <ng-template #observacionErrorTpl let-control>
+      <ng-container *ngIf="control.hasError('required')">Introduzca el nombre</ng-container>
+    </ng-template>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+        <button nz-button nzType="primary" [disabled]="checkForm() || buttonSending" [nzLoading]="buttonSending"
+          (click)="submitForm()">
+          <i nz-icon [nzType]="button.icon" nzTheme="outline"></i>
+          <span>{{ button.label }}</span>
+        </button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

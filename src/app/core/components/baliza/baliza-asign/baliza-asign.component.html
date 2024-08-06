@@ -1,0 +1,29 @@
+<nz-card [nzExtra]="extraTemplateUnidades" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="unidadesList" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzScroll]="{ x: '600px' }" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th id="unidadSelect" [width]="'50px'"></th>
+        <th id="unidadNombre" nzColumnKey="descripcion" [nzSortFn]="true">Unidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let unidad of unidadesList">
+        <tr>
+          <td [nzChecked]="expandSet.has(unidad.id)" (nzCheckedChange)="updateCheckedSet(unidad.id, $event)"></td>
+          <td>{{ unidad.denominacion }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+  <button nz-button nzType="primary" [disabled]="expandSet.size == 0" (click)="AsignUnit()">Asignar</button>
+</div>
+
+<ng-template #extraTemplateUnidades>
+
+</ng-template>

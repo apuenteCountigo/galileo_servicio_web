@@ -1,0 +1,29 @@
+<nz-card nzTitle="Operaciones" style="margin-bottom: 20px;" nzSize="default">
+  <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div nz-col class="gutter-row">
+      <nz-tabset>
+        <nz-tab nzTitle="Mapa">
+          <h3>Item selected</h3>
+          <p>{{itemSelected.type}}</p>
+          <!-- <iframe src="https://demo4.traccar.org/modern/" frameborder="0"></iframe> -->
+        </nz-tab>
+        <nz-tab nzTitle="Información">
+          <h3>Item selected</h3>
+          <p>{{itemSelected.type}}</p>
+        </nz-tab>
+        <nz-tab *ngIf="showEvidence" nzTitle="Generar Evidencia">
+          <h3>Item selected</h3>
+          <p>{{itemSelected.type}}</p>
+        </nz-tab>
+        <nz-tab *ngIf="showConfigurations" nzTitle="Configuración 1">
+          <h3>Item selected</h3>
+          <p>{{itemSelected.type}}</p>
+        </nz-tab>
+        <nz-tab *ngIf="showConfigurations" nzTitle="Configuración 2">
+          <h3>Item selected</h3>
+          <p>{{itemSelected.type}}</p>
+        </nz-tab>
+      </nz-tabset>
+    </div>
+  </div>
+</nz-card>

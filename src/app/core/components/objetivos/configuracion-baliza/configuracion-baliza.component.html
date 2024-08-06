@@ -1,0 +1,77 @@
+<form nz-form [formGroup]="formModalConfiguracion">
+
+  <nz-spin [nzSpinning]="esperandoAPI" [nzSize]="'large'">
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="estadoConfiguracion">Estado de Config. Led</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select [nzLoading]="esperandoAPI" nzShowSearch formControlName="estadoConfiguracion"
+          nzPlaceHolder="Seleccionar estado de config" (ngModelChange)="desahbilitarEstadoConfig($event)">
+          <nz-option *ngFor="let item of estadoConfiguracion" [nzValue]="item.id" [nzLabel]="item.descripcion">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+      <button [disabled]="enableEstadoConfig" nz-button nzType="primary" nzShape="circle" style="margin-left: 50px;"
+        (click)="submitEstadoConfig()" nz-tooltip nzTooltipTitle="Aplicar configuración"><i nz-icon
+          nzType="send"></i></button>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="umbralSonido">Umbral de sonido</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input type="number" min="0" nz-input formControlName="umbralSonido" placeholder="Umbral de sonido"
+          (ngModelChange)="desahbilitarUmbralSonido($event)" pattern="^\+?[0-9]{1,6}$" />
+      </nz-form-control>
+      <button [disabled]="enableUmbralSonido" nz-button nzType="primary" nzShape="circle" style="margin-left: 50px;"
+        (click)="submitUmbralSonido()" nz-tooltip nzTooltipTitle="Aplicar configuración"><i nz-icon
+          nzType="send"></i></button>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="nuevoEstadoConfiguracion">Nuevo estado Config.</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <nz-select nzShowSearch formControlName="nuevoEstadoConfiguracion"
+          nzPlaceHolder="Seleccionar nuevo estado de config" (ngModelChange)="desahbilitarNuevoEstadoConfig($event)">
+          <nz-option *ngFor="let item of estadoConfiguracion" [nzValue]="item.id" [nzLabel]="item.descripcion">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+      <button [disabled]="enableNuevoEstadoConfig" nz-button nzType="primary" nzShape="circle"
+        style="margin-left: 50px;" (click)="submitNuevoEstado()" nz-tooltip nzTooltipTitle="Aplicar configuración"><i
+          nz-icon nzType="send"></i></button>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="nuevoTemporizador">Nuevo Temp.</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input type="number" min="0" nz-input formControlName="nuevoTemporizador" placeholder="Nuevo Temporizador"
+          (ngModelChange)="desahbilitarNuevoTemporizador($event)" pattern="^\+?[0-9]{1,6}$" />
+      </nz-form-control>
+      <button [disabled]="enableNuevoTemporizador" nz-button nzType="primary" nzShape="circle"
+        style="margin-left: 50px;" (click)="submitNuevoTemp()" nz-tooltip nzTooltipTitle="Aplicar configuración"><i
+          nz-icon nzType="send"></i></button>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="umbralSensibilidad">Umbral sensibilidad</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input type="number" min="0" max="1" nz-input formControlName="umbralSensibilidad"
+          placeholder="Nuevo Temporizador" (ngModelChange)="desahbilitarUmbralSensibilidad($event)"
+          pattern="^\+?[0-1]{0,1}$" />
+      </nz-form-control>
+      <button [disabled]="enableUmbralSensibilidad" nz-button nzType="primary" nzShape="circle"
+        style="margin-left: 50px;" (click)="submitUmbralSensibilidad()" nz-tooltip
+        nzTooltipTitle="Aplicar configuración"><i nz-icon nzType="send"></i></button>
+    </nz-form-item>
+
+
+    <nz-form-item>
+      <nz-form-control>
+        <div *nzModalFooter>
+          <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+  </nz-spin>
+
+
+</form>

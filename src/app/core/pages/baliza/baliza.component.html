@@ -1,0 +1,14 @@
+<nz-card nzType="inner">
+  <nz-tabset [(nzSelectedIndex)]="selectedIndex">
+    <!-- Tab de Stock de Balizas -->
+    <nz-tab nzTitle="Stock" (nzClick)="updateBreadCrumb('stocks')">
+      <stock-table [estadoBalizaList]="estadoBalizaList" [(isAsignedBalizas)]="isAsignedBalizas"></stock-table>
+    </nz-tab>
+
+    <!-- Tab de Datos de unidad -->
+    <nz-tab nzTitle="Asignadas" (nzClick)="updateBreadCrumb('asignadas')">
+      <asigned-table [estadoBalizaList]="estadoBalizaList" [(isAsignedBalizas)]="isAsignedBalizas"></asigned-table>
+    </nz-tab>
+
+  </nz-tabset>
+</nz-card>

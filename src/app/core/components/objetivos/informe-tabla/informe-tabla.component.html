@@ -1,0 +1,176 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda" style="margin-bottom: 20px;" [nzExtra]="extraTemplateSearch"
+  nzSize="default">
+  <form [formGroup]="searchInformeForm">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <div class="inner-box">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeHolder="Objetivo" formControlName="objetive" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <div class="inner-box">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeHolder="Dispositivo" formControlName="device" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+  </form>
+</nz-card>
+
+<nz-card nzTitle="Tabla de posiciones" [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #dataPosTable nzShowSizeChanger [nzData]="filterdList" [nzLoading]="loading" [nzTotal]="total"
+    [nzFrontPagination]="true" [nzScroll]="{ x: '240px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzTableLayout]="'auto'" [nzNoResult]="noResult">
+    <!-- <nz-table #dataPosTable nzShowSizeChanger [nzData]="listPositions" [nzLoading]="loading" [nzTotal]="total"
+    [nzFrontPagination]="true" [nzScroll]="{ x: '240px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzTableLayout]="'auto'" [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChange($event)"> -->
+    <thead>
+      <tr>
+        <!-- <th id="unidadSelect" nzWidth="35px" [nzLeft]="true"></th> -->
+        <th id="objetivo">Objetivo</th>
+        <th id="device">Dispositivo</th>
+        <th id="captDate">Fecha de captación</th>
+        <th id="lat">Latitud</th>
+        <th id="long">Longitud</th>
+        <th id="servTime">Servidor Timestamp</th>
+        <th id="long">Satelites</th>
+        <th id="long">Presición</th>
+        <th id="long">Evento</th>
+        <th id="long">Velocidad</th>
+        <th id="long">Rumbo</th>
+        <!-- <th id="long">Celda ID</th> -->
+        <th id="long">Position ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pos of dataPosTable.data">
+        <td>{{ pos.alias }}</td>
+        <td>{{ pos.balizas.clave }}</td>
+        <td>{{ pos.fechaCaptacion }}</td>
+        <td>{{ pos.latitud }}</td>
+        <td>{{ pos.longitud }}</td>
+        <td>{{ pos.timestampServidor }}</td>
+        <td>{{ pos.satelites }}</td>
+        <td>{{ pos.precision }}</td>
+        <td>{{ pos.evento }}</td>
+        <td>{{ pos.velocidad }}</td>
+        <td>{{ pos.rumbo }}</td>
+        <!-- <td>{{ pos.celdaId }}</td> -->
+        <td>{{ pos.idPosicion }}</td>
+
+      </tr>
+      <!-- <tr [nzExpand]="expandSet.has(pos.id)">
+          <div nz-row>
+            <div nz-col [nzSpan]="8">
+              <span><strong>Group wise: </strong></span>
+              <span>{{ unit.groupWise }}</span>
+            </div>
+            <div nz-col [nzSpan]="8">
+              <span><strong>Email: </strong></span>
+              <span>{{ unit.email }}</span>
+            </div>
+            <div nz-col [nzSpan]="8">
+              <span><strong>Código postal: </strong></span>
+              <span>{{ unit.codigoPostal }}</span>
+            </div>
+          </div>
+          <div nz-row>
+            <div nz-col [nzSpan]="24">
+              <span><strong>Notas: </strong></span>
+              <span>{{ unit.notas }}</span>
+            </div>
+          </div>
+        </tr> -->
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="16" nzJustify="end">
+
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzSize="large" (click)="exportData()" nz-tooltip nzTooltipTitle="Exportar"
+        [disabled]="listPositions.length == 0">
+        <em nz-icon nzType="cloud-download" nzTheme="outline"
+          [class]="listPositions.length > 0 ?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+
+    <!-- <div nz-col class="gutter-row" [nzSpan]="5" >
+      <button nz-button nzType="text" nzSize="large" (click)="showModal()" nz-tooltip nzTooltipTitle="Generar Acta"
+        [disabled]="listPositions.length == 0">
+        <em nz-icon nzType="file-done" nzTheme="outline"
+          [class]="listPositions.length > 0 ?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div> -->
+
+    <!-- <div nz-col class="gutter-row" [nzSpan]="4" >
+      <button nz-button nzType="text" nzSize="large" (click)="generateEvidence()" nz-tooltip
+        nzTooltipTitle="Generar Paquete de Evidencia" [disabled]="listPositions.length == 0">
+        <em nz-icon nzType="cloud-server" nzTheme="outline"
+          [class]="listPositions.length > 0 ?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div> -->
+
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzSize="large" (click)="generateKML()" nz-tooltip
+        nzTooltipTitle="Generar evidencias" [disabled]="listPositions.length === 0">
+        <em nz-icon nzType="file-zip" nzTheme="outline"
+          [class]="listPositions.length > 0 ?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+
+    <!-- <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" class="icon-class"></em>
+      </button>
+    </div> -->
+  </div>
+</ng-template>
+
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="onSearchLocal()" [disabled]="isNullSearchForm()"
+        nz-tooltip nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="!isNullSearchForm()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullSearchForm()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="!isNullSearchForm()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Selección de Objetivo" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+    <p>Por favor seleccione un objetivo para generar el acta</p>
+    <nz-select [(ngModel)]="selectedObjetivo" nzPlaceHolder="Objetivos" style="width: 180px">
+      <nz-option *ngFor="let objetivo of objetivosList" [nzValue]="objetivo" [nzLabel]="objetivo.descripcion">
+      </nz-option>
+    </nz-select>
+  </ng-container>
+</nz-modal>

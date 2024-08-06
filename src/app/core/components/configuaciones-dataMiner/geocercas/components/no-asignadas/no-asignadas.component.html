@@ -1,0 +1,38 @@
+<nz-card [nzExtra]="extraTemplate" nzSize="small" nzTitle="Geocercas Disponibles">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="noAsignadas" [nzLoading]="loadingNoAsignadas"
+    [nzScroll]="{ x: '500px' }" [nzNoResult]="noResult" [nzShowPagination]="false" nzSize="small">
+    <thead>
+      <tr>
+        <th id="geocercaSpand" nzWidth="60px"></th>
+        <th *ngFor="let column of listOfColumns" [nzSortFn]="column.sortFn" [nzSortOrder]="column.sortOrder"> {{
+          column.name }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let geocerca of headerTable.data; index as i">
+        <tr>
+          <td [nzChecked]="expandSet.has(geocerca.id)" (nzCheckedChange)="onCheckedChangegeocerca(geocerca, $event)">
+          </td>
+          <td>{{ geocerca.id }}</td>
+          <td>{{ geocerca.name }}</td>
+          <td>{{ geocerca.description }}</td>
+          <td>{{ geocerca.area }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>
+
+<ng-template #extraTemplate>
+  <button class="geo-button" nz-button nzType="text" nzSize="small" (click)="addGeocercas()" nz-tooltip
+    nzTooltipTitle="Asignar Geocerca" [disabled]="isDisabled()">
+    <em nz-icon nzType="plus" nzTheme="outline" [class]="setStyleClass()"></em>
+  </button>
+</ng-template>

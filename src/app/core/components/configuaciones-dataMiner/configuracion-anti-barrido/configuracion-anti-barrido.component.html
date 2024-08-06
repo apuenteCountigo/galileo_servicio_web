@@ -1,0 +1,164 @@
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configReadAntiBarrido.length ? configReadAntiBarrido[0].ParameterName : ''"
+        [nzExtra]="extraEstadoAntiBarrido"
+      >
+        <span >Última actualización: {{configReadAntiBarrido.length ? (configReadAntiBarrido[0].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoAntiBarrido>
+          <span >{{configReadAntiBarrido.length ? configReadAntiBarrido[0].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWriteAntiBarrido.length ? configWriteAntiBarrido[0].ParameterName : ''"
+        [nzExtra]="extraAntibarrido"
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <nz-select  [(ngModel)]="valueAntibarrido" nzAllowClear nzPlaceHolder="seleccionar estado" nzSize="small">
+              <nz-option nzCustomContent nzLabel="Desactivado" nzValue=0>
+                Desactivado
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Activado (Todo Apagado)" nzValue=1>
+                Activado (Todo Apagado)
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Activado (Módem Apagado)" nzValue=2>
+                Activado (Módem Apagado)
+              </nz-option>
+            </nz-select>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueAntibarrido ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEstadoAntibarrido()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerAntibarrido" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+        </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAntiBarrido.length ? (configWriteAntiBarrido[0].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraAntibarrido>
+          <span>{{nuevoValueAntibarrido}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configReadAntiBarrido.length ? configReadAntiBarrido[1].ParameterName : ''"
+        [nzExtra]="extraEstadoAntiBarridoFechaInicio"
+      >
+        <span >Última actualización: {{configReadAntiBarrido.length ? (configReadAntiBarrido[1].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoAntiBarridoFechaInicio>
+          <span >{{configReadAntiBarrido.length ? configReadAntiBarrido[1].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWriteAntiBarrido.length ? configWriteAntiBarrido[1].ParameterName : ''"
+        [nzExtra]="extraFechaInicioAntiBarrido"
+      >       
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="8">
+            <nz-date-picker [(ngModel)]="valueFechaInicioAntiBarrido" nzSize="small"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="6" >
+            <nz-time-picker [(ngModel)]="valueFechaInicioAntiBarridoHora" nzFormat="HH:mm:ss" nzSize="small"></nz-time-picker> 
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueFechaInicioAntiBarrido ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEstadoFechaInicioAntiBarrido()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerFechaInicioAntiBarrido" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAntiBarrido.length ? (configWriteAntiBarrido[1].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraFechaInicioAntiBarrido>
+          <span>{{nuevoValueFechaInicioAntiBarrido}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configReadAntiBarrido.length ? configReadAntiBarrido[2].ParameterName : ''"
+        [nzExtra]="extraEstadoAntiBarridoFechaFin"
+      >
+        <span >Última actualización: {{configReadAntiBarrido.length ? (configReadAntiBarrido[2].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoAntiBarridoFechaFin>
+          <span >{{configReadAntiBarrido.length ? configReadAntiBarrido[2].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWriteAntiBarrido.length ? configWriteAntiBarrido[2].ParameterName : ''"
+        [nzExtra]="extraFechaFinAntiBarrido"
+      >   
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="8">
+            <nz-date-picker [(ngModel)]="valueFechaFinAntiBarrido" nzSize="small"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="6" >
+            <nz-time-picker [(ngModel)]="valueFechaFinAntiBarridoHora" nzFormat="HH:mm:ss" nzSize="small"></nz-time-picker> 
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueFechaFinAntiBarrido ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEstadoFechaFinAntiBarrido()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerFechaFinAntiBarrido" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAntiBarrido.length ? (configWriteAntiBarrido[2].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraFechaFinAntiBarrido>
+          <span>{{nuevoValueFechaFinAntiBarrido}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+    <button nz-button nzType="primary" nzShape="round" nzSize="small"
+      [hidden]="allowEdit"
+      [disabled]="(estadoEnviarConfigAntiBarridoEstado || estadoEnviarConfigAntiBarridoFechaFin
+      || estadoEnviarConfigAntiBarridoFechaInicio) ? true : false"
+      (click)="aplicarConfigAntiBarrido()">Aplicar Configuración Anti Barrido
+    </button>
+    <nz-collapse nzGhost>
+      <nz-collapse-panel
+        [nzHeader]="configReadAntiBarrido.length ? configReadAntiBarrido[3].ParameterName : ''"
+        [nzExtra]="extraAplyConfigLed"
+      >
+      <!-- <span style="margin:0; font-size: small;">ID: {{configReadAntiBarrido.length ? configReadAntiBarrido[3].ID : ''}}</span> -->
+      <span style="margin:0; font-size: small;">Última actualización: {{configReadAntiBarrido.length ? (configReadAntiBarrido[3].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+    </nz-collapse-panel>
+      <ng-template #extraAplyConfigLed>
+        <!-- You can use stopPropagation if you don't want the panel to toggle -->
+        <nz-spin [nzSpinning]="spinerAntiBarrido"></nz-spin>
+        <span *ngIf="!spinerAntiBarrido">{{estadoPeticionAntiBarrido}}</span>
+      </ng-template>
+    </nz-collapse>
+  </div>
+</div>

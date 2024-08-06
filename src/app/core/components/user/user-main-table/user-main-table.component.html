@@ -1,0 +1,160 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Usuario(s)" style="margin-bottom: 20px"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="TIP" [(ngModel)]="searchCriteria.tip" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Nombre" [(ngModel)]="searchCriteria.nombre" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Apellidos" [(ngModel)]="searchCriteria.apellidos" />
+    </div>
+    <div nz-col>
+      <nz-select [(ngModel)]="searchCriteria.perfil" nzPlaceHolder="Perfil" style="width: 180px">
+        <nz-option *ngFor="let perfil of userPerfiles" [nzValue]="perfil.id" [nzLabel]="perfil.descripcion!">
+        </nz-option>
+      </nz-select>
+    </div>
+    <div nz-col>
+      <nz-range-picker nzFormat="dd/MM/yyyy" [(ngModel)]="fechaInicio" [nzFormat]="dateFormat"
+        (ngModelChange)="onDateChange($event, fechaInicio)"></nz-range-picker>
+    </div>
+    <!-- <div nz-col>
+      <nz-date-picker [(ngModel)]="fechaFin" nzPlaceHolder="Fecha Fin"></nz-date-picker>
+    </div> -->
+  </div>
+</nz-card>
+
+<nz-card [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="userList" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzScroll]="{ x: '600px' }" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th id="userSpand" nzWidth="60px"></th>
+        <th id="userTip" nzColumnKey="tip" [nzSortFn]="true">TIP</th>
+        <th id="userNombre" nzColumnKey="nombre" [nzSortFn]="true">Nombre</th>
+        <th id="userApellidos" nzColumnKey="apellidos" [nzSortFn]="true">
+          Apellidos
+        </th>
+        <th id="userRol" nzColumnKey="perfil.descripcion" [nzSortFn]="true">Perfil</th>
+        <th id="userEstado" nzColumnKey="estados.descripcion" [nzSortFn]="true">Estado</th>
+        <th id="userFecha" nzColumnKey="fechaCreacion" [nzSortFn]="true">Fecha de Creación</th>
+        <th id="userUnidad" nzColumnKey="unidad.denominacion" [nzSortFn]="true">Unidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let user of userList">
+        <tr>
+          <td [nzChecked]="expandSet.has(user.id)" (nzCheckedChange)="onExpandChangeUser(user, $event)"
+            [nzShowExpand]="false" [nzExpand]="expandSet.has(user.id)"
+            (nzExpandChange)="onExpandChangeUser(user, $event)"></td>
+          <td>{{ user.tip }}</td>
+          <td>{{ user.nombre }}</td>
+          <td>{{ user.apellidos }}</td>
+          <td>{{ user.perfil.descripcion }}</td>
+          <td>{{ user.estados!.descripcion }}</td>
+          <td>{{ user.fechaCreacion | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ user.unidad?.denominacion }}</td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(user.id)">
+          <div nz-col [nzSpan]="24">
+            <nz-descriptions nzTitle="Información Adicional">
+              <nz-descriptions-item nzTitle="Correo">{{
+                user.email
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Empleo">{{
+                user.empleos.descripcion
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Teléfono">{{
+                user.contacto
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Fecha de Creación">{{
+                user.fechaCreacion | date: 'dd/MM/yyyy'
+                }}</nz-descriptions-item>
+              <!-- <nz-descriptions-item nzTitle="Observaciones">{{
+                user.observaciones
+                }}</nz-descriptions-item> -->
+            </nz-descriptions>
+            <nz-descriptions>
+              <nz-descriptions-item nzTitle="Observaciones">{{
+                user.observaciones
+                }}</nz-descriptions-item>
+            </nz-descriptions>
+          </div>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row nzJustify="end">
+    <div nz-col>
+      <button nz-button nzType="text" nzSize="large" (click)="showModal(false)" nz-tooltip
+        nzTooltipTitle="Crear usuario" [disabled]="isDisabled() || disableAddAdmin">
+        <em nz-icon nzType="plus" nzTheme="outline" [class]="setStyleClass()"></em>
+      </button>
+    </div>
+    <div nz-col>
+      <button nz-button nzType="text" nzSize="large" (click)="showModal(true)" nz-tooltip
+        nzTooltipTitle="Editar usuario" [disabled]="isDisabled(disableUserActions) || isInvitado()">
+        <em nz-icon nzType="edit" nzTheme="outline" [class]="setEditClass(disableUserActions)"></em>
+      </button>
+    </div>
+    <div nz-col>
+      <button nz-button nzType="text" nzSize="large" (click)="changeUserStatus()" nz-tooltip
+        [nzTooltipTitle]="setToolTip()" [disabled]="isDisabled(disableUserActions)">
+        <em nz-icon [nzType]="setActive()" nzTheme="outline" [class]="setStyleClass(disableUserActions)"></em>
+      </button>
+    </div>
+    <div nz-col *ngIf="isSuperAdmin()">
+      <button nz-button nzType="text" nzSize="large" (click)="deleteUser()" nz-tooltip nzTooltipTitle="Eliminar usuario"
+        [disabled]="isDisabled(disableUserActions)">
+        <em nz-icon nzType="delete" nzTheme="outline" [class]="setStyleClass(disableUserActions)"></em>
+      </button>
+    </div>
+    <div nz-col>
+      <button nz-button nzType="text" nzSize="large" (click)="showModalUpload()" nz-tooltip
+        nzTooltipTitle="Importar desde un Fichero">
+        <em nz-icon nzType="cloud-upload" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+    <div *ngIf="!showSearchForm" nz-col>
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #extraTemplateSearch>
+  <div nz-row nzJustify="end">
+    <div nz-col>
+      <button nz-button nzType="text" nzShape="circle" (click)="onSearch()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="setSearchStyleClass()"></em>
+      </button>
+    </div>
+    <div nz-col>
+      <button nz-button nzType="text" nzShape="circle" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="setSearchStyleClass()"></em>
+      </button>
+    </div>
+    <div nz-col>
+      <button nz-button nzType="text" nzShape="circle" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

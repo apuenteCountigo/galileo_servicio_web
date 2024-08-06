@@ -1,0 +1,104 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Unidades(s)" style="margin-bottom: 20px"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+      <nz-select [(ngModel)]="searchCriteria.unidad" nzPlaceHolder="Unidad" style="width: 180px">
+        <nz-option *ngFor="let unidad of listOfUnidades" [nzValue]="unidad.id" [nzLabel]="unidad.denominacion!">
+        </nz-option>
+      </nz-select>
+    </div>
+    <div nz-col>
+      <nz-select [(ngModel)]="searchCriteria.estado" nzPlaceHolder="Estado" style="width: 180px">
+        <nz-option *ngFor="let estado of estados" [nzValue]="estado.id" [nzLabel]="estado.descripcion!">
+        </nz-option>
+      </nz-select>
+    </div>
+    <div nz-col>
+      <nz-range-picker [(ngModel)]="fechaExpiracion" [nzFormat]="dateFormat" (ngModelChange)="onDateChange($event)">
+      </nz-range-picker>
+    </div>
+  </div>
+</nz-card>
+
+<nz-card [nzExtra]="extraTemplateUnidades" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="listOfUserUnidades" [nzFrontPagination]="false"
+    [nzLoading]="loading" [nzTotal]="total" [nzScroll]="{ x: '600px' }" [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex" [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th id="userUnitSpand" nzWidth="60px"></th>
+        <th id="unidadNombre" nzColumnKey="denominacion">Unidad</th>
+        <th id="unidadNombre" nzColumnKey="estado">Estado</th>
+        <th id="unidadNombre" nzColumnKey="fechaExpiracion">Fecha de Expiración</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let userUnidad of listOfUserUnidades">
+        <tr>
+          <td [nzChecked]="expandSet.has(userUnidad.id!)" (nzCheckedChange)="onExpandChangeUserUnit(userUnidad, $event)"
+            [nzShowExpand]="false" [nzExpand]="expandSet.has(userUnidad.id!)"
+            (nzExpandChange)="onExpandChangeUserUnit(userUnidad, $event)"
+            [nzDisabled]="expandSet.size > 0 && !expandSet.has(userUnidad.id!)"></td>
+          <td>{{ userUnidad.unidad?.denominacion }}</td>
+          <td>{{ userUnidad.estado.descripcion }}</td>
+          <td>{{ userUnidad.expira | date: 'dd/MM/yyyy' || '-' }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplateUnidades>
+  <div nz-row [nzGutter]="24">
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="showAsignUnitModal()" nz-tooltip
+        nzTooltipTitle="Asignar/Invitar a Unidad(es)">
+        <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" [disabled]="unitUserActions" nzSize="large" (click)="deleteUserUnit()" nz-tooltip
+        nzTooltipTitle="Eliminar de la Unidad">
+        <em nz-icon nzType="delete" nzTheme="outline" [class]="!unitUserActions?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+
+    <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+
+  </div>
+</ng-template>
+
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="onSearch()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

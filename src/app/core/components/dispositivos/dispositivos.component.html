@@ -1,0 +1,135 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Dispositivo(s)" style="margin-bottom: 20px"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="Clave" [(ngModel)]="searchCriteria.clave" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Unidad" [(ngModel)]="searchCriteria.nombreUnidad" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Operación" [(ngModel)]="searchCriteria.nombreOperacion" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Objetivo" [(ngModel)]="searchCriteria.nombreObjetivo" />
+    </div>
+  </div>
+</nz-card>
+
+<nz-card [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="devicesList" [nzFrontPagination]="false" [nzTotal]="total"
+    [nzScroll]="{ x: '500px' }" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzNoResult]="noResult"
+    (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th id="deviceSpand" nzWidth="60px"></th>
+        <th id="deviceClave" nzColumnKey="balizas.clave" [nzSortFn]="true">Clave</th>
+        <th id="deviceObjetivo" nzColumnKey="descripcion" [nzSortFn]="true">Objetivo</th>
+        <th id="deviceUnidad" nzColumnKey="operaciones.unidades.denominacion" [nzSortFn]="true">Unidad</th>
+        <th id="deviceOperacion" nzColumnKey="operaciones.descripcion" [nzSortFn]="true">Operación</th>
+        <th id="deviceEstado" nzColumnKey="balizas.estados.descripcion" [nzSortFn]="true">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let device of devicesList">
+        <tr>
+          <td [nzChecked]="expandSet.has(device.id)" (nzCheckedChange)="onExpandChangeDevice(device, $event)"
+            [nzShowExpand]="false" [nzExpand]="expandSet.has(device.id)"
+            (nzExpandChange)="onExpandChangeDevice(device, $event)"></td>
+          <td>{{ device.balizas.clave }}</td>
+          <td>{{ device.descripcion }}</td>
+          <td>{{ device.operaciones.unidades!.denominacion }}</td>
+          <td>{{ device.operaciones.descripcion }}</td>
+          <td>{{ device.balizas.estados!.descripcion }}</td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(device.id)">
+          <div nz-col [nzSpan]="24">
+            <nz-descriptions nzTitle="Información Adicional">
+              <nz-descriptions-item nzTitle="Compañía">{{
+                device.balizas.compania
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Marca">{{
+                device.balizas.marca
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Modelo">{{
+                device.balizas.modelo
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Número de serie">{{
+                device.balizas.numSerie
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Tipo de baliza">{{
+                device.balizas.tipoBaliza?.descripcion
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Tipo de contrato">{{
+                device.balizas.tipoContrato?.descripcion
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Pin 1">{{
+                device.balizas.pin1
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Pin 2">{{
+                device.balizas.pin1
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Puk">{{
+                device.balizas.puk
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="ICC Tarjeta">{{
+                device.balizas.iccTarjeta
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Puerto">{{
+                device.balizas.puerto
+                }}</nz-descriptions-item>
+              <nz-descriptions-item nzTitle="Fecha de alta">{{
+                device.balizas.fechaAlta | date: 'dd/MM/yyyy'
+                }}</nz-descriptions-item>
+            </nz-descriptions>
+            <nz-descriptions nzTitle="">
+              <nz-descriptions-item nzTitle="Notas">{{
+                device.balizas.notas
+                }}</nz-descriptions-item>
+            </nz-descriptions>
+          </div>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzShape="circle" (click)="onSearch()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzShape="circle" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzShape="circle" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div *ngIf="!showSearchForm" nz-col class="gutter-row">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

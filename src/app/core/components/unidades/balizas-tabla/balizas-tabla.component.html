@@ -1,0 +1,120 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Baliza(s)" style="margin-bottom: 20px;"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="Clave" [(ngModel)]="searchCriteria.clave" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Marca" [(ngModel)]="searchCriteria.marca" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Modelo" [(ngModel)]="searchCriteria.modelo" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Serie" [(ngModel)]="searchCriteria.numSeries" />
+    </div>
+    <!-- <p style="margin-top: 10px; margin-left: 5px;">
+      <label nz-checkbox [(ngModel)]="isCheckedObject">
+        {{ isCheckedObject ? 'Hablitar objetivos' : 'Deshablitar objetivos' }}
+      </label>
+    </p> -->
+  </div>
+</nz-card>
+
+<nz-card nzTitle="Balizas" [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="listOfBalizas" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzScroll]="{ x: '600px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChangeUnitBaliza($event)">
+    <thead>
+      <tr>
+        <th id="unidadSelect" nzWidth="35px" [nzLeft]="true"></th>
+        <th id="balizaStockClave" nzColumnKey="clave" nzWidth="100px" [nzSortFn]="true">Clave</th>
+        <th id="balizaStockMarca" nzColumnKey="marca" [nzSortFn]="true">Marca</th>
+        <th id="balizaStockModelo" nzColumnKey="modelo" [nzSortFn]="true">Modelo</th>
+        <th id="balizaStockNumSerie" nzColumnKey="numSerie" [nzSortFn]="true">Número de Serie</th>
+        <th id="balizaStockCompania" nzColumnKey="compania" [nzSortFn]="true">Compañía</th>
+        <th id="balizaStockFechaAlta" nzColumnKey="fechaAlta" [nzSortFn]="true">Fecha de Alta</th>
+        <th id="balizaStockEstado" nzColumnKey="estados" [nzSortFn]="true">Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let baliza of listOfBalizas">
+        <tr>
+          <td [nzChecked]="expandSet.has(baliza.id)" (nzCheckedChange)="onCheckChange(baliza, $event)"></td>
+          <td>{{ baliza.clave }}</td>
+          <td>{{ baliza.marca }}</td>
+          <td>{{ baliza.modelo }}</td>
+          <td>{{ baliza.numSerie }}</td>
+          <td>{{ baliza.compania }}</td>
+          <td>{{ baliza.fechaAlta! | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ baliza.estados!.descripcion }}</td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(baliza.id)">
+          <nz-descriptions [nzColumn]="{ xxl: 3, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }" nzTitle="Información Adicional">
+            <nz-descriptions-item nzTitle="ID Dataminer">{{baliza.idDataminer}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="ID Element">{{baliza.idElement}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="ICC Tarjeta">{{baliza.iccTarjeta}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="IMEI">{{baliza.imei}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Pin 1">{{baliza.pin1}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Pin 2">{{baliza.pin2}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Puk">{{baliza.puk}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Tipo de Baliza">{{baliza.tipoBaliza?.descripcion}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Tipo de Contrato">{{baliza.tipoContrato?.descripcion}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Tipo de Coordenadas">{{baliza.tipoCoordenada}}</nz-descriptions-item>
+            <nz-descriptions-item nzTitle="Puerto">{{baliza.puerto}}</nz-descriptions-item>
+          </nz-descriptions>
+          <nz-descriptions>
+            <nz-descriptions-item nzTitle="Notas">{{baliza.notas}}</nz-descriptions-item>
+          </nz-descriptions>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="24">
+    <div nz-col class="gutter-row" [nzSpan]="7" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+      <button nz-button nzType="text" nzSize="large" (click)="removeBalizaToGeneralStock()" nz-tooltip
+        [disabled]="this.isBalizaDisponible == false" nzTooltipTitle="Devolver al Stock General">
+        <em nz-icon nzType="minus" nzTheme="outline" [class]="setStyleClassIcon()"></em>
+      </button>
+    </div>
+
+    <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="onSearchUnitOfBalizas()" [disabled]="isNullBusqueda()"
+        nz-tooltip nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="setStyleClass()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="setStyleClass()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

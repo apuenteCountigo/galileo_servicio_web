@@ -1,0 +1,9 @@
+export enum TipoBaliza {
+  GPS_GSM = 'GPS-GSM',
+  GPS_GPRS = 'GPS-GPRS',
+  GPS_DATOS = 'GPS-DATOS',
+  ARGOS = 'ARGOS',
+  GPS_ARGOS = 'GPS-ARGOS',
+  GPS_GPRS_IRIDIUM = 'GPS-GPRS-IRIDIUM',
+  GPS_IRIDIUM = 'GPS-IRIDIUM',
+}

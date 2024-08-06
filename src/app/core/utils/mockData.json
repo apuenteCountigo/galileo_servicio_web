@@ -1,0 +1,49 @@
+{
+  "estados": [
+    {
+        "tipoEntidad": {
+            "descripcion": "USUARIOS",
+            "id": 2
+        },
+        "descripcion": "ACTIVADO",
+        "id": 2
+    },
+    {
+        "tipoEntidad": {
+            "descripcion": "USUARIOS",
+            "id": 2
+        },
+        "descripcion": "DESACTIVADO",
+        "id": 4
+    }
+  ],
+  "empleos": [
+     {
+      "id": 3,
+      "descripcion": "Guardia Civil"
+    },
+    {
+      "id": 4,
+      "descripcion": "Cabo"
+    }
+  ],
+  "perfiles": [
+    {
+    "id": 1,
+    "descripcion": "Super administrador"
+    },
+    {
+      "id": 2,
+      "descripcion": "Administrador de unidad"
+    },
+    {
+      "id": 3,
+      "descripcion": "Usuario final"
+    },
+    {
+      "id": 4,
+      "descripcion": "Usuario invitado externo"
+    }
+  ]
+
+}

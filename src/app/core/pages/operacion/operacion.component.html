@@ -1,0 +1,128 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Usuario(s)" style="margin-bottom: 20px;"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="Nombre" [(ngModel)]="searchCriteria.descripcion" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Unidad" [(ngModel)]="searchCriteria.unidad" />
+    </div>
+  </div>
+</nz-card>
+<nz-card nzTitle="Operaciones" [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="listOfOperaciones" [nzFrontPagination]="false"
+    [nzLoading]="loading" [nzTotal]="total" [nzScroll]="{ x: '600px' }" [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex" [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th id="operacionSpand" nzWidth="60px"></th>
+        <th id="operacionDescripcion" nzColumnKey="descripcion" [nzSortFn]="true">Nombre</th>
+        <th id="operacionFechaInicio" nzColumnKey="fechaInicio" [nzSortFn]="true">Fecha de Inicio</th>
+        <th id="operacionFechaFin" nzColumnKey="fechaFin" [nzSortFn]="true">Fecha de Fin</th>
+        <th id="operacionUnidad" nzColumnKey="unidades">Unidad</th>
+        <th id="operacionEstado" nzColumnKey="estados" [nzSortFn]="true">Estado</th>
+        <th id="operacionAcciones" nzWidth="90px">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let operacion of listOfOperaciones">
+        <tr>
+          <td [nzExpand]="expandSet.has(operacion.id)" (nzExpandChange)="onExpandChange(operacion.id, $event)"></td>
+          <td>{{ operacion.descripcion }}</td>
+          <td>{{ operacion.fechaInicio | date : 'shortDate' }}</td>
+          <td>{{ operacion.fechaFin | date : 'shortDate'}}</td>
+          <td>{{ operacion.unidades?.denominacion }}</td>
+          <td>{{ operacion.estados?.descripcion }}</td>
+          <td>
+            <button nz-button nzType="text" nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu"
+              nzPlacement="bottomRight">
+              <em nz-icon nzType="more"></em>
+            </button>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="showModal(operacion)">
+                  <em nz-icon nzType="edit" nzTheme="outline" style="margin-right: 10px;"></em>
+                  <span nz-typography>Editar</span>
+                </li>
+                <li nz-menu-item (click)="deleteOperacion(operacion)">
+                  <em nz-icon nzType="delete" nzTheme="outline" style="margin-right: 10px;"></em>
+                  <span nz-typography>Eliminar</span>
+                </li>
+                <li nz-menu-item *ngIf="operacion.estados!.id===4; else elseBlock"
+                  (click)="changeUserStatus(operacion)">
+                  <em nz-icon nzType="check" nzTheme="outline" style="margin-right: 10px;"></em>
+                  <span nz-typography>Activar</span>
+                </li>
+                <ng-template #elseBlock>
+                  <li nz-menu-item (click)="changeUserStatus(operacion)">
+                    <em nz-icon nzType="close" nzTheme="outline" style="margin-right: 10px;"></em>
+                    <span nz-typography>Desactivar</span>
+                  </li>
+                </ng-template>
+              </ul>
+            </nz-dropdown-menu>
+          </td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(operacion.id)">
+          <div nz-row>
+            <div nz-col [nzSpan]="24">
+              <span><strong>Observaciones: </strong></span>
+              <span>{{ operacion.observaciones }}</span>
+            </div>
+          </div>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="5" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="primary" nzShape="circle" (click)="showModal()" nz-toolid
+        nzToolidTitle="Agregar Operacion">
+        <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="primary" nzShape="circle" (click)="showModalUpload()" nz-tooltip
+        nzTooltipTitle="Importar desde un Fichero">
+        <em nz-icon nzType="cloud-upload" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+    <div nz-col *ngIf="!showSearchForm" class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="primary" nzShape="circle" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="primary" nzShape="circle" (click)="onSearch()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="primary" nzShape="circle" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="primary" nzShape="circle" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

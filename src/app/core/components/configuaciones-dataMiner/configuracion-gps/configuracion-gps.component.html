@@ -1,0 +1,403 @@
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+      <nz-collapse >
+          <nz-collapse-panel
+            [nzHeader]="configReadGPS.length ? configReadGPS[0].ParameterName : ''"
+            [nzExtra]="extraEstadoConfigGPS"
+          >
+            <span >Última actualización: {{configReadGPS.length ? (configReadGPS[0].LastValueChange) : ''}}</span>
+            <ng-template #extraEstadoConfigGPS>
+              <span >{{configReadGPS.length ? configReadGPS[0].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+
+    <nz-collapse >
+      <nz-collapse-panel
+      [nzHeader]="configWriteGPS.length ? configWriteGPS[0].ParameterName : ''"
+      [nzExtra]="extraCOnfigGPS"
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <nz-select nzSpan="24" [(ngModel)]="valueConfigGPS" nzAllowClear nzPlaceHolder="seleccionar estado" nzSize="small">
+              <nz-option nzCustomContent nzLabel="Siempre encendido" nzValue=1>
+                Siempre encendido
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Siempre apagado" nzValue=2>
+                Siempre apagado
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Optimización de Encendido" nzValue=4>
+                Optimización de Encendido
+              </nz-option>
+            </nz-select>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueConfigGPS ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoConfigGPS()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerConfigGPS" style="margin-top: 15px;">
+              <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteGPS.length ? configWriteGPS[0].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteGPS.length ? (configWriteGPS[0].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraCOnfigGPS>
+          <span>{{nuevoValueConfigGPS}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>  
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+      <nz-collapse >
+          <nz-collapse-panel
+            [nzHeader]="configReadGPS.length ? configReadGPS[1].ParameterName : ''"
+            [nzExtra]="extraEstadoTiempoMovimiento"
+          >
+            <span >Última actualización: {{configReadGPS.length ? (configReadGPS[1].LastValueChange) : ''}}</span>
+            <ng-template #extraEstadoTiempoMovimiento>
+              <span >{{configReadGPS.length ? configReadGPS[1].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+      [nzHeader]="configWriteGPS.length ? configWriteGPS[1].ParameterName : ''"
+      [nzExtra]="extraTiempoAdqMovimiento"
+      
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+              <nz-input-number [nzMin]="1"  [ngStyle]="{ marginLeft: '16px' }" nzSize="small"
+                [(ngModel)]="valueTiempoAdqMovimiento"></nz-input-number>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueTiempoAdqMovimiento ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTiempoAdqBaliza()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTiempoAdqMovimiento" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteGPS.length ? (configWriteGPS[1].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraTiempoAdqMovimiento>
+          <span>{{nuevoValueTiempoAdqMovimiento}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+        </nz-collapse-panel>
+    </nz-collapse>
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+      <nz-collapse >
+          <nz-collapse-panel
+            [nzHeader]="configReadGPS.length ? configReadGPS[2].ParameterName : ''"
+            [nzExtra]="extraEstadoTiempoEstacionamiento"
+          >
+            <span >Última actualización: {{configReadGPS.length ? (configReadGPS[2].LastValueChange) : ''}}</span>
+            <ng-template #extraEstadoTiempoEstacionamiento>
+              <span >{{configReadGPS.length ? configReadGPS[2].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+      [nzHeader]="configWriteGPS.length ? configWriteGPS[2].ParameterName : ''"
+      [nzExtra]="extraTiempoAdqEstacionamiento"
+      
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+              <nz-input-number [nzMin]="1"  [ngStyle]="{ marginLeft: '16px' }" nzSize="small"
+                [(ngModel)]="valueTiempoAdqEstacionamiento"></nz-input-number>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueTiempoAdqEstacionamiento ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTiempoAdqEstacionamiento()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTiempoAdqEstacionamiento" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteGPS.length ? (configWriteGPS[2].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraTiempoAdqEstacionamiento>
+          <span>{{nuevoValueTiempoAdqEstacionamiento}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse> 
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+      <nz-collapse >
+          <nz-collapse-panel
+            [nzHeader]="configReadGPS.length ? configReadGPS[3].ParameterName : ''"
+            [nzExtra]="extraEstadoTiempoPreAdquisicion"
+          >
+            <span >Última actualización: {{configReadGPS.length ? (configReadGPS[3].LastValueChange) : ''}}</span>
+            <ng-template #extraEstadoTiempoPreAdquisicion>
+              <span >{{configReadGPS.length ? configReadGPS[3].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+      [nzHeader]="configWriteGPS.length ? configWriteGPS[3].ParameterName : ''"
+      [nzExtra]="extraTiempoPreAdquisicion"
+      
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+              <nz-input-number [nzMin]="1"  [ngStyle]="{ marginLeft: '16px' }" nzSize="small"
+                [(ngModel)]="valueTiempoPreAdquisicion"></nz-input-number>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueTiempoPreAdquisicion ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTiempoPreAdquisicion()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTiempoPreAdquisicion" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteGPS.length ? (configWriteGPS[3].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraTiempoPreAdquisicion>
+          <span>{{nuevoValueTiempoPreAdquisicion}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>        
+    <button nz-button nzType="primary" nzShape="round" nzSize="small"
+    [hidden]="allowEdit"
+      [disabled]="estadoEnviarConfigGPSTiempoPreAdq || estadoEnviarConfigGPSGPS 
+      || estadoEnviarConfigGPSTiempoAdq || estadoEnviarConfigGPSTiempoAdqEst ? true : false"
+      (click)="aplicarConfigGPS()">Aplicar Configuración GPS</button>
+    <nz-collapse nzGhost      
+    >
+      <nz-collapse-panel
+          [nzHeader]="configWriteGPS.length ? configReadGPS[7].ParameterName : ''"
+          [nzExtra]="extraAplyConfigGPS"
+        >
+        <!-- <span style="margin:0; font-size: small;">ID: {{configReadGPS.length ? configReadGPS[7].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configReadGPS.length ? (configReadGPS[7].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraAplyConfigGPS>
+        <!-- You can use stopPropagation if you don't want the panel to toggle -->
+        <nz-spin [nzSpinning]="spinerAplicarConfigBaliza"></nz-spin>
+        <span *ngIf="!spinerAplicarConfigBaliza">{{estadoPeticionAplicarConfigBaliza}}</span>
+      </ng-template>
+    </nz-collapse> 
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+      <nz-collapse >
+          <nz-collapse-panel
+            [nzHeader]="configReadGPS.length ? configReadGPS[4].ParameterName : ''"
+            [nzExtra]="extraEstadoConfigGPSLive"
+          >
+            <span >Última actualización: {{configReadGPS.length ? (configReadGPS[4].LastValueChange) : ''}}</span>
+            <ng-template #extraEstadoConfigGPSLive>
+              <span >{{configReadGPS.length ? configReadGPS[4].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+      [nzHeader]="configWriteGPS.length ? configWriteGPS[5].ParameterName : ''"
+      [nzExtra]="extraConfigGPSive"
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <nz-select [(ngModel)]="valueConfigGPSive" nzAllowClear nzPlaceHolder="seleccionar estado" nzSize="small">
+              <nz-option nzCustomContent nzLabel="Habilitado" nzValue=0>
+                Habilitado
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Desactivado" nzValue=1>
+                Deshabilitado
+              </nz-option>
+            </nz-select>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueConfigGPSive ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoConfigGPSive()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerConfigGPSLive" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteGPS.length ? (configWriteGPS[5].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraConfigGPSive>
+          <span>{{nuevoValueConfigGPSive}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse> 
+    <button nz-button nzType="primary" nzShape="round" nzSize="small"
+    [hidden]="allowEdit"
+
+    [disabled]="estadoEnviarConfigGPSLiveIntDescarga || estadoEnviarConfigGPSLiveIntDescarga ? true : false"
+    (click)="aplicarConfigGPSLive()">Aplicar Configuración GPS Live</button>
+    <nz-collapse nzGhost
+    >
+      <nz-collapse-panel
+          [nzHeader]="configWriteGPS.length ? configReadGPS[8].ParameterName : ''"
+          [nzExtra]="extraAplyConfigGPSLive"
+        >
+        <span style="margin:0; font-size: small;">Última actualización: {{configReadGPS.length ? (configReadGPS[8].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraAplyConfigGPSLive>
+        <nz-spin [nzSpinning]="spinerAplicarConfigGPSLive"></nz-spin>
+        <span *ngIf="!spinerAplicarConfigGPSLive">{{estadoPeticionAplicarConfigGPSLive}}</span>
+      </ng-template>
+    </nz-collapse>
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+      <nz-collapse >
+          <nz-collapse-panel
+            [nzHeader]="configReadGPS.length ? configReadGPS[5].ParameterName : ''"
+            [nzExtra]="extraEstadoIntervaloDescarga"
+          >
+            <span >Última actualización: {{configReadGPS.length ? (configReadGPS[5].LastValueChange) : ''}}</span>
+            <ng-template #extraEstadoIntervaloDescarga>
+              <span >{{configReadGPS.length ? configReadGPS[5].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+      [nzHeader]="configWriteGPS.length ? configWriteGPS[6].ParameterName : ''"
+      [nzExtra]="extraIntervaloDescarga"
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+              <nz-input-number [nzMin]="1"  [ngStyle]="{ marginLeft: '16px' }" nzSize="small"
+                [(ngModel)]="valueIntervaloDescarga"></nz-input-number>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueIntervaloDescarga ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoIntervaloDescarga()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerIntervaloDescarga" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteGPS.length ? (configWriteGPS[6].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraIntervaloDescarga>
+          <span>{{nuevoValueIntervaloDescarga}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>  
+
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+      <nz-collapse >
+          <nz-collapse-panel
+            [nzHeader]="configReadGPS.length ? configReadGPS[6].ParameterName : ''"
+            [nzExtra]="extraEstadoReceptorGlonas"
+          >
+            <span >Última actualización: {{configReadGPS.length ? (configReadGPS[6].LastValueChange) : ''}}</span>
+            <ng-template #extraEstadoReceptorGlonas>
+              <span >{{configReadGPS.length ? configReadGPS[6].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+            </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+      [nzHeader]="configWriteGPS.length ? configWriteGPS[8].ParameterName : ''"
+      [nzExtra]="extraConfigEstadoReceptorGlonass"
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <nz-select [(ngModel)]="valueConfigEstadoReceptorGlonass" nzAllowClear nzPlaceHolder="seleccionar estado" nzSize="small">
+              <nz-option nzCustomContent nzLabel="Activado" nzValue=1>
+                Activado
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Desactivado" nzValue=0>
+                Desactivado
+              </nz-option>
+            </nz-select>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4" >
+            <button [disabled]="valueConfigEstadoReceptorGlonass ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoConfigEstadoReceptorGlonass()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerConfigEstadoReceptorGlonass" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteGPS.length ? (configWriteGPS[8].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraConfigEstadoReceptorGlonass>
+          <span>{{nuevoValueConfigEstadoReceptorGlonass}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+    <button nz-button nzType="primary" nzShape="round" nzSize="small"
+    [hidden]="allowEdit"
+    [disabled]="estadoEnviarConfigGlonass > 0 ? false : true"
+    (click)="aplicarConfigGlonass()">Aplicar Configuración GPS Glonass</button>
+    <nz-collapse nzGhost
+    >
+      <nz-collapse-panel
+          [nzHeader]="configWriteGPS.length ? configReadGPS[9].ParameterName : ''"
+          [nzExtra]="extraAplyConfigGlonass"
+        >
+        <span style="margin:0; font-size: small;">Última actualización: {{configReadGPS.length ? (configReadGPS[9].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraAplyConfigGlonass>
+        <nz-spin [nzSpinning]="spinerAplicarConfigGlonass"></nz-spin>
+        <span *ngIf="!spinerAplicarConfigGlonass">{{estadoPeticionAplicarConfigGlonass}}</span>
+      </ng-template>
+    </nz-collapse>
+  </div>
+</div>

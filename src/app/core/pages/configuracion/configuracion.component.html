@@ -1,0 +1,12 @@
+<nz-card nzType="inner">
+  <nz-tabset [(nzSelectedIndex)]="selectedIndex">
+    <nz-tab nzTitle="Servidores" (nzClick)="updateBreadCrumb('servidores')">
+      <app-servidores-data-miner></app-servidores-data-miner>
+    </nz-tab>
+    <!-- <nz-tab nzTitle="Tipos de Balizas" (nzClick)="updateBreadCrumb('tiposBaliza')">
+        Tipos de Baliza</nz-tab> -->
+    <nz-tab nzTitle="Listados de Juzgados" (nzClick)="updateBreadCrumb('listadoJuzgados')">
+      <app-juzgados></app-juzgados>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>

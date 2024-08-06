@@ -1,0 +1,99 @@
+<nz-spin [nzSpinning]="loading" [nzDelay]="500">
+  <nz-card nzType="inner">
+    <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzTabBarExtraContent]="optionMap">
+      <!-- Tab Mapa -->
+      <nz-tab nzTitle="Mapa" (nzClick)="updateBreadCrumb('mapa')">
+        <div>
+          <iframe style="width: 100%; height: 750px;" [src]="urlUnSanitized | safe" frameborder="0" allowfullscreen>
+          </iframe>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="Balizas" (nzClick)="updateBreadCrumb('informacion', balizaSelected?.clave)">
+        <app-dispositivos (selectBaliza)="selectBaliza($event)" [dataApi]="dataApi"></app-dispositivos>
+      </nz-tab>
+      <!-- Tabs Configuraciones -->
+
+      <!-- <nz-tab nzTitle="Info de dispositivo" (nzClick)="updateBreadCrumb('infoDispositivo')">
+    </nz-tab> -->
+
+      <nz-tab nzTitle="Instalación" (nzClick)="updateBreadCrumb('instalacion')" [nzDisabled]="disableConfig"
+      (nzSelect)="isInstallSelected = true" (nzDeselect)="isInstallSelected = false"
+      >
+        <app-instalacion [balizaSelected]="balizaSelected" [allowEdit]="allowEdit" [dataApi]="dataApi"
+        [isInstallSelected]="isInstallSelected" (loadingGeneral)="loadingGeneral($event)">
+        </app-instalacion>
+      </nz-tab>
+      <nz-tab nzTitle="Última posición" (nzClick)="updateBreadCrumb('ultimaPosicion')" [nzDisabled]="disableConfig"
+      (nzSelect)="isLastPositionSelected = true" (nzDeselect)="isLastPositionSelected = false"
+      >
+        <app-ultima-posicion [balizaSelected]="balizaSelected" [allowEdit]="allowEdit" [dataApi]="dataApi"
+        [isLastPositionSelected]="isLastPositionSelected" (loadingGeneral)="loadingGeneral($event)">
+        </app-ultima-posicion>
+      </nz-tab>
+      <nz-tab nzTitle="Configuración GPS" (nzClick)="updateBreadCrumb('configGPS')" [nzDisabled]="disableConfig"
+      (nzSelect)="isConfigGpsSelected = true" (nzDeselect)="isConfigGpsSelected = false"
+      >
+        <app-configuracion-gps [balizaSelected]="balizaSelected" [allowEdit]="allowEdit" [dataApi]="dataApi"
+        [isConfigGpsSelected]="isConfigGpsSelected" (loadingGeneral)="loadingGeneral($event)">
+        </app-configuracion-gps>
+      </nz-tab>
+      <nz-tab nzTitle="Configuración anti-barrido" (nzClick)="updateBreadCrumb('configAntiBarridoa')" [nzDisabled]="disableConfig"
+      (nzSelect)="isConfigAntiBarridoSelected = true" (nzDeselect)="isConfigAntiBarridoSelected = false"
+      >
+        <app-configuracion-anti-barrido [balizaSelected]="balizaSelected" [allowEdit]="allowEdit" [dataApi]="dataApi"
+        [isConfigAntiBarridoSelected]="isConfigAntiBarridoSelected" (loadingGeneral)="loadingGeneral($event)">
+        </app-configuracion-anti-barrido>
+      </nz-tab>
+
+      <nz-tab nzTitle="Avanzada" (nzClick)="updateBreadCrumb('configAvanzada')" [nzDisabled]="disableConfig"
+      (nzSelect)="isAvanzadaSelected = true" (nzDeselect)="isAvanzadaSelected = false"
+      >
+        <app-configuracion-avanzada [balizaSelected]="balizaSelected" [allowEdit]="allowEdit" [dataApi]="dataApi"
+        [isAvanzadaSelected]="isAvanzadaSelected" (loadingGeneral)="loadingGeneral($event)">
+        </app-configuracion-avanzada>
+      </nz-tab>
+
+      <nz-tab nzTitle="Alertas operativa" (nzClick)="updateBreadCrumb('alertasOperativo')" [nzDisabled]="disableConfig"
+      (nzSelect)="isAlertaOperativaSelected = true" (nzDeselect)="isAlertaOperativaSelected = false"
+      >
+        <app-alertas-operativa [balizaSelected]="balizaSelected" [allowEdit]="allowEdit" [dataApi]="dataApi"
+        [isAlertaOperativaSelected]="isAlertaOperativaSelected" (loadingGeneral)="loadingGeneral($event)">
+        </app-alertas-operativa>
+      </nz-tab>
+
+      <nz-tab nzTitle="Geocercas" [nzDisabled]="disableConfig" (nzSelect)="isGeocercaSelected = true"
+        (nzDeselect)="isGeocercaSelected = false">
+        <!-- <nz-tab nzTitle="Geocercas" (nzClick)="updateBreadCrumb('geocercas')" [nzDisabled]="disableConfig"> -->
+        <app-geocercas [balizaSelected]="balizaSelected" [allowEdit]="allowEdit" [isGeocercaSelected]="isGeocercaSelected"></app-geocercas>
+      </nz-tab>
+
+      <nz-tab nzTitle="Planificador" (nzClick)="updateBreadCrumb('planificador')" [nzDisabled]="disableConfig"
+      (nzSelect)="isPlanificadorSelected = true" (nzDeselect)="isPlanificadorSelected = false"
+      >
+        <app-planificador [balizaSelected]="balizaSelected" (nuevoPlanificador)="nuevoPlanificador($event)"
+          [allowEdit]="allowEdit" [dataApi]="dataApi" [isPlanificadorSelected]="isPlanificadorSelected" (loadingGeneral)="loadingGeneral($event)"
+          ></app-planificador>
+      </nz-tab>
+
+      <nz-tab nzTitle="Nuevo planificador" (nzClick)="updateBreadCrumb('nuevoPlanificador')" [nzDisabled]="disableNuevoPlanificador"
+      (nzSelect)="isPNewlanificadorSelected = true" (nzDeselect)="isPNewlanificadorSelected = false"
+      >
+        <app-nuevo-planificador [balizaSelected]="balizaSelected" (loadingPlanificador)="loadingPlanificador($event)"
+        [isPNewlanificadorSelected]="isPNewlanificadorSelected" (loadingGeneral)="loadingGeneral($event)"
+        >
+        </app-nuevo-planificador>
+      </nz-tab>
+
+      <!-- <nz-tab nzTitle="Planificador" (nzClick)="updateBreadCrumb('planificador')">
+    </nz-tab>
+    <nz-tab nzTitle="Geofences" (nzClick)="updateBreadCrumb('geofences')">
+    </nz-tab> -->
+
+    </nz-tabset>
+    <ng-template #optionMap>
+      <button nz-button nzType="text" nzSize="large" nz-tooltip nzTooltipTitle="Ir a TRACCAR" (click)="goTraccar()">
+        <em nz-icon nzType="global" nzTheme="outline" class="icon-class"></em>
+      </button>
+    </ng-template>
+  </nz-card>
+</nz-spin>

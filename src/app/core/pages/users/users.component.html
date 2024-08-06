@@ -1,0 +1,18 @@
+<nz-card nzType="inner">
+  <nz-tabset [(nzSelectedIndex)]="selectedIndex" (nzSelectChange)="onTabChange($event)">
+    <!-- Tab de Gestion de Usuarios -->
+    <nz-tab nzTitle="Gestión de Usuarios" (nzClick)="updateBreadCrumb('usurioUsuario')">
+      <app-user-main-table #userTable (outSelectedUser)="onSelectUser($event)"></app-user-main-table>
+      <!-- <ng-template nz-tab>
+        <app-user-main-table #userTable (outSelectedUser)="onSelectUser($event)"></app-user-main-table>
+      </ng-template> -->
+    </nz-tab>
+
+    <!-- Tab de Datos de unidad -->
+    <nz-tab *ngIf="this.loggedUser.perfil.descripcion == userRoles.SUPER_ADMIN" nzTitle="Unidades"
+      [nzDisabled]="!selectedUser || isSuperAdmin()" (nzClick)="updateBreadCrumb('usurioUnidad')">
+      <app-unidad-asociada [selectedUser]="selectedUser" [loading]="unitLoading">
+      </app-unidad-asociada>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>

@@ -1,0 +1,143 @@
+<form nz-form [formGroup]="formModalUnit">
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="denominacion">Denominación</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="errorDenominacionUnit">
+      <input type="text" nz-input formControlName="denominacion" placeholder="Denominación" maxlength="50" />
+      <ng-template #errorDenominacionUnit let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca la denominación</ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">El campo tiene un máximo de 50 caracteres
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="oficialResponsable">Oficial responsable
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="errorOficialUnit">
+      <!-- <nz-select formControlName="oficialResponsable" nzPlaceHolder="Oficial responsable" nzShowSearch nzAllowClear>
+        <nz-option *ngFor="let oficial of oficialList" [nzValue]="oficial" [nzLabel]="getOficialFullName(oficial)">
+        </nz-option>
+      </nz-select> -->
+      <input type="text" nz-input formControlName="responsable" placeholder="Oficial responsable" maxlength="50" />
+      <ng-template #errorOficialUnit let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el oficial responsable</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="telefono">Teléfono</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="contactErrorTpl">
+      <input type="number" nz-input formControlName="telefono" placeholder="Teléfono" pattern="^\+?[1-9][0-9]{7,11}$"
+        maxlength="11" />
+      <ng-template #contactErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el teléfono</ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">Introduzca un teléfono valido</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="direccion">Dirección</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="errorDireccionUnit">
+      <textarea nz-input formControlName="direccion" placeholder="Dirección" [nzAutosize]="{ minRows: 2, maxRows: 3 }"
+        maxlength="50"></textarea>
+      <ng-template #errorDireccionUnit let-control>
+        <!-- <ng-container *ngIf="control.hasError('required')">Introduzca la dirección</ng-container> -->
+        <ng-container *ngIf="control.hasError('maxlength')">El campo tiene un máximo de 50 caracteres
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="provincia">Provincia</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="errorProvinciaUnit">
+      <nz-select formControlName="provincia" nzPlaceHolder="Provincia" nzShowSearch nzAllowClear>
+        <nz-option *ngFor="let provincia of provList" [nzValue]="provincia" [nzLabel]="provincia.descripcion">
+        </nz-option>
+      </nz-select>
+      <ng-template #errorProvinciaUnit let-control>
+        <!-- <ng-container *ngIf="control.hasError('required')">Seleccione la provincia</ng-container> -->
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="localidad">Localidad</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="errorLocalidadUnit">
+      <!-- <nz-select formControlName="localidad" nzPlaceHolder="Localidad" nzShowSearch nzAllowClear>
+        <nz-option *ngFor="let localidad of localityList" [nzValue]="localidad" [nzLabel]="localidad.descripcion">
+        </nz-option>
+      </nz-select> -->
+      <input type="text" nz-input formControlName="localidad" placeholder="Localidad" maxlength="45" />
+      <ng-template #errorLocalidadUnit let-control>
+        <!-- <ng-container *ngIf="control.hasError('required')">Introduzca la localidad</ng-container> -->
+        <ng-container *ngIf="control.hasError('maxlength')">El campo tiene un máximo de 45 caracteres
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="groupWise">Group wise</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="errorGroupWUnit">
+      <input type="text" nz-input formControlName="groupWise" placeholder="Group wise" maxlength="25" />
+      <ng-template #errorGroupWUnit let-control>
+        <!-- <ng-container *ngIf="control.hasError('required')">Introduzca el group wise</ng-container> -->
+        <ng-container *ngIf="control.hasError('maxlength')">El campo tiene un máximo de 25 caracteres
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7">Correo electrónico</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="emailErrorUnit">
+      <input nz-input formControlName="email" placeholder="Correo electrónico" type="email"
+        pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$" />
+      <ng-template #emailErrorUnit let-control>
+        <!-- <ng-container *ngIf="control.hasError('email')">No es un correo válido</ng-container> -->
+        <ng-container *ngIf="control.hasError('pattern')">No es un correo válido</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="codigoPostal">Código postal</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="errorCPostalUnit">
+      <input type="text" nz-input formControlName="codigoPostal" placeholder="Código postal" pattern="^[0-9]+$"
+        maxlength="5" />
+      <ng-template #errorCPostalUnit let-control>
+        <!-- <ng-container *ngIf="control.hasError('required')">Introduzca el código postal</ng-container> -->
+        <ng-container *ngIf="control.hasError('minlength') && !control.hasError('pattern')">El código debe ser de 5
+          dígitos</ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">El código solo debe contener números</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="notas">Notas</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea nz-input formControlName="notas" placeholder="Notas"
+        [nzAutosize]="{ minRows: 5, maxRows: 5 }"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="cancelForm()">Cancelar</button>
+        <button nz-button nzType="primary" [disabled]="checkForm() || buttonSending" [nzLoading]="buttonSending"
+          (click)="submitForm()">
+          <i nz-icon [nzType]="button.icon" nzTheme="outline"></i>
+          <span>{{ button.label }}</span>
+        </button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

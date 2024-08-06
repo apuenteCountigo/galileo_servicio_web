@@ -1,0 +1,98 @@
+<nz-card [nzTitle]="dataEntrante" [nzExtra]="extraTemplate" nzSize="default">
+    <nz-table #headerTable nzShowSizeChanger [nzData]="listOfNomencladores"
+      [nzFrontPagination]="false"
+      [nzLoading]="loading"
+      [nzTotal]="total"
+      [nzScroll]="{ x: '240px', y: '260px' }"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzNoResult] = "noResult"
+      (nzQueryParams)="onQueryParamsChange($event)"
+      >
+      <thead>
+        <tr>
+          <th id="nomencladornSelect" nzWidth="35px" [nzLeft]="true"></th>
+          <th nzWidth="150px" nzColumnKey="descripcion" [nzSortFn]="true" >Descripcion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let nomneclador of listOfNomencladores">
+          <tr>
+            <td [nzChecked]="expandSet.has(nomneclador.id)"              
+                (nzCheckedChange)="onExpandChangeNomenclador(nomneclador, $event)" 
+                [nzShowExpand]="false"
+                [nzExpand]="expandSet.has(nomneclador.id)"
+                ></td>
+            <td  >{{ nomneclador.descripcion }}</td>
+          <!-- </tr>
+          <tr [nzExpand]="expandSet.has(user.tip)">
+            <div nz-row>
+              <div nz-col>
+                <span><strong>Observaciones: </strong></span>
+                <span>{{ user.observaciones }}</span>
+              </div>
+            </div>
+            <div nz-row>
+              <div nz-col>
+                <span><strong>Fecha de Expiración: </strong></span>
+                <span>1/1/2023</span>
+              </div>
+            </div>
+          </tr> -->
+        </ng-container>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+  <!-- <ng-template #extraTemplate>
+    <div nz-row [nzGutter]="16">
+      <div nz-col class="gutter-row" [nzSpan]="4">
+        <button nz-button nzType="primary" nzShape="circle" (click)="showModal()"><i nz-icon nzType="user-add" nzTheme="outline"></i></button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="18">
+        <nz-input-group [nzSuffix]="suffixIconSearch">
+          <input type="text" nz-input placeholder="Buscar..." [(ngModel)]="searchCriteria.descripcion"/>
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+          <i nz-icon nzType="search" (click)="onSearchUnitOfOperaciones()"></i>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template> -->
+
+  <ng-template #extraTemplate>
+    <div nz-row [nzGutter]="24" nzJustify="end">
+      <div nz-col class="gutter-row" [nzSpan]="6">
+        <button nz-button nzType="text" nzSize="large" (click)="showModal()" nz-tooltip
+         nzTooltipTitle="Crear operación">
+          <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="6" >
+        <button nz-button nzType="text" nzSize="large" (click)="showModal(true)" nz-tooltip
+          nzTooltipTitle="Editar operación" [disabled]="selectedNomenclador == null">
+          <em nz-icon nzType="edit" nzTheme="outline" [class]="selectedNomenclador?'icon-class':'icon-disabled'"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="6" >
+        <button nz-button nzType="text" nzSize="large" (click)="deleteNomenclador()" nz-tooltip
+          nzTooltipTitle="Eliminar unidad" [disabled]="selectedNomenclador == null">
+          <em nz-icon nzType="delete" nzTheme="outline" [class]="selectedNomenclador?'icon-class':'icon-disabled'"></em>
+        </button>
+      </div>
+      <!-- <div  nz-col class="gutter-row" >
+        <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+          nzTooltipTitle="Filtros de búsqueda">
+          <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+        </button>
+      </div> -->
+    </div>
+</ng-template>
+
+  <ng-template #noResult>
+    <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+    <ng-template #contentTpl>
+        <h5 nz-typography nzType="secondary">No existen datos</h5>
+    </ng-template>
+  </ng-template>
+  

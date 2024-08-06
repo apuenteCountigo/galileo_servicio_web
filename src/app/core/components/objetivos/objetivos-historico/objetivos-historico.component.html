@@ -1,0 +1,14 @@
+<nz-timeline>
+  <nz-timeline-item *ngFor="let registro of historico"
+    [nzColor]="registro.accion!.descripcion == 'Asignar'? 'green': 'red'">
+    <span *ngIf="registro.accion!.descripcion == 'Asignar'">Asignada la Baliza {{ registro.baliza!.clave}} el
+      {{registro.fecha | date: 'dd/MM/yyyy' }}</span>
+    <span *ngIf="registro.accion!.descripcion == 'Desasignar'"> Se Desasigna la Baliza {{ registro.baliza!.clave}} el
+      {{registro.fecha | date: 'dd/MM/yyyy'}}</span>
+  </nz-timeline-item>
+</nz-timeline>
+<div *nzModalFooter>
+  <button nz-button nzType="primary" (click)="closeForm()">
+    Cerrar
+  </button>
+</div>

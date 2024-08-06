@@ -1,0 +1,149 @@
+<nz-card nzType="inner">
+  <nz-card *ngIf="showSearchForm" nzTitle="Filtrar trazas" style="margin-bottom: 20px;" [nzExtra]="extraTemplateSearch"
+    nzSize="default">
+    <form [formGroup]="searchTraceForm">
+      <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+        <div nz-col class="gutter-row" [nzSpan]="6">
+          <div class="inner-box">
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeHolder="Usuario (TIP)" formControlName="tip" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="6">
+          <div class="inner-box">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-select formControlName="action" nzPlaceHolder="Acción" nzAllowClear>
+                  <nz-option *ngFor="let action of actionList" [nzValue]="action.id" [nzLabel]="action.description">
+                  </nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="6">
+          <div class="inner-box">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-range-picker formControlName="fullDateRange" [nzFormat]="dateFormat"
+                  (ngModelChange)="onDateChange($event)">
+                </nz-range-picker>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="6">
+          <div class="inner-box">
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeHolder="Descripción" formControlName="description" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nz-card>
+
+  <nz-card nzTitle="Trazas" [nzExtra]="extraTemplate" nzSize="default">
+    <nz-table nzShowSizeChanger [nzData]="traceList" [nzFrontPagination]="false" [nzLoading]="loading" [nzTotal]="total"
+      [nzScroll]="{ x: '600px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzTableLayout]="'auto'"
+      [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChange($event)">
+      <thead>
+        <tr>
+          <!-- <th id="unidadSpand" nzWidth="35px" [nzLeft]="true"></th> -->
+          <th id="trazaSelect" nzWidth="35px" [nzLeft]="true"></th>
+          <th id="tipoEntidad" nzColumnKey="tipoEntidad.descripcion" [nzSortFn]="true">Entidad</th>
+          <th id="accionEntidad" nzColumnKey="accionEntidad.descripcion" [nzSortFn]="true">Acción</th>
+          <th id="usuario">Usuario</th>
+          <th id="fecha" nzColumnKey="fecha" [nzSortFn]="true">Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let trace of traceList">
+          <tr>
+            <!-- <td [nzShowExpand]="false" [nzExpand]="expandSet.has(unit.id)"
+                  (nzExpandChange)="onExpandChange(unit.id, $event)"></td> -->
+            <td [nzChecked]="expandSet.has(trace.id)" (nzCheckedChange)="onExpandChange(trace, $event)"
+              [nzShowExpand]="false" [nzExpand]="expandSet.has(trace.id)"
+              (nzExpandChange)="onExpandChange(trace, $event)"></td>
+            <td>{{ trace.tipoEntidad.descripcion | uppercase}}</td>
+            <td>{{ trace.accionEntidad.descripcion | uppercase }}</td>
+            <td>{{ trace.usuario | userTrace }}</td>
+            <td>{{ trace.fecha | date: 'dd/MM/yyyy' || '-' }}</td>
+          </tr>
+          <tr [nzExpand]="expandSet.has(trace.id)">
+            <div nz-row>
+              <div nz-col [nzSpan]="24">
+                <nz-descriptions nzTitle="Información Adicional Traza">
+                  <nz-descriptions-item nzTitle="Descripción">{{
+                    trace.descripcion
+                    }}</nz-descriptions-item>
+                </nz-descriptions>
+                <nz-descriptions nzTitle="Información Adicional Usuario">
+                  <nz-descriptions-item nzTitle="Nombre">{{
+                    trace.usuario.nombre
+                    }}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="Apellidos">{{
+                    trace.usuario.apellidos
+                    }}</nz-descriptions-item>
+                  <nz-descriptions-item nzTitle="Correo electrónico">{{
+                    trace.usuario.email
+                    }}</nz-descriptions-item>
+                </nz-descriptions>
+              </div>
+            </div>
+            <div nz-row>
+              <!-- <div nz-col [nzSpan]="24">
+                <span><strong>Notas: </strong></span>
+                <span>{{ unit.notas }}</span>
+              </div> -->
+            </div>
+          </tr>
+        </ng-container>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+  <ng-template #extraTemplate>
+    <div nz-row [nzGutter]="extraGutter" nzJustify="end">
+      <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="extraSpan">
+        <button nz-button nzType="text" nzSize="large" (click)="showHideSearchFormTrace()" nz-tooltip
+          nzTooltipTitle="Filtros de búsqueda">
+          <em nz-icon nzType="filter" nzTheme="outline" class="icon-class"></em>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #noResult>
+    <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+    <ng-template #contentTpl>
+      <h5 nz-typography nzType="secondary">No existen datos</h5>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #extraTemplateSearch>
+    <div nz-row [nzGutter]="24" nzJustify="end">
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="onSearch()" [disabled]="isNullSearchForm()" nz-tooltip
+          nzTooltipTitle="Buscar">
+          <em nz-icon nzType="search" nzTheme="outline" [class]="!isNullSearchForm()?'icon-class':'icon-disabled'"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullSearchForm()" nz-tooltip
+          nzTooltipTitle="Limpiar">
+          <em nz-icon nzType="clear" nzTheme="outline" [class]="!isNullSearchForm()?'icon-class':'icon-disabled'"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+          <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+        </button>
+      </div>
+    </div>
+  </ng-template>

@@ -1,0 +1,22 @@
+<form nz-form [formGroup]="formModalDesasignarBaiza">
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="estados">{{label}}</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select nzShowSearch [nzLoading]="loadingBalizas" nzAllowClear formControlName="items"
+        nzPlaceHolder="Seleccionar estado">
+        <nz-option *ngFor=" let item of listBalizaz" [nzValue]="item" [nzLabel]="item.clave"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+        <button nz-button nzType="primary" [disabled]="checkForm()" (click)="submitForm()">
+          <!-- <i nz-icon [nzType]="button.icon" nzTheme="outline"></i> -->
+          <span>{{ button.label }}</span>
+        </button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -1,0 +1,25 @@
+<form nz-form [formGroup]="formModalNomenclador">
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired nzFor="descripcion">Descripcion</nz-form-label>
+      <nz-form-control [nzSpan]="12" nzErrorTip="Introduzca la descripcion">
+        <input type="text" nz-input formControlName="descripcion" placeholder="descripcion" />
+        <ng-template #userErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">Introduzca la descripción</ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <div *nzModalFooter>
+          <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+          <button nz-button nzType="primary" [disabled]="checkForm()" (click)="submitForm()">
+            <i nz-icon [nzType]="button.icon" nzTheme="outline"></i>
+            <span>{{ button.label }}</span>
+          </button>
+        </div>
+      </nz-form-control>
+    </nz-form-item>
+
+  </form>

@@ -1,0 +1,115 @@
+<nz-layout class="app-layout">
+  <nz-sider class="menu-sidebar" [nzWidth]="isCollapsed ? '' : 256" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null"
+    [nzCollapsedWidth]="0">
+    <div class="sidebar-logo">
+      <a style="pointer-events: none;">
+        <img src="{{isCollapsed ? 'assets/images/galileo-logo-small.png' : 'assets/images/galileo-logo.png'}}"
+          alt="logo" />
+      </a>
+    </div>
+    <ul nz-menu nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-menu-item nzMatchRouter nz-tooltip [nzTooltipTitle]="isCollapsed ? 'General' : null" nzSelected>
+        <i nz-icon nzType="home" style="margin-right: 10px;"></i>
+        <div><a routerLink="/app/welcome">General</a></div>
+      </li>
+      <li *ngxPermissionsOnly="[userRoles.FINAL_USER, userRoles.GUEST_USER]" nz-menu-item nzMatchRouter nz-tooltip
+        [nzTooltipTitle]="isCollapsed ? 'Mis Dispositivos' : null">
+        <i nz-icon nzType="environment" style="margin-right: 10px;"></i>
+        <div><a routerLink="/app/devices">Mis Dispositivos</a></div>
+      </li>
+      <li *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]" nz-menu-item nzMatchRouter nz-tooltip
+        [nzTooltipTitle]="isCollapsed ? 'Gestión de Usuarios' : null">
+        <i nz-icon nzType="team" style="margin-right: 10px;"></i>
+        <div><a routerLink="/app/users">Gestión de Usuarios</a></div>
+      </li>
+      <li nz-menu-item nzMatchRouter nz-tooltip [nzTooltipTitle]="isCollapsed ? 'Gestión de Unidades' : null">
+        <i nz-icon nzType="bank" style="margin-right: 10px;"></i>
+        <div><a routerLink="/app/unidad">Gestión de Unidades</a></div>
+      </li>
+      <li *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]" nz-submenu nzTitle="Configuración Avanzada" nzIcon="setting"
+        nz-tooltip [nzTooltipTitle]="isCollapsed ? 'Configuración Avanzada' : null" [nzTooltipPlacement]="'topLeft'">
+        <ul>
+          <!-- <li nz-menu-item nzMatchRouter>
+            <a routerLink="/app/unidad">Gestión de Unidades</a>
+          </li> -->
+          <li nz-menu-item nzMatchRouter *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+            <a routerLink="/app/configuracion">Configuración Sistema</a>
+          </li>
+          <li nz-menu-item nzMatchRouter *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+            <a routerLink="/app/baliza">Alta de Balizas</a>
+          </li>
+          <li nz-menu-item nzMatchRouter *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+            <a routerLink="/app/nomencladores">Nomencladores</a>
+          </li>
+          <li nz-menu-item nzMatchRouter *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+            <a routerLink="/app/audit">Auditoría del sistema</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div nz-row nzJustify="space-between">
+        <button nz-button nzSize="small" (click)="toggleCollapsed()" style="margin-top: 15px;">
+          <i nz-icon nzType="pushpin" [nzTheme]="isCollapsed ? 'outline' : 'fill'"></i>
+        </button>
+
+        <div style="width: 70%; display:flex; align-items: center; margin-left: 35px;" *ngIf="isGenerating">
+          <div style="width: 40%">
+            <nz-progress [nzPercent]="percent" [nzStatus]="getStatusBar()"
+              [nzStrokeColor]="{ '0%': '#F8B563', '100%': '#1CB1F5' }" nzType="line">
+            </nz-progress>
+          </div>
+          <span>Generando evidencias</span>
+        </div>
+
+        <div style="margin-right: 25px; display:flex; align-items: center;">
+          <nz-switch [(ngModel)]="switchValue" [nzControl]="true" (click)="toggleTheme()" style="margin-right: 15px;">
+          </nz-switch>
+          <button style="margin-right: 5px; background-color: #f0f2f5; cursor: default !important;" nzType="text"
+            nz-button nzShape="circle" nzSize="small">
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+          </button>
+          <h4 style="margin: 0; cursor: default !important;">{{this.loggedUser.tip}}</h4>
+          <button nz-button nzType="text" nz-dropdown [nzDropdownMenu]="menuUser" nzTrigger="click"
+            nzPlacement="bottomRight">
+            <i nz-icon nzType="down" nzTheme="outline"></i>
+          </button>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content>
+      <app-bread-crumb></app-bread-crumb>
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer>Copyright © Galileo {{todayDate | date: "y"}}.
+      <a (click)="showHelp()"><i nz-icon nzType="question" nzTheme="outline" nz-tooltip nzTooltipTitle="Ayuda"></i></a>
+    </nz-footer>
+  </nz-layout>
+</nz-layout>
+<nz-dropdown-menu #menuUser="nzDropdownMenu">
+  <ul nz-menu>
+    <li nz-menu-item nzDisabled="true">
+      <div
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0px; width: 95%;">
+        <h4>{{this.fullUserName}}</h4>
+        <h5>{{this.loggedUser.perfil.descripcion}}</h5>
+      </div>
+    </li>
+    <nz-divider style="margin: 0px;"></nz-divider>
+    <li nz-menu-item (click)="showChangePassword()">
+      <em nz-icon nzType="lock" nzTheme="outline" style="margin-right: 10px;"></em>
+      <span nz-typography>Cambiar contraseña</span>
+    </li>
+    <li nz-menu-item (click)="showHelp()">
+      <em nz-icon nzType="question" nzTheme="outline" style="margin-right: 10px;"></em>
+      <span nz-typography>Ayuda del sistema</span>
+    </li>
+    <nz-divider style="margin: 0px;"></nz-divider>
+    <li nz-menu-item (click)="logout()">
+      <em nz-icon nzType="logout" nzTheme="outline" style="margin-right: 10px;"></em>
+      <span nz-typography>Cerrar sesión</span>
+    </li>
+  </ul>
+</nz-dropdown-menu>

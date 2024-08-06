@@ -1,0 +1,27 @@
+<nz-card>
+  <div nz-row nzJustify="space-between">
+    <div nz-col>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item *ngFor="let item of rutas">
+          <a>{{item}}</a>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+    <div nz-col>
+      <div *ngIf="estado != estadosList.SIN_INICIAR">
+        <!-- <nz-badge *ngIf="estado == estadosList.ENCENDIDA" nzStatus="success" nzText="Baliza encendida"></nz-badge>
+        <nz-badge *ngIf="estado == estadosList.APAGADA" nzStatus="error" nzText="Baliza apagada"></nz-badge> -->
+        <div nz-row *ngIf="estado == estadosList.ENCENDIDA">
+          <span class="dot-success"></span>
+          <span style="color: #52C41A;">Baliza encendida</span>
+        </div>
+        <div nz-row *ngIf="estado == estadosList.APAGADA">
+          <span class="dot-error"></span>
+          <span style="color: #FF4D4F;">Baliza apagada</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</nz-card>

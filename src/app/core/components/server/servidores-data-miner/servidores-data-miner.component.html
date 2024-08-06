@@ -1,0 +1,111 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Usuario(s)" style="margin-bottom: 20px;"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="IP" [(ngModel)]="searchCriteria.ipServicio" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Servicio" [(ngModel)]="searchCriteria.servicio" />
+    </div>
+  </div>
+</nz-card>
+
+
+<nz-card nzTitle="Servidores" [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="listOfServer" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzScroll]="{ x: '600px' }" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th id="serverSpand" nzWidth="60px"></th>
+        <th id="serverServicio" nzColumnKey="Servicio" [nzSortFn]="true">Servicio</th>
+        <th id="serverIp" nzColumnKey="ip" [nzSortFn]="true">IP</th>
+        <th id="serverPort" nzColumnKey="Puerto" [nzSortFn]="true">Puerto</th>
+        <th id="serverUsermane" nzColumnKey="usuario" [nzSortFn]="true">Usuario</th>
+        <th id="serverPassword" nzColumnKey="password">Contraseña</th>
+        <th id="serverdmaID" nzColumnKey="dmaID" [nzSortFn]="true">DMA ID</th>
+        <th id="serverviewIDs" nzColumnKey="viewIDs" [nzSortFn]="true">ViewIDs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let server of listOfServer">
+        <tr>
+          <td [nzChecked]="expandSet.has(server.id)" (nzCheckedChange)="onExpandChangeServer(server, $event)"
+            [nzShowExpand]="false" [nzExpand]="expandSet.has(server.id)"
+            (nzExpandChange)="onExpandChangeServer(server, $event)"></td>
+          <td>{{ server.servicio }}</td>
+          <td>{{ server.ipServicio }}</td>
+          <td>{{ server.puerto }}</td>
+          <td>{{ server.usuario }}</td>
+          <td>{{ server.password! | passwordMask}}</td>
+          <td>{{ server.dmaID }}</td>
+          <td>{{ server.viewIDs }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="showModal(false)" nz-tooltip
+        nzTooltipTitle="Crear servidor">
+        <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="showModal(true)" nz-tooltip
+        nzTooltipTitle="Editar servidor" [disabled]="disableServerActions">
+        <em nz-icon nzType="edit" nzTheme="outline" [class]="!disableServerActions?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="deleteServer()" nz-tooltip
+        nzTooltipTitle="Eliminar usuario" [disabled]="disableServerActions">
+        <em nz-icon nzType="delete" nzTheme="outline" [class]="!disableServerActions?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <!-- <div nz-col class="gutter-row" [nzSpan]="3">
+        <button nz-button nzType="text" nzSize="large" (click)="showModalUpload()" nz-tooltip
+          nzTooltipTitle="Importar desde un Fichero">
+          <em nz-icon nzType="upload" nzTheme="outline"></em>
+        </button>
+      </div> -->
+    <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="onSearch()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

@@ -1,0 +1,14 @@
+[
+  {
+    "descripcion": "Descripcion 1",
+    "id": 1,
+    "operaciones": [
+      {
+        "descripcion": "Operacion 1-1"
+      },
+      {
+        "descripcion": "Operacion 1-2"
+      }
+    ]
+  }
+]

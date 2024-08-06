@@ -1,0 +1,95 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Permisos" style="margin-bottom: 20px;"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="Tip" [(ngModel)]="searchCriteria.tip" />
+    </div>
+    <div nz-col>
+      <input nz-input placeHolder="Nombre" [(ngModel)]="searchCriteria.nombre" />
+    </div>
+  </div>
+</nz-card>
+<nz-card nzTitle="Permisos" [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="listOfPermisos" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzScroll]="{ x: '500px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChangePermisosOperacion($event)">
+    <thead>
+      <tr>
+        <th id="permisoSelect" nzWidth="35px" [nzLeft]="true"></th>
+        <th id="permisoTip" nzColumnKey="usuarios.tip" [nzSortFn]="true">Tip</th>
+        <th id="permisoNombre" nzColumnKey="usuarios.nombre" [nzSortFn]="true">Nombre</th>
+        <th id="permisoApellidos" nzColumnKey="usuarios.apellidos" [nzSortFn]="true">Apellidos</th>
+        <th id="permisoCargo" nzColumnKey="usuarios.empleos.descripcion" [nzSortFn]="true">Cargo</th>
+        <th id="permisoPermiso" nzColumnKey="permiso">Permiso(s)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let permiso of listOfPermisos">
+        <tr>
+          <td [nzChecked]="false" (nzCheckedChange)="onExpandChangePermiso(permiso, $event)" [nzShowExpand]="false"
+            [nzExpand]="expandSet.has(permiso.id)" (nzExpandChange)="onExpandChangePermiso(permiso, $event)"
+            [nzDisabled]="expandSet.size > 0 && !expandSet.has(permiso.id)"></td>
+
+          <td>{{ permiso?.usuarios?.tip }}</td>
+          <td>{{ permiso?.usuarios?.nombre }}</td>
+          <td>{{ permiso?.usuarios?.apellidos }}</td>
+          <td>{{ permiso?.usuarios?.empleos?.descripcion }}</td>
+          <td>
+            <nz-switch class="swich-table" (ngModelChange)="ActualizarPermiso(permiso, $event)"
+              [ngModel]="permiso.permisos === 'e' ? true : false" nzCheckedChildren="Escritura"
+              nzUnCheckedChildren="Lectura"></nz-switch>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="24">
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzSize="large" (click)="showModal()" nz-tooltip nzTooltipTitle="Crear permiso">
+        <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzSize="large" (click)="deleteOperacion()" nz-tooltip
+        nzTooltipTitle="Eliminar permiso" [disabled]="selectedPermiso == null">
+        <em nz-icon nzType="delete" nzTheme="outline" [class]="setStyleClass()"></em>
+      </button>
+    </div>
+    <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="onSearchPermisosOperacion()" [disabled]="isNullBusqueda()"
+        nz-tooltip nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="setStyleClassBusqueda()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="setStyleClassBusqueda()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="setStyleClassBusqueda()"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

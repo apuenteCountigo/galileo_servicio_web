@@ -1,0 +1,467 @@
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[0].ParameterName : ''"
+        [nzExtra]="extraEstadoConfigLed"
+        nzActive="false"
+      >
+        <span >Última actualización: {{configRead.length ? (configRead[0].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoConfigLed>
+          <span >{{configRead.length ? configRead[0].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+
+      <nz-collapse >
+        <nz-collapse-panel
+          [nzHeader]="configWrite.length ? configWrite[0].ParameterName : ''"
+          [nzExtra]="extraConfigLed"            
+        >
+        <div [hidden]="allowEdit" nz-row >
+            <div nz-col nzSpan="14">
+              <nz-select [(ngModel)]="estadoConfigLed" nzAllowClear nzPlaceHolder="seleccionar estado" nzSize="small">
+                <nz-option nzCustomContent nzLabel="Activado" nzValue= 1>
+                  <i nz-icon nzType="check"></i>
+                  Activado
+                </nz-option>
+                <nz-option nzCustomContent nzLabel="Desactivado" nzValue= 0>
+                  <i nz-icon nzType="close"></i>
+                  Desactivado
+                </nz-option>
+              </nz-select>
+            </div>
+            <div nz-col nzSpan="2">
+            </div>
+            <div nz-col nzSpan="4">
+              <button [disabled]="estadoConfigLed ? false : true" nz-button nzType="primary" nzSize="small" nzShape="round"
+                (click)="nuevoConfigLed()">OK</button>
+            </div>
+            <div nz-col nzSpan="4" *ngIf="spinerConfigLed" >
+              <nz-spin nzSize="small"></nz-spin>
+            </div>
+          </div>
+          <span style=" font-size: small;">Última actualización: {{configWrite.length ? (configWrite[0].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+          <ng-template #extraConfigLed>
+            <span>{{nuevoValueConfiguracionLed}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>            
+          </ng-template>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <button [hidden]="allowEdit" nz-button nzType="primary" nzSize="small" nzShape="round"
+      [disabled]="estadoEnviarConfigLed"
+      (click)="aplicarConfiguracionLed()">Aplicar Configuración LED</button>
+      <nz-collapse nzGhost
+      >
+        <nz-collapse-panel
+          [nzHeader]="configRead.length ? configRead[6].ParameterName : ''"
+          [nzExtra]="extraAplyConfigLed"
+          >
+          <span style="margin:0; font-size: small;">Última actualización: {{configRead.length ? (configRead[6].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        </nz-collapse-panel>
+        <ng-template #extraAplyConfigLed>
+          <nz-spin nzSize="small" [nzSpinning]="spinerAplicarConfigLed"></nz-spin>
+          <span *ngIf="!spinerAplicarConfigLed">{{estadoPeticionCOnfigLed}} </span>
+        </ng-template>
+      </nz-collapse>
+
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[1].ParameterName : ''"
+        [nzExtra]="extraUmbralSensibilidad"
+      >
+        <span >Última actualización: {{configRead.length ? (configRead[1].LastValueChange) : ''}}</span>
+        <ng-template #extraUmbralSensibilidad>
+          <span >{{configRead.length ? configRead[1].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWrite.length ? configWrite[2].ParameterName : ''"
+        [nzExtra]="extraUmbralSonido"
+      >
+      <div [hidden]="allowEdit" nz-row >
+        <div nz-col nzSpan="14">
+            <nz-input-number [nzMin]="1" [nzMax]="8" [ngStyle]="{ marginLeft: '16px' }"  nzSize="small"
+              [(ngModel)]="valueUmbralSensibilidad"></nz-input-number>
+        </div>
+        <div nz-col nzSpan="2">
+        </div>
+        <div nz-col nzSpan="4" >
+          <button [disabled]="valueUmbralSensibilidad ? false : true" nz-button nzType="primary"  nzSize="small"
+            (click)="nuevoUmbralSensibilidad()">OK</button>
+        </div>
+        <div nz-col nzSpan="4" *ngIf="spinerUmbralSensibilidad" >
+          <nz-spin nzSize="small"></nz-spin>
+        </div>
+      </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWrite.length ? (configWrite[2].LastValueChangeUTC | convertDateUTC) : ''}}</span>
+        <ng-template #extraUmbralSonido>
+            <span>{{nuevoValueUmbralSensibilidad}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+    <button nz-button nzType="primary"  nzSize="small" nzShape="round"
+    [hidden]="allowEdit"
+    [disabled]="estadoEnviarUmbralSensibilidad"
+    (click)="aplicarUmbralSensibilidad()">Aplicar Umbral Sensibilidad</button>
+    <nz-collapse nzGhost
+    >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[7].ParameterName : ''"
+        [nzExtra]="extraAplyUmbralSensibilidad"
+      >
+      <span style="margin:0; font-size: small;">Última actualización: {{configRead.length ? (configRead[7].LastChangeUTC | convertDateUTC) : ''}}</span>
+    </nz-collapse-panel>
+      <ng-template #extraAplyUmbralSensibilidad>
+        <nz-spin nzSize="small" [nzSpinning]="spinerAplicaUmbralSensibilidad"></nz-spin>
+        <span *ngIf="!spinerAplicaUmbralSensibilidad">{{estadoPeticionUmbralSensibilidad}}</span>
+      </ng-template>
+    </nz-collapse>
+
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[2].ParameterName : ''"
+        [nzExtra]="extraEstadoDetectorSonido"
+      >
+        <span >Última actualización: {{configRead.length ? (configRead[2].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoDetectorSonido>
+          <span >{{configRead.length ? configRead[2].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWrite.length ? configWrite[5].ParameterName : ''"
+        [nzExtra]="extraDetectorSonido" 
+      >
+      <div [hidden]="allowEdit" nz-row >
+        <div nz-col nzSpan="14">
+            <nz-select [(ngModel)]="valueDetectorSonido" nzAllowClear nzPlaceHolder="seleccionar estado"  nzSize="small">
+              <nz-option nzCustomContent nzLabel="Activo" nzValue= 1>
+                <i nz-icon nzType="check"></i>
+                Activo
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Inactivo" nzValue= 0>
+                <i nz-icon nzType="close"></i>
+                Inactivo
+              </nz-option>
+            </nz-select>
+        </div>
+        <div nz-col nzSpan="2">
+        </div>
+        <div nz-col nzSpan="4" >
+          <button [disabled]="valueDetectorSonido ? false : true" nz-button nzType="primary"  nzSize="small" nzShape="round"
+            (click)="nuevoEstadoDetectorDeSonido()">OK</button>
+        </div>
+        <div nz-col nzSpan="4" *ngIf="spinerDetectorSonido" >
+          <nz-spin nzSize="small"></nz-spin>
+        </div>
+      </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWrite.length ? configWrite[5].LastValueChange : ''}}</span>
+        <ng-template #extraDetectorSonido>
+          <span>{{nuevoValueDetectorSonido}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+    <nz-collapse nzGhost
+    >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[10].ParameterName : ''"
+        [nzExtra]="extraNuevoUmbralSonido"
+      >
+      <span style="margin:0; font-size: small;">Última actualización: {{configRead.length ? (configRead[10].LastChangeUTC | convertDateUTC) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraNuevoUmbralSonido>
+        <span >{{configRead.length ? configRead[10].Value : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span>
+      </ng-template>
+    </nz-collapse>
+
+    <button nz-button nzType="primary"  nzSize="small" nzShape="round"
+    [hidden]="allowEdit"
+    [disabled]="estadoEnviarDetectorSonido"
+    (click)="aplicarEstadoDetectorDeSonido()">Aplicar Detector de Sonido</button>
+    <nz-collapse nzGhost
+    >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[11].ParameterName : ''"
+        [nzExtra]="extraAplyDetectorSonido"
+      >
+      <span style="margin:0; font-size: small;">Última actualización: {{configRead.length ? (configRead[11].LastChangeUTC | convertDateUTC) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraAplyDetectorSonido>
+        <nz-spin nzSize="small" [nzSpinning]="spinerAplicaDetectorSonido"></nz-spin>
+        <span *ngIf="!spinerAplicaDetectorSonido">{{estadoPeticionDetectorSonido}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+      </ng-template>
+    </nz-collapse>
+
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[3].ParameterName : ''"
+        [nzExtra]="extraEstadoTemporizador"
+      >
+        <span >Última actualización: {{configRead.length ? (configRead[3].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoTemporizador>
+          <span >{{configRead.length ? configRead[3].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWrite.length ? configWrite[7].ParameterName : ''"
+        [nzExtra]="extraTemporizador"
+        
+      >
+      <div [hidden]="allowEdit" nz-row >
+        <div nz-col nzSpan="14">
+            <nz-input-number [nzMin]="1" [nzMax]="10000" [ngStyle]="{ marginLeft: '16px' }"  nzSize="small"
+              [(ngModel)]="valueNuevoTemporizador"></nz-input-number>
+        </div>
+        <div nz-col nzSpan="2">
+        </div>
+        <div nz-col nzSpan="4" >
+          <button [disabled]="valueNuevoTemporizador ? false : true" nz-button nzType="primary"  nzSize="small" nzShape="round"
+            (click)="nuevoNuevoTemporizador()">OK</button>
+        </div>
+        <div nz-col nzSpan="4" *ngIf="spinerTemporizador" >
+          <nz-spin nzSize="small"></nz-spin>
+        </div>
+      </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWrite.length ? configWrite[7].LastValueChange : ''}}</span>
+        <ng-template #extraTemporizador>
+          <span>{{nuevoValueTemporizador}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+    <button nz-button nzType="primary"  nzSize="small" nzShape="round"
+    [hidden]="allowEdit"
+    [disabled]="estadoEnviarTemporizador"
+    (click)="aplicarNuevoTemporizador()">Aplicar Temporizador</button>
+    <nz-collapse nzGhost
+    >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[12].ParameterName : ''"
+        [nzExtra]="extraAplyNuevoTemporizador"
+      >
+      <span style="margin:0; font-size: small;">Última actualización: {{configRead.length ? (configRead[12].LastChangeUTC | convertDateUTC) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraAplyNuevoTemporizador>
+        <nz-spin nzSize="small" [nzSpinning]="spinerAplicaTemporizador"></nz-spin>
+        <span *ngIf="!spinerAplicaTemporizador">{{estadoPeticionTemporizador}}</span>
+      </ng-template>
+    </nz-collapse>
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[9].ParameterName : ''"
+        [nzExtra]="extraEstadoConfigPais"
+      >
+        <span >Última actualización: {{configRead.length ? (configRead[9].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoConfigPais>
+          <span >{{configRead.length ? configRead[9].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWrite.length ? configWrite[4].ParameterName : ''"
+        [nzExtra]="extraConfigPais"                    
+      >
+      <div [hidden]="allowEdit" nz-row >
+        <div nz-col nzSpan="14">
+          <nz-select [(ngModel)]="valueConfigPais" nzAllowClear nzPlaceHolder="seleccionar estado"  nzSize="small">
+            <nz-option nzCustomContent nzLabel="Inactiva" nzValue="0">
+              <i nz-icon nzType="check"></i>
+              Inactiva
+            </nz-option>
+            <nz-option nzCustomContent nzLabel="Activa" nzValue="1">
+              <i nz-icon nzType="close"></i>
+              Activa
+            </nz-option>
+          </nz-select>
+        </div>
+        <div nz-col nzSpan="2">
+        </div>
+        <div nz-col nzSpan="4" > 
+          <button [disabled]="valueConfigPais ? false : true" nz-button nzType="primary"  nzSize="small" nzShape="round"
+            (click)="aplicarAlarmaPais()">OK</button>
+        </div>
+        <div nz-col nzSpan="4" *ngIf="spinerConfigPais" >
+          <nz-spin nzSize="small"></nz-spin>
+        </div>
+      </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWrite.length ? (configWrite[4].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraConfigPais>
+          <span>{{nuevoValueConfigPais}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+    <nz-collapse nzGhost
+    >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[8].ParameterName : ''"
+        [nzExtra]="extraMCCFijo"
+      >
+      <span style="margin:0; font-size: small;">Última actualización: {{configRead.length ? (configRead[8].LastChangeUTC | convertDateUTC) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraMCCFijo>
+        <span >{{configRead.length ? configRead[8].Value : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span>
+      </ng-template>
+    </nz-collapse>
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[4].ParameterName : ''"
+        [nzExtra]="extraEstadoVoltageApagado"
+      >
+        <span >Última actualización: {{configRead.length ? (configRead[4].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoVoltageApagado>
+          <span >{{configRead.length ? configRead[4].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWrite.length ? configWrite[9].ParameterName : ''"
+        [nzExtra]="extraVoltageApagado"            
+      >
+      <div [hidden]="allowEdit" nz-row >
+        <div nz-col nzSpan="14">
+            <nz-input-number [nzMin]="1" [nzMax]="10000" [ngStyle]="{ marginLeft: '16px' }" nzSize="small"
+              [(ngModel)]="valueConfigVoltajeApagado"></nz-input-number>
+        </div>
+        <div nz-col nzSpan="2">
+        </div>
+        <div nz-col nzSpan="4" >
+          <button [disabled]="valueConfigVoltajeApagado ? false : true" nz-button nzType="primary"  nzSize="small" nzShape="round"
+            (click)="nuevoVoltajeApagado()">OK</button>
+        </div>
+        <div nz-col nzSpan="4" *ngIf="spinerConfigVoltajeApagado" >
+          <nz-spin nzSize="small"></nz-spin>
+        </div>
+      </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWrite.length ? configWrite[9].LastValueChange : ''}}</span>
+        <ng-template #extraVoltageApagado>
+          <span>{{nuevoValueConfigVoltajeApagado}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>   
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[5].ParameterName : ''"
+        [nzExtra]="extraEstadoVoltageEncendido"
+      >
+        <span >Última actualización: {{configRead.length ? (configRead[5].LastValueChange) : ''}}</span>
+        <ng-template #extraEstadoVoltageEncendido>
+          <span >{{configRead.length ? configRead[5].DisplayValue  : ''}} <span nz-icon nzType="read" nzTheme="outline"></span></span >            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }" >
+    <nz-collapse >
+      <nz-collapse-panel
+        [nzHeader]="configWrite.length ? configWrite[10].ParameterName : ''"
+        [nzExtra]="extraVoltageEncendido"          
+      >
+      <div [hidden]="allowEdit" nz-row >
+        <div nz-col nzSpan="14">
+            <nz-input-number [nzMin]="1" [nzMax]="10000" [ngStyle]="{ marginLeft: '16px' }"  nzSize="small"
+              [(ngModel)]="valueConfigVoltajeEncendido"></nz-input-number>
+        </div>
+        <div nz-col nzSpan="2">
+        </div>
+        <div nz-col nzSpan="4" >
+          <button [disabled]="valueConfigVoltajeEncendido ? false : true" nz-button nzType="primary"  nzSize="small" nzShape="round"
+            (click)="nuevoVoltajeEncendido()">OK</button>
+        </div>
+        <div nz-col nzSpan="4" *ngIf="spinerConfigVoltajeEncendido" >
+          <nz-spin nzSize="small"></nz-spin>
+        </div>
+      </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWrite.length ? configWrite[10].LastValueChange : ''}}</span>
+        <ng-template #extraVoltageEncendido>
+          <span>{{nuevoValueConfigVoltajeEncendido}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>            
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+    <button nz-button nzType="primary"  nzSize="small" nzShape="round"
+    [hidden]="allowEdit"
+    [disabled]="estadoEnviarUmbralUPSVoltajeEncendido || estadoEnviarUmbralUPSVoltajeApagado ? true : false"
+    (click)="aplicarNuevoUmbralUPS()">Aplicar Umbral UPS</button>
+    <nz-collapse nzGhost
+    >
+      <nz-collapse-panel
+        [nzHeader]="configRead.length ? configRead[13].ParameterName : ''"
+        [nzExtra]="extraAplyUmbralUPS"
+      >
+      <span style="margin:0; font-size: small;">Última actualización: {{configRead.length ? (configRead[13].LastChangeUTC | convertDateUTC) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraAplyUmbralUPS>
+        <nz-spin nzSize="small" [nzSpinning]="spinerAplicaUmbralUPS"></nz-spin>
+        <span *ngIf="!spinerAplicaUmbralUPS">{{estadoPeticionUmbralUPS}}</span>
+      </ng-template>
+    </nz-collapse>
+  </div>
+</div>
+
+
+

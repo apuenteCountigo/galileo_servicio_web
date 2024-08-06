@@ -1,0 +1,248 @@
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="configReadInstalacion.length ? configReadInstalacion[0].ParameterName : ''"
+        [nzExtra]="extraEstadoAutorizacionDispositivo">
+        <span>Última actualización: {{configReadInstalacion.length ? (configReadInstalacion[0].LastValueChange) :
+          ''}}</span>
+        <ng-template #extraEstadoAutorizacionDispositivo>
+          <span>{{configReadInstalacion.length ? configReadInstalacion[0].DisplayValue : ''}} <span nz-icon
+              nzType="read" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <!-- <nz-collapse>
+      <nz-collapse-panel [nzHeader]="configWriteInstalacion.length ? configWriteInstalacion[8].ParameterName : ''"
+        [nzExtra]="extraFechaFinAutorizacion">
+        <span>Última actualización: {{configWriteInstalacion.length ? (configWriteInstalacion[8].LastValueChange) :
+          ''}}</span>
+        <ng-template #extraFechaFinAutorizacion>
+          <span>{{configWriteInstalacion.length ? configWriteInstalacion[8].DisplayValue : ''}} </span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse> -->
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="configWriteInstalacion.length ? configWriteInstalacion[1].ParameterName : ''"
+        [nzExtra]="extraEstado">
+        <div [hidden]="allowEdit" nz-row>
+          <div nz-col nzSpan="14">
+            <nz-select nzSpan="24" [(ngModel)]="valueEstado" nzAllowClear nzPlaceHolder="seleccionar estado"
+              nzSize="small">
+              <nz-option nzCustomContent nzLabel="Operativa" nzValue="1">
+                Operativa
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="A Recuperar" nzValue="2">
+                A Recuperar
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Perdida" nzValue="3">
+                Perdida
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Baja" nzValue="4">
+                Baja
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="Disponible en Unidad" nzValue="5">
+                Disponible en Unidad
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="En Reparación" nzValue="6">
+                En Reparación
+              </nz-option>
+              <nz-option nzCustomContent nzLabel="En Instalación" nzValue="7">
+                En Instalación
+              </nz-option>
+            </nz-select>
+          </div>
+
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueEstado ? false : true" nz-button nzType="primary" (click)="nuevoEstado()"
+              nzSize="small" nzShape="round">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerEstado">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteInstalacion.length ? configWriteInstalacion[1].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteInstalacion.length ?
+          (configWriteInstalacion[1].LastValueChangeUTC | convertDateUTC): ''}}</span>
+        <ng-template #extraEstado>
+          <span>{{nuevoValueEstado}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="configWriteInstalacion.length ? configWriteInstalacion[9].ParameterName : ''"
+        [nzExtra]="extraFechaInicioInstalacion">
+        <div [hidden]="allowEdit" nz-row>
+          <div nz-col nzSpan="8">
+            <nz-date-picker [(ngModel)]="valueFechaInicioInstalacion" nzSize="small"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-time-picker [(ngModel)]="valueFechaInicioInstalacionHora" nzFormat="HH:mm:ss" nzSize="small">
+            </nz-time-picker>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueFechaInicioInstalacion ? false : true" nz-button nzType="primary" nzShape="round"
+              (click)="nuevoFechaInicioInstalacion()" nzSize="small">OK</button>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteInstalacion.length ? configWriteInstalacion[9].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteInstalacion.length ?
+          (configWriteInstalacion[9].LastValueChangeUTC | convertDateUTC): ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraFechaInicioInstalacion>
+        <span>{{nuevoValueFechaInicioInstalacion}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+      </ng-template>
+    </nz-collapse>
+    <nz-collapse nzGhost>
+      <nz-collapse-panel [nzHeader]="configReadInstalacion.length ? configReadInstalacion[1].ParameterName : ''"
+        [nzExtra]="extraFechaInstalacion">
+        <span style="margin:0; font-size: small;">Última actualización: {{configReadInstalacion.length ?
+          (configReadInstalacion[1].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraFechaInstalacion>
+        <nz-spin [nzSpinning]="spinerFechaInicioInstalacion"></nz-spin>
+        <span *ngIf="!spinerFechaInicioInstalacion">{{estadoPeticionFechaInicioInstalacion}}</span>
+      </ng-template>
+    </nz-collapse>
+
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="configWriteInstalacion.length ? configWriteInstalacion[8].ParameterName : ''"
+        [nzExtra]="extraFechaFinAutorizacion">
+        <div [hidden]="allowEdit" nz-row>
+          <div nz-col nzSpan="8">
+            <nz-date-picker [(ngModel)]="valueFechaFinAutorizacion" nzSize="small"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-time-picker [(ngModel)]="valueFechaFinAutorizacionHora" nzFormat="HH:mm:ss" nzSize="small">
+            </nz-time-picker>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueFechaFinAutorizacion ? false : true" nz-button nzType="primary" nzShape="round"
+              (click)="nuevoFechaFinAutorizacion()" nzSize="small">OK</button>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteInstalacion.length ? configWriteInstalacion[9].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteInstalacion.length ?
+          (configWriteInstalacion[8].LastValueChangeUTC | convertDateUTC): ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraFechaFinAutorizacion>
+        <span>{{nuevoValueFechaFinAutorizacion}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+      </ng-template>
+    </nz-collapse>
+    <!-- <nz-collapse nzGhost>
+      <nz-collapse-panel [nzHeader]="configReadInstalacion.length ? configReadInstalacion[1].ParameterName : ''"
+        [nzExtra]="extraFechaInstalacion">
+        <span style="margin:0; font-size: small;">Última actualización: {{configReadInstalacion.length ?
+          (configReadInstalacion[1].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraFechaInstalacion>
+        <nz-spin [nzSpinning]="spinerFechaInicioInstalacion"></nz-spin>
+        <span *ngIf="!spinerFechaInicioInstalacion">{{estadoPeticionFechaInicioInstalacion}}</span>
+      </ng-template>
+    </nz-collapse> -->
+
+  </div>
+</div>
+
+<div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="configWriteInstalacion.length ? configWriteInstalacion[10].ParameterName : ''"
+        [nzExtra]="extraCargaBateriaInstalada">
+        <div [hidden]="allowEdit" nz-row>
+          <div nz-col nzSpan="14">
+            <nz-input-number [nzMin]="1" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="valueCargaBateriaInstalada"
+              nzSize="small"></nz-input-number>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueCargaBateriaInstalada ? false : true" nz-button nzType="primary" nzShape="round"
+              (click)="nuevoCargaBateriaInstalada()" nzSize="small">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerCargaBateriaInstalada" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteInstalacion.length ?
+          (configWriteInstalacion[10].LastValueChangeUTC | convertDateUTC): ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraCargaBateriaInstalada>
+        <span>{{nuevoValueCargaBateriaInstalada}}<span nz-icon nzType="tool" nzTheme="outline"></span></span>
+      </ng-template>
+    </nz-collapse>
+
+  </div>
+</div>
+
+
+<!-- <div nz-row [nzGutter]="{ xs: 24, sm: 24, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+
+  </div>
+  <div divEsritura nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+
+    <nz-collapse>
+      <nz-collapse-panel [nzHeader]="configWriteInstalacion.length ? configWriteInstalacion[8].ParameterName : ''"
+        [nzExtra]="extraFechaFinAutorizacion">
+        <div [hidden]="allowEdit" nz-row>
+          <div nz-col nzSpan="8">
+            <nz-date-picker [(ngModel)]="valueFechaFinAutorizacion" nzSize="small"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-time-picker [(ngModel)]="valueFechaFinAutorizacionHora" nzFormat="HH:mm:ss" nzSize="small">
+            </nz-time-picker>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueFechaFinAutorizacion ? false : true" nz-button nzType="primary" nzShape="round"
+              (click)="nuevoFechaFinAutorizacion()" nzSize="small">OK</button>
+          </div>
+        </div>
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteInstalacion.length ?
+          (configWriteInstalacion[8].LastValueChangeUTC | convertDateUTC): ''}}</span>
+      </nz-collapse-panel>
+      <ng-template #extraFechaFinAutorizacion>
+        <span>{{nuevoValueFechaFinAutorizacion}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+      </ng-template>
+    </nz-collapse>
+  </div>
+</div> -->

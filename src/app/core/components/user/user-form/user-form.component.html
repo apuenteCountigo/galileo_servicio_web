@@ -1,0 +1,108 @@
+<form nz-form [formGroup]="formModalUser">
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="tip">TIP Agente</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="idErrorTpl">
+      <input type="text" nz-input formControlName="tip" placeholder="TIP" pattern="^[A-Za-z0-9]+$" maxlength="7"
+        [readonly]="!!userToEdit" />
+      <ng-template #idErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('pattern')">El campo TIP debe contener solo letras y números
+        </ng-container>
+        <!-- <ng-container *ngIf="control.hasError('minlength')">El campo TIP debe contener exactamente 7 caracteres
+          alfanuméricos
+        </ng-container> -->
+        <ng-container *ngIf="control.hasError('required')">Introduzca el TIP</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="nombre">Nombre</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="userErrorTpl">
+      <input type="text" nz-input formControlName="nombre" placeholder="Nombre"
+        pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" />
+      <ng-template #userErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('pattern')">El campo nombre debe contener solo letras</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el nombre</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="apellidos">Apellidos</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="userErrorApell">
+      <input type="text" nz-input formControlName="apellidos" placeholder="Apellidos"
+        pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" />
+      <ng-template #userErrorApell let-control>
+        <ng-container *ngIf="control.hasError('pattern')">El campo apellidos debe contener solo letras</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Introduzca los apellidos</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="contacto">Teléfono</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="contactErrorTpl">
+      <input type="text" (keypress)="validatePhone($event)" nz-input formControlName="contacto" placeholder="Teléfono"
+        pattern="^\+?[1-9][0-9]{7,10}$" />
+      <ng-template #contactErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el teléfono</ng-container>
+        <ng-container *ngIf="control.hasError('pattern')">Introduzca un teléfono válido</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired>Correo electrónico</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="emailErrorTpl">
+      <input nz-input formControlName="email" placeholder="Correo electrónico" type="email"
+        pattern="^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$" />
+      <ng-template #emailErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('pattern')">Introduzca una dirección de correo válida</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el correo</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="perfil">Perfil</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="rolErrorTpl">
+      <nz-select formControlName="perfil" nzPlaceHolder="Perfil">
+        <nz-option *ngFor="let perfil of userPerfiles" [nzValue]="perfil" [nzLabel]="perfil.descripcion!"></nz-option>
+      </nz-select>
+      <ng-template #rolErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Seleccione el perfil</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="empleos">Empleo</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="empleoErrorTpl">
+      <nz-select formControlName="empleos" nzPlaceHolder="Empleo">
+        <nz-option *ngFor="let empleo of empleosList" [nzValue]="empleo" [nzLabel]="empleo.descripcion"></nz-option>
+      </nz-select>
+      <ng-template #empleoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Seleccione el empleo</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="observaciones">Observaciones</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea nz-input formControlName="observaciones" [nzAutosize]="{ minRows: 5, maxRows: 5 }"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <a nz-button nzType="link" (click)="resetPassword()" *ngIf="userToEdit">Reiniciar Contraseña</a>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+        <button nz-button nzType="primary" [disabled]="checkForm() || buttonSending" [nzLoading]="buttonSending"
+          (click)="submitForm()">
+          <i nz-icon [nzType]="button.icon" nzTheme="outline"></i>
+          <span>{{ button.label }}</span>
+        </button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>

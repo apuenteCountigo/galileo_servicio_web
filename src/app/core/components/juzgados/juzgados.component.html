@@ -1,0 +1,117 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Usuario(s)" style="margin-bottom: 20px"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="Nombre del Juzgado" [(ngModel)]="searchCriteria.descripcion" />
+    </div>
+  </div>
+</nz-card>
+
+<nz-card [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="juzgadosList" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzScroll]="{ x: '600px' }" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th id="userSpand" nzWidth="60px"></th>
+        <th id="juzgadoNombre" nzColumnKey="nombre" [nzSortFn]="true">Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let juzgado of juzgadosList">
+        <tr>
+          <td [nzChecked]="expandSet.has(juzgado.id)" (nzCheckedChange)="onExpandChangeJuzgado(juzgado, $event)"
+            [nzShowExpand]="false" [nzExpand]="expandSet.has(juzgado.id)"
+            (nzExpandChange)="onExpandChangeJuzgado(juzgado, $event)"
+            ></td>
+          <td>{{ juzgado.descripcion }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="showModalJuzgados(false)" nz-tooltip
+        nzTooltipTitle="Crear juzgado">
+        <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="showModalJuzgados(true)" nz-tooltip
+        nzTooltipTitle="Editar juzgado" [disabled]="disableJuzgadoActions">
+        <em nz-icon nzType="edit" nzTheme="outline" [class]="!disableJuzgadoActions?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="deleteJuzgado()" nz-tooltip
+        nzTooltipTitle="Eliminar juzgado" [disabled]="disableJuzgadoActions">
+        <em nz-icon nzType="delete" nzTheme="outline"
+          [class]="!disableJuzgadoActions?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="6">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzShape="circle" (click)="onSearch()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzShape="circle" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzShape="circle" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>
+
+
+<!--
+<nz-list nzBordered [nzHeader]="extraListHeader">
+  <nz-list-item *ngFor="let juzgado of juzgados">
+    {{ juzgado.descripcion }}
+    <ul nz-list-item-actions>
+      <nz-list-item-action>
+        <button nz-button nzType="text" nzShape="circle" nz-tooltip nzTooltipTitle="Editar">
+          <em nz-icon nzType="edit" nzTheme="outline"></em>
+        </button>
+        <button nz-button nzType="text" nzShape="circle" nz-tooltip nzTooltipTitle="Eliminar">
+          <em nz-icon nzType="delete" nzTheme="outline"></em>
+        </button>
+      </nz-list-item-action>
+    </ul>
+  </nz-list-item>
+</nz-list>
+
+<ng-template #extraListHeader>
+  <div nz-row nzJustify="end">
+    <button nz-button nzType="primary" nzShape="circle" nz-tooltip nzTooltipTitle="Agregar Juzgado">
+      <em nz-icon nzType="plus" nzTheme="outline"></em>
+    </button>
+  </div>
+</ng-template> -->

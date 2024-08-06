@@ -1,0 +1,365 @@
+<nz-card nzType="inner">
+  <nz-tabset [(nzSelectedIndex)]="selectedIndex" [nzCanDeactivate]="canDeactivate">
+    <!-- Tab de Gestion de Unidades -->
+    <nz-tab [nzTitle]="'Gestión de Unidades'" (nzClick)="updateBreadCrumb('unid', selectedUnit?.denominacion)">
+      <nz-card *ngIf="showSearchForm" nzTitle="Búsqueda" style="margin-bottom: 20px;" [nzExtra]="extraTemplateSearch"
+        nzSize="default">
+        <form [formGroup]="searchUnitForm">
+          <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <div class="inner-box">
+                <nz-form-item>
+                  <nz-form-control>
+                    <input nz-input placeHolder="Denominación" formControlName="denominacion" />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <div class="inner-box">
+                <nz-form-item>
+                  <nz-form-control>
+                    <input nz-input placeHolder="Responsable" formControlName="responsable" />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <div class="inner-box">
+                <nz-form-item>
+                  <nz-form-control>
+                    <input nz-input placeHolder="Localidad" formControlName="localidad" />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div nz-col class="gutter-row" [nzSpan]="6">
+              <div class="inner-box">
+                <nz-form-item>
+                  <nz-form-control>
+                    <nz-select formControlName="provinciaId" nzPlaceHolder="Provincia" nzShowSearch nzAllowClear>
+                      <nz-option *ngFor="let prov of provList" [nzValue]="prov.id" [nzLabel]="prov.descripcion">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nz-card>
+
+      <nz-card nzTitle="Unidades" [nzExtra]="extraTemplate" nzSize="default">
+        <nz-table nzShowSizeChanger [nzData]="unitList" [nzFrontPagination]="false" [nzLoading]="loading"
+          [nzTotal]="total" [nzScroll]="{ x: '600px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+          [nzTableLayout]="'auto'" [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChange($event)">
+          <thead>
+            <tr>
+              <!-- <th id="unidadSpand" nzWidth="35px" [nzLeft]="true"></th> -->
+              <th id="unidadSelect" nzWidth="35px" [nzLeft]="true"></th>
+              <th id="unidadDenominacion" nzColumnKey="denominacion" [nzSortFn]="true">Denominación</th>
+              <th id="unidadOficial" nzColumnKey="responsable" [nzSortFn]="true">Oficial responsable</th>
+              <th id="unidadDireccion" nzColumnKey="direccion" [nzSortFn]="true">Dirección</th>
+              <th id="unidadLocalidad" nzColumnKey="localidad" [nzSortFn]="true">Localidad</th>
+              <th id="unidadProvincia" nzColumnKey="provincia.descripcion" [nzSortFn]="true">Provincia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let unit of unitList">
+              <tr>
+                <td [nzChecked]="expandSet.has(unit.id)" (nzCheckedChange)="onExpandChange(unit, $event)"
+                  [nzShowExpand]="false" [nzExpand]="expandSet.has(unit.id)"
+                  (nzExpandChange)="onExpandChange(unit, $event)"></td>
+                <td>{{ unit.denominacion }}</td>
+                <td>{{ unit.responsable }}</td>
+                <td>{{ unit.direccion }}</td>
+                <td>{{ unit.localidad }}</td>
+                <td>{{ unit.provincia?.descripcion || '' }}</td>
+              </tr>
+              <tr [nzExpand]="expandSet.has(unit.id)">
+                <div nz-row>
+                  <div nz-col [nzSpan]="6">
+                    <span><strong>Group wise: </strong></span>
+                    <span>{{ unit.groupWise }}</span>
+                  </div>
+                  <div nz-col [nzSpan]="6">
+                    <span><strong>Correo electrónico: </strong></span>
+                    <span>{{ unit.email }}</span>
+                  </div>
+                  <div nz-col [nzSpan]="6">
+                    <span><strong>Código postal: </strong></span>
+                    <span>{{ unit.codigoPostal }}</span>
+                  </div>
+                  <div nz-col [nzSpan]="6">
+                    <span><strong>Teléfono: </strong></span>
+                    <span>{{ unit.telefono }}</span>
+                  </div>
+                </div>
+                <div nz-row>
+                  <div nz-col [nzSpan]="24">
+                    <span><strong>Notas: </strong></span>
+                    <span>{{ unit.notas }}</span>
+                  </div>
+                </div>
+              </tr>
+            </ng-container>
+          </tbody>
+        </nz-table>
+      </nz-card>
+    </nz-tab>
+    <!-- Tab de Datos de oficiales -->
+    <nz-tab [nzTitle]="UsuariosTitleTpl" [nzDisabled]="disableOficialTab" (nzClick)="updateBreadCrumb('usua')"
+      *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <ng-template nz-tab>
+        <nz-card *ngIf="showOficerSearchForm" nzTitle="Búsqueda" style="margin-bottom: 20px;"
+          [nzExtra]="extraTemplateSearchOficial" nzSize="default">
+          <div nz-row [nzGutter]="[24, 16]">
+            <div nz-col>
+              <input nz-input placeHolder="TIP" [(ngModel)]="searchOficerCriteria.tip" />
+            </div>
+            <div nz-col>
+              <input nz-input placeHolder="Nombre" [(ngModel)]="searchOficerCriteria.nombre" />
+            </div>
+            <div nz-col>
+              <input nz-input placeHolder="Apellidos" [(ngModel)]="searchOficerCriteria.apellidos" />
+            </div>
+            <div nz-col>
+              <nz-select [(ngModel)]="searchOficerCriteria.idEstado" nzPlaceHolder="Perfil" style="width: 180px">
+                <nz-option *ngFor="let estado of userEstados" [nzValue]="estado.id" [nzLabel]="estado.descripcion!">
+                </nz-option>
+              </nz-select>
+            </div>
+            <div nz-col>
+              <nz-range-picker nzFormat="dd/MM/yyyy" [(ngModel)]="searchOficerCriteria.fechaInicio"
+                (ngModelChange)="onDateChange($event)"></nz-range-picker>
+            </div>
+          </div>
+        </nz-card>
+
+        <nz-card [nzExtra]="extraTemplateOficial" nzSize="default">
+          <nz-table #headerTable nzShowSizeChanger [nzData]="unitOficialList" [nzFrontPagination]="false"
+            [nzLoading]="loadingOficials" [nzTotal]="totalOfic" [nzScroll]="{ x: '340px' }" [nzPageSize]="pageSizeOfic"
+            [nzPageIndex]="pageIndexOfic" [nzNoResult]="noResult"
+            (nzQueryParams)="onQueryParamsChangeUnitOficials($event)">
+            <thead>
+              <tr>
+                <th id="oficialSelect" nzWidth="35px" [nzLeft]="true"></th>
+                <th id="oficialTip" nzColumnKey="usuario.tip" [nzSortFn]="true">TIP</th>
+                <th id="oficialName" nzColumnKey="usuario.nombre" [nzSortFn]="true">Nombre</th>
+                <th id="oficialApell" nzColumnKey="usuario.apellidos" [nzSortFn]="true">Apellidos</th>
+                <th id="oficialRol" nzColumnKey="estado" [nzSortFn]="true">Estado</th>
+                <th id="oficialFechaVencimiento" nzColumnKey="expira" [nzSortFn]="true">Fecha de Expiración</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let relation of unitOficialList">
+                <tr>
+                  <td [nzChecked]="expandSetOfic.has(relation.id)"
+                    (nzCheckedChange)="onSelectOffRelation(relation, $event)"></td>
+                  <td>{{ relation.usuario!.tip }}</td>
+                  <td>{{ relation.usuario!.nombre }}</td>
+                  <td>{{ relation.usuario!.apellidos }}</td>
+                  <td>{{ relation.estado.descripcion }}</td>
+                  <td>{{ relation.expira | date: 'dd/MM/yyyy' || '-' }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </nz-table>
+        </nz-card>
+      </ng-template>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="BalizasTitleTpl" [nzDisabled]="disableOficialTab" (nzClick)="updateBreadCrumb('bali')"
+      *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <ng-template nz-tab>
+        <app-balizas-tabla [selectedUnit]="selectedUnit" (removeBalizaToStock)="removeOne()">
+        </app-balizas-tabla>
+      </ng-template>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="OperacionesTitleTpl" [nzDisabled]="disableOficialTab"
+      (nzClick)="updateBreadCrumb('oper', selectedOper?.descripcion)">
+      <ng-template nz-tab>
+        <app-operaciones-tabla [selectedUnit]="selectedUnit" (selectOperation)="selectedOperation($event)"
+          (accionChange)="onChangeOperacion($event)" [selectedOper]="selectedOper"></app-operaciones-tabla>
+      </ng-template>
+    </nz-tab>
+
+    <nz-tab [nzTitle]="ObjetivosTitleTpl" [nzDisabled]="disableTabObjetivos"
+      (nzClick)="updateBreadCrumb('obje' , this.selectedObj?.descripcion)">
+      <ng-template nz-tab>
+        <app-objetivos-tabla [selectedOper]="selectedOper" (selectObjetivo)="selectObjetivo($event)"
+          (informePositionFilterData)="showTabInforme($event)" [selectedObj]="selectedObj"
+          (createdObjetivo)="onAction($event)">
+        </app-objetivos-tabla>
+      </ng-template>
+    </nz-tab>
+
+    <nz-tab nzTitle="Permisos" [nzDisabled]="disableTabObjetivos" (nzClick)="updateBreadCrumb('perm')"
+      *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <ng-template nz-tab>
+        <app-permisos-tabla [selectedOper]="selectedOper" [selectedObj]="selectedObj"></app-permisos-tabla>
+      </ng-template>
+    </nz-tab>
+
+    <nz-tab *ngIf="showInformTab" nzTitle="Informe de posiciones" [nzDisabled]="disableTabInforme"
+      (nzClick)="updateBreadCrumb('perm')">
+      <ng-template nz-tab>
+        <!-- <app-permisos-tabla [selectedOper]="selectedOper" [selectedObj]="selectedObj"></app-permisos-tabla> -->
+        <app-informe-tabla [filterData]="filterPositionInformData"></app-informe-tabla>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>
+
+  <ng-template #extraTemplate>
+    <div nz-row [nzGutter]="24" nzJustify="end">
+      <div nz-col class="gutter-row" [nzSpan]="4" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+        <button nz-button nzType="text" nzSize="large" (click)="showModal()" nz-tooltip nzTooltipTitle="Crear unidad"
+          [disabled]="isDisabled()">
+          <em nz-icon nzType="plus" nzTheme="outline" [class]="setStyleClass(!isDisabled())"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="4" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+        <button nz-button nzType="text" nzSize="large" (click)="showModal(true)" nz-tooltip
+          nzTooltipTitle="Editar unidad" [disabled]="selectedUnit == null">
+          <em nz-icon nzType="edit" nzTheme="outline" [class]="setStyleClass(!!selectedUnit)"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="4" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+        <button nz-button nzType="text" nzDanger nzSize="large" (click)="deleteUnit()" nz-tooltip
+          nzTooltipTitle="Eliminar unidad" [disabled]="selectedUnit == null || isDisabled()">
+          <em nz-icon nzType="delete" nzTheme="outline" [class]="setStyleClass(selectedUnit&&!isDisabled())"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="4" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
+        <button nz-button nzType="text" nzSize="large" (click)="showModalUpload()" nz-tooltip
+          nzTooltipTitle="Importar desde un Fichero">
+          <em nz-icon nzType="cloud-upload" nzTheme="outline" class="icon-class"></em>
+        </button>
+      </div>
+      <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="setSpand">
+        <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+          nzTooltipTitle="Filtros de búsqueda">
+          <em nz-icon nzType="filter" nzTheme="outline" class="icon-class"></em>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #noResult>
+    <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+    <ng-template #contentTpl>
+      <h5 nz-typography nzType="secondary">No existen datos</h5>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #extraTemplateSearch>
+    <div nz-row [nzGutter]="24" nzJustify="end">
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="onSearch()" [disabled]="isNullSearchForm()" nz-tooltip
+          nzTooltipTitle="Buscar">
+          <em nz-icon nzType="search" nzTheme="outline" [class]="setStyleClass(!isNullSearchForm())"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullSearchForm()" nz-tooltip
+          nzTooltipTitle="Limpiar">
+          <em nz-icon nzType="clear" nzTheme="outline" [class]="setStyleClass(!isNullSearchForm())"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+          <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #extraTemplateSearchOficial>
+    <div nz-row [nzGutter]="24" nzJustify="end">
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="onSearchUnitOficials()" [disabled]="isNullBusqueda()"
+          nz-tooltip nzTooltipTitle="Buscar">
+          <em nz-icon nzType="search" nzTheme="outline" [class]="setStyleClass(!isNullSearchForm())"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="resetOficerForm()" [disabled]="isNullBusqueda()"
+          nz-tooltip nzTooltipTitle="Limpiar">
+          <em nz-icon nzType="clear" nzTheme="outline" [class]="setStyleClass(!isNullSearchForm())"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="5">
+        <button nz-button nzType="text" nzSize="large" (click)="closeOficerSearchForm()" nz-tooltip
+          nzTooltipTitle="Cerrar">
+          <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #extraTemplateOficial>
+    <div nz-row [nzGutter]="24" nzJustify="end">
+      <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+        <button nz-button nzType="text" nzSize="large" (click)="showModalToAssignOfficcer()" nz-tooltip
+          nzTooltipTitle="Asignar usuario">
+          <em nz-icon nzType="container" nzTheme="outline" [class]="'icon-class'"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+        <button nz-button nzType="text" nzSize="large" (click)="deleteAssing()" nz-tooltip
+          nzTooltipTitle="Eliminar asignación" [disabled]="selectedOffRelation == null">
+          <em nz-icon nzType="delete" nzTheme="outline" [class]="setStyleClass(!!selectedOffRelation)"></em>
+        </button>
+      </div>
+      <div *ngIf="!showOficerSearchForm" nz-col class="gutter-row" [nzSpan]="6">
+        <button nz-button nzType="text" nzSize="large" (click)="showHideSearchOficerForm()" nz-tooltip
+          nzTooltipTitle="Filtros de búsqueda">
+          <em nz-icon nzType="filter" nzTheme="outline" class="icon-class"></em>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #UnidadesTitleTpl>
+    <nz-badge nzShowZero nzStandalone [nzCount]="total">
+    </nz-badge>
+    <span style="margin-left: -10px;">Gestión de Unidades</span>
+    <!-- Usuarios -->
+  </ng-template>
+
+  <ng-template #UsuariosTitleTpl>
+    <nz-badge *ngIf="selectedUnit && !loadingResumen" nzShowZero nzStandalone [nzCount]="resumenUnit.cantidadUsuarios">
+    </nz-badge>
+    <span style="margin-left: -10px;">Usuarios</span>
+    <!-- Usuarios -->
+  </ng-template>
+
+  <ng-template #BalizasTitleTpl>
+    <div nz-row>
+      <nz-badge *ngIf="selectedUnit && !loadingResumen" nzShowZero nzStandalone
+        [nzCount]="resumenUnit.cantidadBalizasStock">
+      </nz-badge>
+      <span style="margin-left: -10px;">Balizas</span>
+    </div>
+    <!-- Balizas -->
+  </ng-template>
+
+  <ng-template #OperacionesTitleTpl>
+    <div nz-row>
+      <nz-badge *ngIf="selectedUnit && !loadingResumen" nzShowZero nzStandalone
+        [nzCount]="resumenUnit.cantidadOperaciones">
+      </nz-badge>
+      <span style="margin-left: -10px;">Operaciones</span>
+    </div>
+    <!-- Operaciones -->
+  </ng-template>
+
+  <ng-template #ObjetivosTitleTpl>
+    <div nz-row>
+      <nz-badge *ngIf="selectedOper && !loadingOperResumen" nzShowZero nzStandalone
+        [nzCount]="resumenOper!.cantObjetivo">
+      </nz-badge>
+      <span style="margin-left: -10px;">Objetivos</span>
+    </div>
+  </ng-template>

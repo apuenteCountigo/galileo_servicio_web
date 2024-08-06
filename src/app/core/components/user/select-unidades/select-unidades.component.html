@@ -1,0 +1,78 @@
+<nz-card [nzTitle]="cardHeaderTpl" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="listOfAllUnidades" [nzFrontPagination]="false"
+    [nzLoading]="loading" [nzTotal]="total" [nzScroll]="{ x: '240px', y: '300px' }" [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th nzWidth="50px"></th>
+        <th id="unidadDenominacion" nzColumnKey="denominacion" [nzSortFn]="true">Unidad</th>
+        <th id="unidadProvincia" nzColumnKey="provincia" [nzSortFn]="true">Provincia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let userUnidad of listOfAllUnidades">
+        <tr>
+          <td [nzChecked]="setOfCheckedUnitId.has(userUnidad.id)"
+            (nzCheckedChange)="onItemChecked(userUnidad.id, $event)"
+            [nzDisabled]="expandSet.size > 0 && !expandSet.has(userUnidad.id) && !isGuestStatus"></td>
+          <td>{{ userUnidad.denominacion }}</td>
+          <td>{{ userUnidad.provincia?.descripcion }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+
+</nz-card>
+
+<ng-template #cardHeaderTpl>
+  <form nz-form [formGroup]="form">
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="estado">Estado</nz-form-label>
+      <nz-form-control [nzSpan]="12" [nzErrorTip]="errorEstado">
+        <nz-select formControlName="estado" style="width: 180px;" (ngModelChange)="selectStatusChange($event)">
+          <nz-option *ngFor="let estado of estados" [nzValue]="estado" [nzLabel]="estado.descripcion!"></nz-option>
+        </nz-select>
+        <ng-template #errorEstado let-control>
+          <ng-container *ngIf="control.hasError('required')">Seleccione el estado</ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item *ngIf="isGuestStatus">
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="fechaExpiracion">Fecha de expiración
+      </nz-form-label>
+      <nz-form-control [nzSpan]="12" [nzErrorTip]="errorEstado">
+        <nz-date-picker [nzDisabledDate]="disabledDate" [nzFormat]="dateFormat" formControlName="fechaExpiracion"
+          (ngModelChange)="setDateEvt($event)" style="width: 180px;">
+        </nz-date-picker>
+        <ng-template #errorEstado let-control>
+          <ng-container *ngIf="control.hasError('required')">Seleccione la fecha de expiración</ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+  </form>
+  <!-- <div nz-row>
+    <div nz-col>
+      <nz-select [(ngModel)]="selectedEstado" (ngModelChange)="selectStatusChange($event)" style="width: 180px;">
+        <nz-option *ngFor="let estado of estados" [nzValue]="estado" [nzLabel]="estado.descripcion!"></nz-option>
+      </nz-select>
+    </div>
+    <div nz-col *ngIf="isGuestStatus" style="margin-left: 50px;">
+      <nz-date-picker [nzDisabledDate]="disabledDate" [(ngModel)]="fechaExpiracion"></nz-date-picker>
+    </div>
+  </div> -->
+
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>
+
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+  <button nz-button nzType="primary" (click)="onClick()" [disabled]="checkForm()">Asignar</button>
+</div>

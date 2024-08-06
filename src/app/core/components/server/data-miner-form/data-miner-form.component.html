@@ -1,0 +1,82 @@
+<form nz-form [formGroup]="formModalServer">
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="servicio">Servicio</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="servicioErrorTpl">
+      <nz-select formControlName="servicio" nzPlaceHolder="Servicio" (ngModelChange)="updateValidators()">
+        <nz-option *ngFor="let servidor of tipoServicio" [nzValue]="servidor" [nzLabel]="servidor"></nz-option>
+      </nz-select>
+      <ng-template #servicioErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Seleccione el servicio</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="ipServicio">IP</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="serverIpErrorTpl">
+      <input type="text" nz-input formControlName="ipServicio" placeholder="IP"
+        pattern="^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$" />
+      <ng-template #serverIpErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('pattern')">El campo IP no es válido</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el ip</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="puerto">Puerto</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="puertoErrorTpl">
+      <input type="number" nz-input formControlName="puerto" placeholder="Puerto" />
+      <ng-template #puertoErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el puerto</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="usuario">Usuario</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="usuarioErrorTpl">
+      <input type="text" nz-input formControlName="usuario" placeholder="Usuario" />
+      <ng-template #usuarioErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el usuario</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="password">Contraseña</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="passErrorTpl">
+      <input type="password" nz-input formControlName="password" placeholder="Contraseña" />
+      <ng-template #passErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca la contraseña</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="formModalServer.value.servicio == tipoServidor.DATAMINER">
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="dmaID">dmaID</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="dmaIDErrorTpl">
+      <input type="number" nz-input formControlName="dmaID" placeholder="dmaID" />
+      <ng-template #dmaIDErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el dmaID</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="formModalServer.value.servicio == tipoServidor.DATAMINER">
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="viewIDs">ViewIDs</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="viewIDsErrorTpl">
+      <input type="number" nz-input formControlName="viewIDs" placeholder="ViewIDs" />
+      <ng-template #viewIDsErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el ViewIDs</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control>
+      <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
+        <button nz-button nzType="primary" [disabled]="checkForm()" (click)="submitForm()">
+          <i nz-icon [nzType]="button.icon" nzTheme="outline"></i>
+          <span>{{ button.label }}</span>
+        </button>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

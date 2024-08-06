@@ -1,0 +1,46 @@
+<nz-card [nzExtra]="extraTemplate" nzSize="default" nzTitle="Geocercas Asignadas" nzSize="small">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="asignadas" [nzLoading]="loadingAsignadas"
+    [nzShowPagination]="false" [nzScroll]="{ x: '600px' }" [nzNoResult]="noResult" nzSize="small">
+    <thead>
+      <tr>
+        <th id="geocercaSpand" nzWidth="60px"></th>
+        <th *ngFor="let column of listOfColumns" [nzSortFn]="column.sortFn" [nzSortOrder]="column.sortOrder"
+          nzWidth="100px"> {{
+          column.name }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let geocerca of headerTable.data; index as i">
+        <tr>
+          <td [nzChecked]="expandSet.has(geocerca.id)" (nzCheckedChange)="onCheckedChangeGeocerca(geocerca.id, $event)">
+          </td>
+          <td>{{ geocerca.id }}</td>
+          <td>{{ geocerca.name }}</td>
+          <td>{{ geocerca.bottomLeftLatitude }}</td>
+          <td>{{ geocerca.bottomLeftLongitude }}</td>
+          <td>{{ geocerca.topRightLatitude }}</td>
+          <td>{{ geocerca.topRightLongitude }}</td>
+          <!-- <td>{{ geocerca.activa? 'Activa':'Desactivada' }}</td> -->
+          <td>
+            <nz-switch [(ngModel)]="geocerca.activa" [nzControl]="true" (click)="changeGeocercaState(geocerca, i)"
+              [nzLoading]="loadingSwitch[i]" [disabled]="allowEdit"></nz-switch>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>
+
+<ng-template #extraTemplate>
+  <button nz-button nzType="text" nzSize="small" (click)="removeGeocercas()" nz-tooltip
+    nzTooltipTitle="Remover Geocerca" [disabled]="isDisabled()">
+    <em nz-icon nzType="minus" nzTheme="outline" [class]="setStyleClass()"></em>
+  </button>
+</ng-template>

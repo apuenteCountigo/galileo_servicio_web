@@ -1,0 +1,120 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Operacion(es)" style="margin-bottom: 20px;"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="Descripción" [(ngModel)]="searchCriteria.descripcion" />
+    </div>
+    <div nz-col>
+      <nz-select [(ngModel)]="searchCriteria.estado" nzPlaceHolder="Situación" style="width: 180px">
+        <nz-option *ngFor="let estado of balizasEstados" [nzValue]="estado.id" [nzLabel]="estado.descripcion!">
+        </nz-option>
+      </nz-select>
+    </div>
+  </div>
+</nz-card>
+
+<nz-card nzTitle="Operaciones" [nzExtra]="extraTemplate" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="listOfOperaciones" [nzFrontPagination]="false"
+    [nzLoading]="loading" [nzTotal]="total" [nzScroll]="{ x: '600px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChangeUnitOperacion($event)">
+    <thead>
+      <tr>
+        <th id="operacionSelect" nzWidth="35px" [nzLeft]="true"></th>
+        <th id="operacionDescripcion" nzColumnKey="descripcion" [nzSortFn]="true">Nombre</th>
+        <th id="operacionFechaInicio" nzColumnKey="fechaInicio" [nzSortFn]="true">Fecha de Inicio</th>
+        <th id="operacionFechaFin" nzColumnKey="fechaFin" [nzSortFn]="true">Fecha de Fin</th>
+        <th id="operacionEstado" nzColumnKey="estados.descripcion">Situación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let operacion of listOfOperaciones">
+        <tr>
+          <td [nzChecked]="selectedOper?.id == operacion.id ? true : false"
+            (nzCheckedChange)="onExpandChangeOperacion(operacion, $event)" [nzShowExpand]="false"
+            [nzExpand]="expandSet.has(operacion.id)" (nzExpandChange)="onExpandChangeOperacion(operacion, $event)"></td>
+
+          <td>{{ operacion.descripcion }}</td>
+          <td>{{ operacion.fechaInicio | date : 'dd/MM/yyyy' }}</td>
+          <td>{{ operacion.fechaFin | date : 'dd/MM/yyyy' }}</td>
+          <td>{{ operacion.estados?.descripcion }}</td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(operacion.id)">
+          <div nz-row>
+            <div nz-col [nzSpan]="24">
+              <nz-descriptions nzTitle="Información Adicional">
+                <nz-descriptions-item nzTitle="Diligencias">{{
+                  operacion.diligencias
+                  }}</nz-descriptions-item>
+                <nz-descriptions-item nzTitle="Juzgado"> {{
+                  operacion.juzgado?.descripcion }}</nz-descriptions-item>
+              </nz-descriptions>
+              <nz-descriptions>
+                <nz-descriptions-item nzTitle="Observaciones">{{
+                  operacion.observaciones
+                  }}</nz-descriptions-item>
+              </nz-descriptions>
+            </div>
+          </div>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="text" nzSize="large" (click)="showModal(false)" nz-tooltip
+        nzTooltipTitle="Crear operación">
+        <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="text" nzSize="large" (click)="showModal(true)" nz-tooltip
+        nzTooltipTitle="Editar operación" [disabled]="selectedOper == null">
+        <em nz-icon nzType="edit" nzTheme="outline" [class]="selectedOper?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="text" nzSize="large" (click)="deleteOperacion()" nz-tooltip
+        nzTooltipTitle="Eliminar operación" [disabled]="selectedOper == null">
+        <em nz-icon nzType="delete" nzTheme="outline" [class]="selectedOper?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="setSpand">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="onSearchUnitOfOperaciones()" nz-tooltip
+        [disabled]="isNullBusqueda()" nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="!isNullBusqueda()?'icon-class':'icon-disabled'"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="5">
+      <button nz-button nzType="text" nzSize="large" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

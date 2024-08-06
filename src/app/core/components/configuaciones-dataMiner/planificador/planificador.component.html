@@ -1,0 +1,151 @@
+<div nz-row>
+  <div class="columnaPlan" nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 24 }" [nzLg]="{ span: 24 }" [nzXl]="{ span: 14 }" [nzXXl]="{ span: 12 }">
+    <table *ngIf="tablaConDatos" class="table1">
+        <thead>
+          <tr >
+            <th>COMPLETO</th>
+            <th id="10103" >LUNES</th>
+            <th id="10104" >MARTES</th>
+            <th id="10105" >MIERCOLES</th>
+            <th id="10106" >JUEVES</th>
+            <th id="10107" >VIERNES</th>
+            <th id="10108" >SABADO</th>
+            <th id="10109" >DOMINGO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fila of arrayConfig">
+            <td *ngFor="let celda of fila.Cells" [id]="celda.ParameterID" [class]="colorCelda(celda.Value)">{{celda.DisplayValue}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table *ngIf="!tablaConDatos" class="table1">
+        <thead>
+          <tr >
+            <th>COMPLETO</th>
+            <th id="10103" >Lunes</th>
+            <th id="10104" >Martes</th>
+            <th id="10105" >Miercoles</th>
+            <th id="10106" >Jueves</th>
+            <th id="10107" >Viernes</th>
+            <th id="10108" >Sábado</th>
+            <th id="10109" >Domingo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fila of identificador">
+            <td [class]="colorCelda(celda.Value)" *ngFor="let celda of fila" >{{celda.DisplayValue}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="columnaPlan" nz-col [nzXs]="{ span: 24 }" [nzMd]="{ span: 24 }" [nzLg]="{ span: 24 }" [nzXl]="{ span: 10 }" [nzXXl]="{ span: 12 }">
+      <div nz-row>
+            <table   id="tablaConfig" nzSize="small" class="table2" >
+                <thead>
+                  <tr >
+                    <th>CONFIGURACION</th>
+                    <th class="tipoCnx" nzAlign="center">GPRS</th>
+                    <th class="tipoCnx" nzAlign="center">UMTS</th>
+                    <th class="tipoCnx" nzAlign="center">AUTO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="tipoConfig" >Módem encendido</th>
+                    <td id="OnG" class="greenyellow">OnG
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('OnG')">Sele</button> -->
+                    </td>
+                    <td id="OnU" class="greenyellow">OnU
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('OnU')">Sele</button> -->
+                    </td>
+                    <td id="OnA" class="greenyellow" >OnA
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('OnA')">Sele</button> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="tipoConfig" >Anti-barrido</th>
+                    <td id="VoxOffG" class="limegreen" >VoxOffG
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('VoxOffG')">Sele</button> -->
+                    </td>
+                    <td id="VoxOffU" class="limegreen" >VoxOffU
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('VoxOffU')">Sele</button> -->
+                    </td>
+                    <td id="VoxOffA" class="limegreen" >VoxOffA
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('VoxOffA')">Sele</button> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="tipoConfig" >Endendido del módem optimizado</th>
+                    <td id="DataOnG" class="mediumblue" >DataOnG
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('DataOnG')">Sele</button> -->
+                    </td>
+                    <td id="DataOnU" class="mediumblue" >DataOnU
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('DataOnU')">Sele</button> -->
+                    </td>
+                    <td id="DataOnA" class="mediumblue" >DataOnA
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('DataOnA')">Sele</button> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="tipoConfig" >Módem encendido con conexión de datos desactivada</th>
+                    <td id="NoConG" class="violet" >NoConG
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('NoConG')">Sele</button> -->
+                    </td>
+                    <td id="NoConU" class="violet" >NoConU
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('NoConU')">Sele</button> -->
+                    </td>
+                    <td id="NoConA" class="violet" >NoConA
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('NoConA')">Sele</button> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="tipoConfig" >Conexión de red optimizada</th>
+                    <td id="DataConG" class="darkviolet" >DataConG
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('DataConG')">Sele</button> -->
+                    </td>
+                    <td id="DataConU" class="darkviolet" >DataConU
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('DataConU')">Sele</button> -->
+                    </td>
+                    <td id="DataConA" class="darkviolet" >DataConA
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('DataConA')">Sele</button> -->
+                    </td>
+                  </tr>
+                  <tr>
+                    <th class="tipoConfig" >Módem apagado</th>
+                    <td id="ModemOff" class="darkorange" nzAlign="center" colspan="3" >
+                        Módem Off
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('ModemOff')">Sele</button> -->
+                    </td>                    
+                  </tr>
+                  <tr>
+                    <th class="tipoConfig" >Módulo de transmisión y grabador de apagados</th>
+                    <td id="DispositivoOff" class="red" nzAlign="center" colspan="3">Dispositivo Off
+                        <!-- <button nz-button nzType="default" nzSize="small" (click)="selectOption('DispositivoOff')">Sele</button> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div style="margin: 15px;">
+          <div nz-row>
+            <button
+            [hidden]="allowEdit"
+            nz-button 
+            nzType="primary"
+            (click)="enableTabNewPlan()"
+            >Nuevo Planificador</button>
+          </div>
+          <div nz-row style="margin-top: 15px;">
+            <div class="textoEstado" nz-col nzSpan="20" >
+                Estado Envío Configuración Planificador
+            </div>
+            <div class="textoEstado" nz-col nzSpan="4">
+              {{estadoPeticionPlanificador}}
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+

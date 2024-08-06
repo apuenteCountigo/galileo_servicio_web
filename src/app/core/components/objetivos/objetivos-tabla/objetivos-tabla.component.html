@@ -1,0 +1,129 @@
+<nz-card *ngIf="showSearchForm" nzTitle="Búsqueda de Objetivos(s)" style="margin-bottom: 20px;"
+  [nzExtra]="extraTemplateSearch" nzSize="default">
+  <div nz-row [nzGutter]="['8', '8']">
+    <div nz-col>
+      <input nz-input placeHolder="Descripción" [(ngModel)]="searchCriteria.descripcion" />
+    </div>
+    <!-- <div nz-col>
+      <input nz-input placeHolder="Id responsable" [(ngModel)]="searchCriteria.idresponsable" />
+    </div> -->
+  </div>
+</nz-card>
+<nz-card [nzExtra]="extraTemplate" nzTitle="Objetivos" nzSize="default">
+  <nz-table #headerTable nzShowSizeChanger [nzData]="listOfObjetivos" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzScroll]="{ x: '600px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+    [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChangeUnitObjetivos($event)">
+    <thead>
+      <tr>
+        <th id="objeivoSpand" nzWidth="60px"></th>
+        <th id="objetivoDescripcion" nzColumnKey="descripcion" [nzSortFn]="true">Nombre</th>
+        <th id="objetivoUrgencia" nzColumnKey="urgencia" [nzSortFn]="true">Urgencia</th>
+        <th id="objetivoFechaFin" nzColumnKey="finalAuto" [nzSortFn]="true">Fecha de fin de autorización</th>
+
+        <th id="objetivoOperacion" nzColumnKey="balizas.clave" [nzSortFn]="true">Baliza</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let objetivo of listOfObjetivos">
+        <tr>
+          <td [nzChecked]="selectedObj?.id == objetivo.id ? true : false"
+            (nzCheckedChange)="onExpandChangeObjetivo(objetivo, $event)" [nzShowExpand]="false"
+            [nzExpand]="expandSet.has(objetivo.id)" (nzExpandChange)="onExpandChangeObjetivo(objetivo, $event)"></td>
+
+          <td>{{ objetivo.descripcion }}</td>
+          <td>{{ objetivo.urgencia }}</td>
+          <td>{{ objetivo.finalAuto | date : 'shortDate' }}</td>
+          <td>{{ objetivo?.balizas?.clave }}</td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(objetivo.id)">
+          <div nz-row>
+            <div nz-col [nzSpan]="24">
+              <span><strong>Observaciones: </strong></span>
+              <span>{{ objetivo.observaciones }}</span>
+            </div>
+          </div>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<ng-template #extraTemplate>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="3" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="text" nzSize="large" (click)="showModal()" nz-tooltip nzTooltipTitle="Crear objetivo">
+        <em nz-icon nzType="plus" nzTheme="outline" class='icon-class'></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="3" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="text" nzSize="large" (click)="showModal(true)" nz-tooltip
+        nzTooltipTitle="Editar objetivo" [disabled]="selectedObj == null">
+        <em nz-icon nzType="edit" nzTheme="outline" [class]="setStyleClass()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="3" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="text" nzSize="large" (click)="deleteObjetivo()" nz-tooltip
+        nzTooltipTitle="Eliminar objetivo" [disabled]="selectedObj == null">
+        <em nz-icon nzType="delete" nzTheme="outline" [class]="setStyleClass()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="setSpand">
+      <button nz-button nzType="text" nzSize="large" (click)="showModalHistory()" nz-tooltip
+        nzTooltipTitle="Histórico de Objetivo" [disabled]="selectedObjetivo == null">
+        <em nz-icon nzType="history" nzTheme="outline" [class]="setStyleClass2()"></em>
+      </button>
+    </div>
+
+    <div nz-col class="gutter-row" [nzSpan]="3" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <button nz-button nzType="text" nzSize="large" (click)="asigDesAsigBaliza(selectedObj)" nz-tooltip
+        [nzTooltipTitle]="'Asignar/Eliminar baliza'" [disabled]="selectedObj == null">
+        <em nz-icon nzType="environment" nzTheme="outline" [class]="setStyleClass()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="setSpand">
+      <button nz-button nzType="text" nzSize="large" (click)="downloadZip()" nz-tooltip
+        nzTooltipTitle="Descargar paquete de evidencias" [disabled]="isGenerating">
+        <em nz-icon nzType="file-zip" nzTheme="outline" [class]="setStyleClass3()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="setSpand">
+      <button nz-button nzType="text" nzSize="large" (click)="showModalWizardPosition()" nz-tooltip
+        nzTooltipTitle="Generar informe de posiciones" [disabled]="isGenerating">
+        <em nz-icon nzType="file-sync" nzTheme="outline" [class]="setStyleClass4()"></em>
+      </button>
+    </div>
+    <div *ngIf="!showSearchForm" nz-col class="gutter-row" [nzSpan]="setSpand">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+        nzTooltipTitle="Filtros de búsqueda">
+        <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #extraTemplateSearch>
+  <div nz-row [nzGutter]="24" nzJustify="end">
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzSize="large" (click)="onSearchUnitOfObjetivos()" [disabled]="isNullBusqueda()"
+        nz-tooltip nzTooltipTitle="Buscar">
+        <em nz-icon nzType="search" nzTheme="outline" [class]="setStyleClassBusqueda()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="isNullBusqueda()" nz-tooltip
+        nzTooltipTitle="Limpiar">
+        <em nz-icon nzType="clear" nzTheme="outline" [class]="setStyleClassBusqueda()"></em>
+      </button>
+    </div>
+    <div nz-col class="gutter-row" [nzSpan]="8">
+      <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+        <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #noResult>
+  <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+  <ng-template #contentTpl>
+    <h5 nz-typography nzType="secondary">No existen datos</h5>
+  </ng-template>
+</ng-template>

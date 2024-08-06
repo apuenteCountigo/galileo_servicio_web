@@ -1,0 +1,20 @@
+<nz-collapse style="margin-bottom: 15px;">
+  <nz-collapse-panel nzHeader="Estado Envío Geocerca" [nzExtra]="extraTpl">
+    <div *ngIf="estadoEnvio">
+      <span style="margin:0; font-size: small;">Última actualización: {{estadoEnvio.lastValueChangeUTC | date:
+        'dd/MM/yyyy HH:mm:ss'}}</span>
+    </div>
+    <ng-template #extraTpl>
+      <span *ngIf="estadoEnvio">{{estadoEnvio.displayValue}}</span>
+      <span *ngIf="!estadoEnvio">Sin Estado</span>
+    </ng-template>
+  </nz-collapse-panel>
+</nz-collapse>
+<div style="margin-bottom: 15px;">
+  <app-no-asignadas [urlToReplace]="urlToReplace" [loadingNoAsignadas]="loading" [noAsignadas]="noAsignadas"
+    [asignadasSize]="asignadasSize" (onEventChange)="onChange($event)" [allowEdit]="allowEdit">
+  </app-no-asignadas>
+</div>
+<app-asignadas [urlToReplace]="urlToReplace" [loadingAsignadas]="loading" [asignadas]="asignadas"
+  (onEventChange)="onChange($event)" [allowEdit]="allowEdit">
+</app-asignadas>

@@ -1,0 +1,39 @@
+    
+<div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+    <nz-collapse
+            *ngFor="let config of arrayConfig1"
+        >
+            <nz-collapse-panel
+              [nzHeader]="config.ParameterName"
+              [nzExtra]="extraTpl"
+              
+            >
+            <!-- <span style="margin:0; font-size: small;">ID: {{config.ID}}</span> -->
+            <span style="margin:0; font-size: small;">Última actualización: {{config.LastValueChange}}</span>
+              <ng-template #extraTpl>
+                <!-- You can use stopPropagation if you don't want the panel to toggle -->
+                <span>{{config.DisplayValue}} <span nz-icon nzType="read" nzTheme="outline"></span></span>            
+              </ng-template>
+            </nz-collapse-panel>
+        </nz-collapse>
+    </div>
+    <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+      <nz-collapse 
+            *ngFor="let config of arrayConfig2"
+        >
+            <nz-collapse-panel
+              [nzHeader]="config.ParameterName"
+              [nzExtra]="extraTpl"
+              
+            >
+              <!-- <span style="margin:0;">ID: {{config.ID}}</span> -->
+              <span style="margin:0;">Última actualización: {{config.LastValueChange}}</span>
+              <ng-template #extraTpl>
+                <!-- You can use stopPropagation if you don't want the panel to toggle -->
+                <span>{{config.DisplayValue}} <span nz-icon nzType="read" nzTheme="outline"></span></span>            
+              </ng-template>
+            </nz-collapse-panel>
+        </nz-collapse>
+    </div>
+</div>

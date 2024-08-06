@@ -1,0 +1,348 @@
+<div  nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+    <nz-collapse >
+      <nz-collapse-panel
+        nzHeader="Emails aviso carga batería"
+        [nzExtra]="extraEmailAvisoCargaBateria"
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input placeholder="email" type="email" [(ngModel)]="valueEmailAvisoCargaBateria" nzSize="small"/>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueEmailAvisoCargaBateria  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEmailAvisoCargaBateria()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerEmailAvisoCargaBateria" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[0].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[0].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraEmailAvisoCargaBateria>
+          <span>{{nuevoValueEmailAvisoCargaBateria}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        [nzHeader]="configWriteAlertasOperativas.length ? configWriteAlertasOperativas[1].ParameterName : ''"
+        [nzExtra]="extraEmailAvisoInicioMovimiento"
+        
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input placeholder="email" type="email" [(ngModel)]="valueEmailAvisoInicioMovimiento" nzSize="small"/>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueEmailAvisoInicioMovimiento  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEmailAvisoInicioMovimiento()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerEmailAvisoInicioMovimiento" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[1].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[1].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraEmailAvisoInicioMovimiento>
+          <span>{{nuevoValueEmailAvisoInicioMovimiento}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        [nzHeader]="configWriteAlertasOperativas.length ? configWriteAlertasOperativas[2].ParameterName : ''"
+        [nzExtra]="extraEmailAvisoFinMovimiento"
+        
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input placeholder="email" type="email" [(ngModel)]="valueEmailAvisoFinMovimiento" nzSize="small"/>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueEmailAvisoFinMovimiento  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEmailAvisoFinMovimiento()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerEmailAvisoFinMovimiento" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[2].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[2].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraEmailAvisoFinMovimiento>
+          <span>{{nuevoValueEmailAvisoFinMovimiento}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        [nzHeader]="configWriteAlertasOperativas.length ? configWriteAlertasOperativas[3].ParameterName : ''"
+        [nzExtra]="extraEmailAvisoEntradaGeocerca"
+        
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input placeholder="email" type="email" [(ngModel)]="valueEmailAvisoEntradaGeocerca" nzSize="small"/>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueEmailAvisoEntradaGeocerca  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEmailAvisoEntradaGeocerca()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerEmailAvisoEntradaGeocerca" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[3].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[3].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraEmailAvisoEntradaGeocerca>
+          <span>{{nuevoValueEmailAvisoEntradaGeocerca}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        [nzHeader]="configWriteAlertasOperativas.length ? configWriteAlertasOperativas[4].ParameterName : ''"
+        [nzExtra]="extraEmailAvisoSalidaGeocerca"
+        
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input placeholder="email" type="email" [(ngModel)]="valueEmailAvisoSalidaGeocerca" nzSize="small"/>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueEmailAvisoSalidaGeocerca  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEmailAvisoSalidaGeocerca()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerEmailAvisoSalidaGeocerca" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[4].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[4].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraEmailAvisoSalidaGeocerca>
+          <span>{{nuevoValueEmailAvisoSalidaGeocerca}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        nzHeader="Emails aviso cambio de pais"
+        [nzExtra]="extraEmailAvisoCambioPais"
+        
+      >
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input placeholder="email" type="email" [(ngModel)]="valueEmailAvisoCambioPais" nzSize="small"/>
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueEmailAvisoCambioPais  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoEmailAvisoCambioPais()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerEmailAvisoCambioPais" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[5].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[5].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraEmailAvisoCambioPais>
+          <span>{{nuevoValueEmailAvisoCambioPais}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+  </div>
+
+  <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzMd]="{ span: 12 }" [nzLg]="{ span: 12 }">
+    <nz-collapse  >
+      <nz-collapse-panel
+        nzHeader ="Teléfonos aviso carga batería"
+        [nzExtra]="extraTelAvisoCargaBateria"
+        
+      >  
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input min="0" placeholder="número de teléfono" type="number" nzSize="small"
+              [(ngModel)]="valueTelAvisoCargaBateria" />
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="(valueTelAvisoCargaBateria) ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTelAvisoCargaBateria()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTelAvisoCargaBateria" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[6].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[6].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraTelAvisoCargaBateria>
+          <span>{{nuevoValueTelAvisoCargaBateria}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        nzHeader ="Teléfonos aviso inicio de movimiento"
+        [nzExtra]="extraTelAvisoInicioMovimiento"
+        
+      >  
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input min="0" placeholder="número de teléfono" type="number" nzSize="small"
+              [(ngModel)]="valueTelAvisoInicioMovimiento" />
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueTelAvisoInicioMovimiento  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTelAvisoInicioMovimiento()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTelAvisoInicioMovimiento" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[7].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[7].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraTelAvisoInicioMovimiento>
+          <span>{{nuevoValueTelAvisoInicioMovimiento}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        nzHeader ="Teléfonos aviso fin de movimiento"
+        [nzExtra]="extraTelAvisoFinMovimiento"
+        
+      >  
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input min="0" placeholder="número de teléfono" type="number" nzSize="small"
+              [(ngModel)]="valueTelAvisoFinMovimiento" />
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueTelAvisoFinMovimiento  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTelAvisoFinMovimiento()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTelAvisoFinMovimiento" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[8].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[8].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraTelAvisoFinMovimiento>
+          <span>{{nuevoValueTelAvisoFinMovimiento}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        nzHeader ="Teléfonos aviso entrada en geocerca"
+        [nzExtra]="extraTelAvisoEntradaGeocerca"
+        
+      >  
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input min="0" placeholder="número de teléfono" type="number" nzSize="small"
+              [(ngModel)]="valueTelAvisoEntradaGeocerca" />
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueTelAvisoEntradaGeocerca  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTelAvisoEntradaGeocerca()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTelAvisoEntradaGeocerca" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[9].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[9].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraTelAvisoEntradaGeocerca>
+          <span>{{nuevoValueTelAvisoEntradaGeocerca}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        nzHeader ="Teléfonos aviso salida de geocerca"
+        [nzExtra]="extraTelAvisoSalidaGeocerca"
+        
+      >  
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input min="0" placeholder="número de teléfono" type="number" nzSize="small"
+              [(ngModel)]="valueTelAvisoSalidaGeocerca" />
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueTelAvisoSalidaGeocerca  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTelAvisoSalidaGeocerca()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTelAvisoSalidaGeocerca" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[10].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[10].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraTelAvisoSalidaGeocerca>
+          <span>{{nuevoValueTelAvisoSalidaGeocerca}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+      </nz-collapse-panel>
+    </nz-collapse>
+
+    <nz-collapse  >
+      <nz-collapse-panel
+        nzHeader ="Teléfonos aviso cambio de país"
+        [nzExtra]="extraTelAvisoCambioPais"
+        
+      >  
+        <div [hidden]="allowEdit" nz-row style="margin-top: 10px;">
+          <div nz-col nzSpan="14">
+            <input nz-input min="0" placeholder="número de teléfono" type="number" nzSize="small"
+              [(ngModel)]="valueTelAvisoCambioPais" />
+          </div>
+          <div nz-col nzSpan="2">
+          </div>
+          <div nz-col nzSpan="4">
+            <button [disabled]="valueTelAvisoCambioPais  ? false : true" nz-button nzType="primary" nzShape="round" nzSize="small"
+              (click)="nuevoTelAvisoCambioPais()">OK</button>
+          </div>
+          <div nz-col nzSpan="4" *ngIf="spinerTelAvisoCambioPais" style="margin-top: 15px;">
+            <nz-spin></nz-spin>
+          </div>
+        </div>
+        <!-- <span style="margin:0; font-size: small;">ID: {{configWriteAlertasOperativas.length ? configWriteAlertasOperativas[11].ID : ''}}</span> -->
+        <span style="margin:0; font-size: small;">Última actualización: {{configWriteAlertasOperativas.length ? (configWriteAlertasOperativas[11].LastValueChangeUTC | convertDateUTC ) : ''}}</span>
+        <ng-template #extraTelAvisoCambioPais>
+          <span>{{nuevoValueTelAvisoCambioPais}} <span nz-icon nzType="tool" nzTheme="outline"></span></span>
+        </ng-template>
+          </nz-collapse-panel>
+        </nz-collapse>
+  </div>
+  
+</div>
