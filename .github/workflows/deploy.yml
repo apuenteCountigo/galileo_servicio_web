@@ -45,10 +45,12 @@ jobs:
           script: |
             ssh -i ~/id_rsaalain mome@192.168.0.98 '
             cd galileo-newdev/${{ secrets.SERVICIO }}/galileo_servicio_web &&
+            ls &&
             git fetch origin &&
             git reset --hard origin/main &&
             git pull &&
             cd ../../ &&
+            ls &&
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
             IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME") &&
             if [[ -n "$IMAGE_NAME" ]]; then
