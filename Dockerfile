@@ -7,17 +7,17 @@ WORKDIR /app
 # Copiar los archivos package.json y package-lock.json
 COPY package*.json ./
 
-# Instalar las dependencias
-RUN npm install
-
 # Copiar el resto del código fuente
 COPY . .
 
+# Instalar las dependencias
+RUN npm install && ng --version && ng build --prod
+
 # Construir la aplicación Angular
 #RUN npm run build --prod
-RUN ng --version
+#RUN ng --version
 
-RUN ng build --prod
+#RUN ng build --prod
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
