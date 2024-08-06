@@ -1,5 +1,8 @@
-const BASE_API = 'http://192.168.0.195:8090/api/';
-const BASE_API_APIS = 'http://192.168.0.195:8090/api/apis/';
+// const BASE_API = 'http://192.168.0.195:8090/api/';
+// const BASE_API_APIS = 'http://192.168.0.195:8090/api/apis/';
+
+const BASE_API = 'http://location.host/api/';
+const BASE_API_APIS = 'http://location.host/api/apis/';
 
 export const environment = {
   production: true,
