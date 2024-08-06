@@ -44,12 +44,10 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             ssh -i ~/id_rsaalain mome@192.168.0.98 '
-            cd galileo-newdev/${{ secrets.SERVICIO }}/galileo_servicio_${{ secrets.SERVICIO }} &&
+            cd galileo-newdev/${{ secrets.SERVICIO }}/galileo_servicio_web &&
             git fetch origin &&
             git reset --hard origin/main &&
             git pull &&
-            export PATH=/opt/maven/bin:$PATH && mvn clean install -DskipTests &&
-            mv ./target/servicio-${{ secrets.SERVICIO }}-0.0.1-SNAPSHOT.jar ../servicio-${{ secrets.SERVICIO }}.jar &&
             cd ../../ &&
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
             IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME") &&
