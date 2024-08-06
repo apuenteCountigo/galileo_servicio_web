@@ -14,7 +14,8 @@ RUN npm install
 COPY . .
 
 # Construir la aplicación Angular
-RUN npm run build --prod
+#RUN npm run build --prod
+RUN ng build --prod
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
