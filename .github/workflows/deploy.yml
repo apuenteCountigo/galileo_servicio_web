@@ -63,5 +63,7 @@ jobs:
               fi
             fi &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d &&
-            sudo docker builder prune'
+            sudo docker builder prune  <<EOF &&
+            y &&
+            EOF'
             exit
