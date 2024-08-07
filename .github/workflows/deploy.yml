@@ -62,5 +62,6 @@ jobs:
                 echo "$IMAGE_NAME"
               fi
             fi &&
-            docker compose up servicio-${{ secrets.SERVICIO }} -d'
+            docker compose up servicio-${{ secrets.SERVICIO }} -d &&
+            sudo docker builder prune'
             exit
