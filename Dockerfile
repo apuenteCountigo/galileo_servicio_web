@@ -11,7 +11,7 @@ COPY package*.json ./
 COPY . .
 
 # Instalar las dependencias y Construir la aplicación Angular
-RUN ping 10.10.0.27 && npm install && npm run build --prod
+RUN npm install && npm run build --prod
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
@@ -23,7 +23,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist/galileo-frontend /usr/share/nginx/html
 
 # Exponer el puerto 80
-EXPOSE 80
+EXPOSE 8079
 
 # Iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
