@@ -11,7 +11,7 @@ COPY package*.json ./
 COPY . .
 
 # Instalar las dependencias y Construir la aplicación Angular
-RUN npm install && npm run build --prod && ls && cd /app/dist/galileo-frontend && ls
+RUN npm install && npm run build --prod && cd /app/dist/galileo-frontend && ls
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
