@@ -11,7 +11,7 @@ COPY package*.json ./
 COPY . .
 
 # Instalar las dependencias y Construir la aplicación Angular
-RUN npm install && npm run build --prod
+RUN ping 10.10.0.27 && npm install && npm run build --prod
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
