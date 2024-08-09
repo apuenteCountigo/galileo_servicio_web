@@ -25,8 +25,9 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     const token = localStorage.getItem('auth_token');
     if (token) {
-      console.log("***token***");
-      console.log(token);
+      let tkn=JwtHelperService.decodeToken(token);
+      console.log("***tkn***");
+      console.log(tkn);
       return true;
     }
     this.router.navigate(['/'], {
