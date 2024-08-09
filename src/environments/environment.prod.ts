@@ -3,7 +3,7 @@
 
 
 const BASE_API = 'http://'+location.host+'/api/';
-const BASE_API_APIS = 'http://'+location.host+'/api/apis/';
+const BASE_API_APIS = BASE_API+'apis/'//'http://'+location.host+'/api/apis/';
 
 export const environment = {
   production: true,
