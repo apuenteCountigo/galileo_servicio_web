@@ -14,6 +14,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./core/pages/layout/layout.module').then((m) => m.LayoutModule),
     canActivate: [AuthGuard],
+    data: { expectedRole: ['Administrador'] }
   },
   { path: 'audit', loadChildren: () => import('./core/pages/audit/audit.module').then(m => m.AuditModule) },
 ];
