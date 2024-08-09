@@ -45,12 +45,10 @@ jobs:
           script: |
             ssh -i ~/id_rsaalain mome@192.168.0.98 '
             cd galileo-newdev/${{ secrets.SERVICIO }}/galileo_servicio_web &&
-            ls &&
             git fetch origin &&
             git reset --hard origin/main &&
             git pull &&
             cd ../../ &&
-            ls &&
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
             CN=$(docker ps -a --filter name="servicio-${{ secrets.SERVICIO }}" --format "{{.Names}}") &&
             if [[ -n "$CN" ]]; then
