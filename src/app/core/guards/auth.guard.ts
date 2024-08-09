@@ -32,6 +32,7 @@ export class AuthGuard implements CanActivate {
       let tkn = this.jwtHelper.decodeToken(token);  // Usar la instancia creada para decodificar el token
       console.log("***tkn***");
       console.log(tkn);
+      
       return true;
     }
     this.router.navigate(['/'], {
