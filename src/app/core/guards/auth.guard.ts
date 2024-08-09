@@ -13,7 +13,11 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router, private jwtHelper: JwtHelperService) {}
+  private jwtHelper: JwtHelperService;
+
+  constructor(private router: Router) {
+    this.jwtHelper = new JwtHelperService();
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -25,7 +29,7 @@ export class AuthGuard implements CanActivate {
     | UrlTree {
     const token = localStorage.getItem('auth_token');
     if (token) {
-      let tkn=this.jwtHelper.decodeToken(token);
+      let tkn = this.jwtHelper.decodeToken(token);  // Usar la instancia creada para decodificar el token
       console.log("***tkn***");
       console.log(tkn);
       return true;
