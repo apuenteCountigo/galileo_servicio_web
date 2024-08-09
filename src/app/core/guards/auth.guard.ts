@@ -32,8 +32,8 @@ export class AuthGuard implements CanActivate {
       let tkn = this.jwtHelper.decodeToken(token);  // Usar la instancia creada para decodificar el token
       console.log("***tkn***");
       console.log(tkn);
-      console.log(location.pathname);
-      if(location.pathname.includes("app/configuracion") && tkn.Perfil.descripcion=="Super Administrador")
+      let expectedRoles = route.data['expectedRole'];
+      if(expectedRoles.includes('Super Administrador'))
         return false;
       return true;
     }
