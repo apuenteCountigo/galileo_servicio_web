@@ -15,6 +15,10 @@ const routes: Routes = [
       import('./core/pages/layout/layout.module').then((m) => m.LayoutModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'app/configuracion',
+    canActivate: [AuthGuard],
+  },
   { path: 'audit', loadChildren: () => import('./core/pages/audit/audit.module').then(m => m.AuditModule) },
 ];
 
