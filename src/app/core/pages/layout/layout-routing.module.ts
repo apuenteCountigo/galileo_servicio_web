@@ -54,7 +54,7 @@ const routes: Routes = [
             (m) => m.ConfiguracionModule
           ),
           canActivate: [AuthGuard],
-          data: { expectedRole: ['Administrador'] }
+          data: { expectedRole: ['Super Administrador','Administrador de Unidad'] }
       },
       {
         path: 'operations',
