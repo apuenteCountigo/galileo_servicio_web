@@ -17,6 +17,8 @@ const routes: Routes = [
         path: 'users',
         loadChildren: () =>
           import('../users/users.module').then((m) => m.UsersModule),
+        canActivate: [AuthGuard],
+        data: { expectedRole: ['Super Administrador','Administrador de Unidad'] }
       },
       {
         path: 'unidad',
@@ -27,6 +29,8 @@ const routes: Routes = [
         path: 'baliza',
         loadChildren: () =>
           import('../baliza/baliza.module').then((m) => m.BalizaModule),
+        canActivate: [AuthGuard],
+        data: { expectedRole: ['Super Administrador','Administrador de Unidad'] }
       },
       {
         path: 'nomencladores',
@@ -34,6 +38,8 @@ const routes: Routes = [
           import('../nomencladores/nomencladores.module').then(
             (m) => m.NomencladoresModule
           ),
+          canActivate: [AuthGuard],
+          data: { expectedRole: ['Super Administrador','Administrador de Unidad'] }
       },
       {
         path: 'devices',
@@ -69,6 +75,8 @@ const routes: Routes = [
           import('../audit/audit.module').then(
             (m) => m.AuditModule
           ),
+          canActivate: [AuthGuard],
+          data: { expectedRole: ['Super Administrador','Administrador de Unidad'] }
       },
 
     ],
