@@ -512,15 +512,36 @@ export class UnidadComponent implements OnInit, OnDestroy {
       },
     });
 
-    modalRef.afterClose.subscribe((result) => {
-      if (result) {
+    modalRef.afterClose.subscribe({
+      next: (result) => {
         this.loadDataFromService();
-        this.notificationService.notificationSuccess(
-          'Información',
-          'Se ha cargado el fichero correctamente'
+        if (result) {
+          //this.updateBreadCrumb('usurioUsuario');
+          setTimeout(() => {
+            this.notificationService.notificationSuccess(
+              'Información',
+              'Se han insertado correctamente las unidades'
+            );
+          }, 1000);
+        }
+      },
+      error: (error) => {
+        this.notificationService.notificationError(
+          'Error',
+          'Introduzca un documento excel de unidades válido para importar'
         );
-      }
+      },
     });
+
+    // modalRef.afterClose.subscribe((result) => {
+    //   if (result) {
+    //     this.loadDataFromService();
+    //     this.notificationService.notificationSuccess(
+    //       'Información',
+    //       'Se ha cargado el fichero correctamente'
+    //     );
+    //   }
+    // });
   }
 
   updateOficialTabInfo(unit: Unit) {
