@@ -460,8 +460,11 @@ export class StockTableComponent
       });
       modalRef.afterClose.subscribe({
         next: (result) => {
+          this.loadData();
+          console.log("******Línea 464");
           if (result) {
             this.loadData();
+            console.log("******Línea 467");
             setTimeout(() => {
               this._notificationService.notificationSuccess(
                 'Información',
