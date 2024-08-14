@@ -359,6 +359,7 @@ export class UserMainTableComponent
     });
     modalRef.afterClose.subscribe({
       next: (result) => {
+        this.loadData();
         if (result) {
           this.updateBreadCrumb('usurioUsuario');
           this.loadData();
