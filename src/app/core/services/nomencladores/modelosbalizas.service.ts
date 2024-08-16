@@ -32,19 +32,19 @@ export class NomencladorModelosBalizasService extends HateoasResourceOperation<M
     modeloBaliza: ModeloBaliza
   ): Observable<Observable<never> | ModeloBaliza> {
     this.changeUrl();
-    return super.createResource({ body: ModeloBaliza });
+    return super.createResource({ body: modeloBaliza });
   }
 
   public detele(
     modeloBaliza: ModeloBaliza
   ): Observable<Observable<never> | ModeloBaliza> {
     this.changeUrl();
-    return super.deleteResourceById(ModeloBaliza.id as number);
+    return super.deleteResourceById(modeloBaliza.id as number);
   }
 
   public put(modeloBaliza: ModeloBaliza): Observable<Observable<never> | ModeloBaliza> {
     this.changeUrl();
-    return super.updateResourceById(ModeloBaliza.id as number, {
+    return super.updateResourceById(modeloBaliza.id as number, {
       body: modeloBaliza,
     });
   }
