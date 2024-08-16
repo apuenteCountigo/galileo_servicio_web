@@ -4,11 +4,13 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
 import { Juzgado } from 'src/app/core/models/juzgado.model';
 import { Empleo } from 'src/app/core/models/momencaldores.model';
+import { ModeloBaliza } from 'src/app/core/models/momencaldores.model';
 import { EmpleoService } from 'src/app/core/services/empleo.service';
 import { TableBase } from 'src/app/core/utils/table.base';
 import { NomencladorFormComponent } from '../nomenclador-form/nomenclador-form.component';
 import { NomencladorService } from './../../../services/nomenclador.service';
 import { NomencladorJuzgadosService } from './../../../services/nomencladores/nomenclador-juzgados.service';
+import { NomencladorModelosBalizasService } from './../../../services/nomencladores/modelosbalizas.service';
 import { NotificationService } from './../../../services/notification.service';
 
 interface BusquedaOperacion {
@@ -41,6 +43,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
     private modalService: NzModalService,
     private notificationService: NotificationService,
     private _nomencladorJuzgado: NomencladorJuzgadosService,
+    private _nomencladorModelosBalizas: NomencladorModelosBalizasService,
     private _empleoService: EmpleoService
   ) {
     super();
@@ -73,7 +76,18 @@ export class NomencladorComponent extends TableBase implements OnInit {
           });
         break;
 
-      case 'Empleo':
+        case 'ModelosBalizas':
+          this.loading = true;
+          this._nomencladorModelosBalizas
+            .getAll(this.params, this.sort)
+            .subscribe((modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
+              this.loading = false;
+              this.listOfNomencladores = [...modeloBaliza.resources];
+              this.total = modeloBaliza.totalElements;
+            });
+          break;
+  
+        case 'Empleo':
         this.loading = true;
         this._empleoService
           .getAll(this.params, this.sort)
@@ -110,7 +124,14 @@ export class NomencladorComponent extends TableBase implements OnInit {
                 this.loadDataFromLocal();
               });
             break;
-          case 'Empleo':
+            case 'ModelosBalizas':
+              this._nomencladorModelosBalizas
+                .create(result.nomemcladorAux)
+                .subscribe(() => {
+                  this.loadDataFromLocal();
+                });
+              break;
+            case 'Empleo':
             this._empleoService.create(result.nomemcladorAux).subscribe(() => {
               this.loadDataFromLocal();
             });
@@ -122,6 +143,13 @@ export class NomencladorComponent extends TableBase implements OnInit {
         switch (this.dataEntrante) {
           case 'Juzgado':
             this._nomencladorJuzgado
+              .put(result.nomemcladorAux)
+              .subscribe(() => {
+                this.loadDataFromLocal();
+              });
+            break;
+          case 'ModelosBalizas':
+            this._nomencladorModelosBalizas
               .put(result.nomemcladorAux)
               .subscribe(() => {
                 this.loadDataFromLocal();
@@ -174,7 +202,32 @@ export class NomencladorComponent extends TableBase implements OnInit {
                 },
               });
             break;
-          case 'Empleo':
+            case 'ModelosBalizas':
+              this._nomencladorModelosBalizas
+                .detele(this.selectedNomenclador)
+                .subscribe({
+                  next: () => {
+                    this.notificationService.notificationSuccess(
+                      'Información',
+                      'Se ha eliminado el modelo correctamente.'
+                    );
+                  },
+                  error: (err) => {
+                    if (err.status == 409) {
+                      this.notificationService.notificationError(
+                        'Error',
+                        'El modelo esta siendo usado, no puede ser eliminado.'
+                      );
+                    } else {
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ha ocurrido un error al eliminar el modelo.'
+                      );
+                    }
+                  },
+                });
+              break;
+            case 'Empleo':
             // this._empleoService.detele(this.selectedNomenclador).subscribe(() => {
             //   this.loadDataFromLocal();
             // });

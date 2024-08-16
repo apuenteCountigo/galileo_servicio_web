@@ -19,6 +19,7 @@ export const environment = {
   API_URL_ESTADO: BASE_API + 'estados',
   API_URL_EMPLEO: BASE_API + 'empleos',
   API_URL_JUZGADO: BASE_API + 'juzgados',
+  API_URL_MODELOSBALIZAS: BASE_API + 'modelosbalizas',
   API_URL_PERFIL: BASE_API + 'perfiles',
   API_URL_LOGIN: BASE_API + 'security/oauth/token',
   API_URL_IMPORTAR: BASE_API + 'importador/importarExcel',

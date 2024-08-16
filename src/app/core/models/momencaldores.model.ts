@@ -25,6 +25,11 @@ export class TipoBaliza extends Resource {
   public id?: number;
   public descripcion?: string;
 }
+@HateoasResource('modelosbalizas')
+export class ModeloBaliza extends Resource {
+  public id?: number;
+  public descripcion?: string;
+}
 
 @HateoasResource('tipocontratos')
 export class TipoContrato extends Resource {
