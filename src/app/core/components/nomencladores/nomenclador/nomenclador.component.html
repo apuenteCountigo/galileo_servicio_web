@@ -64,19 +64,19 @@
     <div nz-row [nzGutter]="24" nzJustify="end">
       <div nz-col class="gutter-row" [nzSpan]="6">
         <button nz-button nzType="text" nzSize="large" (click)="showModal()" nz-tooltip
-         nzTooltipTitle="Crear dataTooltip">
+        [nzTooltipTitle]="'Crear ' + dataTooltip">
           <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
         </button>
       </div>
       <div nz-col class="gutter-row" [nzSpan]="6" >
         <button nz-button nzType="text" nzSize="large" (click)="showModal(true)" nz-tooltip
-          nzTooltipTitle="Editar dataTooltip" [disabled]="selectedNomenclador == null">
+          [nzTooltipTitle]="'Editar ' + dataTooltip" [disabled]="selectedNomenclador == null">
           <em nz-icon nzType="edit" nzTheme="outline" [class]="selectedNomenclador?'icon-class':'icon-disabled'"></em>
         </button>
       </div>
       <div nz-col class="gutter-row" [nzSpan]="6" >
         <button nz-button nzType="text" nzSize="large" (click)="deleteNomenclador()" nz-tooltip
-          nzTooltipTitle="Eliminar dataTooltip" [disabled]="selectedNomenclador == null">
+          [nzTooltipTitle]="'Eliminar ' + dataTooltip" [disabled]="selectedNomenclador == null">
           <em nz-icon nzType="delete" nzTheme="outline" [class]="selectedNomenclador?'icon-class':'icon-disabled'"></em>
         </button>
       </div>
