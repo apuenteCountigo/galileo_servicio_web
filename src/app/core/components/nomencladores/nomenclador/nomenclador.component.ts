@@ -187,6 +187,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     'Información',
                     'Se ha eliminado el juzgado correctamente.'
                   );
+                  this.loadDataFromLocal();
                 },
                 error: (err) => {
                   if (err.status == 409) {
@@ -212,6 +213,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                       'Información',
                       'Se ha eliminado el modelo correctamente.'
                     );
+                    this.loadDataFromLocal();
                   },
                   error: (err) => {
                     if (err.status == 409) {
@@ -238,6 +240,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                   'Información',
                   'Se ha eliminado el empleo correctamente.'
                 );
+                this.loadDataFromLocal();
               },
               error: (err) => {
                 if (err.status == 409) {
