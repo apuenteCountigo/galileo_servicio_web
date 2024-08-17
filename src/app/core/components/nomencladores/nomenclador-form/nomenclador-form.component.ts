@@ -4,6 +4,7 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { Empleo } from 'src/app/core/models/momencaldores.model';
 import { ButtonInterface } from '../../user/user-form/user-form.component';
 import { Juzgado } from './../../../models/juzgado.model';
+import { ModeloBaliza } from './../../../models/modelosbalizas.model';
 
 @Component({
   selector: 'app-nomenclador-form',
@@ -57,6 +58,9 @@ export class NomencladorFormComponent implements OnInit {
           break;
         case 'Empleo':
           nomemcladorAux = new Empleo();
+          break;
+        case 'ModelosBalizas':
+          nomemcladorAux = new ModeloBaliza();
           break;
         default:
           break;
