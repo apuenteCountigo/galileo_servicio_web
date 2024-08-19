@@ -16,14 +16,14 @@
         </tr>
       </thead>
       <tbody>
-        <ng-container *ngFor="let nomneclador of listOfNomencladores">
+        <ng-container *ngFor="let nomenclador of listOfNomencladores">
           <tr>
-            <td [nzChecked]="expandSet.has(nomneclador.id)"              
-                (nzCheckedChange)="onExpandChangeNomenclador(nomneclador, $event)" 
+            <td [nzChecked]="expandSet.has(nomenclador.id)"              
+                (nzCheckedChange)="onExpandChangeNomenclador(nomenclador, $event)" 
                 [nzShowExpand]="false"
-                [nzExpand]="expandSet.has(nomneclador.id)"
+                [nzExpand]="expandSet.has(nomenclador.id)"
                 ></td>
-            <td  >{{ nomneclador.descripcion }}</td>
+            <td  >{{ nomenclador.descripcion }}</td>
           <!-- </tr>
           <tr [nzExpand]="expandSet.has(user.tip)">
             <div nz-row>
