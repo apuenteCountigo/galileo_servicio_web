@@ -66,7 +66,6 @@ export class AsignedTableComponent
   searchCriteria: SearchData = {
     clave: '',
     marca: '',
-    modelo: '',
     numSeries: '',
     compania: '',
     fechaInicio: '',
@@ -332,7 +331,6 @@ export class AsignedTableComponent
   resetForm(): void {
     this.searchCriteria.clave = '';
     this.searchCriteria.marca = '';
-    this.searchCriteria.modelo = '';
     this.searchCriteria.numSeries = '';
     this.searchCriteria.compania = '';
     this.searchCriteria.fechaFin = '';
@@ -353,7 +351,7 @@ export class AsignedTableComponent
         id: baliza.id,
         clave: baliza.clave,
         marca: baliza.marca,
-        modelo: baliza.modelo,
+        modelo: baliza.idModeloBaliza,
         numSerie: baliza.numSerie,
         compania: baliza.compania,
         estados: baliza.estados?.descripcion,

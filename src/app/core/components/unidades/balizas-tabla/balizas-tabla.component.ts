@@ -13,7 +13,6 @@ import { Baliza } from './../../../models/baliza.model';
 export interface SearchData {
   clave: string;
   marca: string;
-  modelo: string;
   numSeries: string;
   compania: string;
   objetivo?: string;
@@ -36,7 +35,6 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
   searchCriteria: SearchData = {
     clave: '',
     marca: '',
-    modelo: '',
     numSeries: '',
     compania: '',
     unidad: 0,
@@ -78,7 +76,6 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
   resetForm(): void {
     this.searchCriteria.clave = '';
     this.searchCriteria.marca = '';
-    this.searchCriteria.modelo = '';
     this.searchCriteria.numSeries = '';
     this.searchCriteria.compania = '';
     (this.searchCriteria.unidad = 0),

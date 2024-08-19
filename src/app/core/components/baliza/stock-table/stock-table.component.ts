@@ -487,7 +487,7 @@ export class StockTableComponent
         id: baliza.id,
         clave: baliza.clave,
         marca: baliza.marca,
-        modelo: baliza.modelo,
+        idModeloBaliza: baliza.idModeloBaliza,
         numSerie: baliza.numSerie,
         compania: baliza.compania,
         estados: baliza.estados?.descripcion,
