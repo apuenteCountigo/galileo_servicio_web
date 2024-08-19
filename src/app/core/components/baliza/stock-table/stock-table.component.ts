@@ -40,7 +40,6 @@ import { formatISO } from 'date-fns';
 export interface SearchData {
   clave: string;
   marca: string;
-  modelo: string;
   numSeries: string;
   compania: string;
   objetivo?: string;
