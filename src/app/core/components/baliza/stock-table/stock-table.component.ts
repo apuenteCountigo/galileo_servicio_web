@@ -95,7 +95,6 @@ export class StockTableComponent
   searchCriteria: SearchData = {
     clave: '',
     marca: '',
-    modelo: '',
     numSeries: '',
     compania: '',
     fechaInicio: '',
@@ -424,7 +423,6 @@ export class StockTableComponent
   resetForm(): void {
     this.searchCriteria.clave = '';
     this.searchCriteria.marca = '';
-    this.searchCriteria.modelo = '';
     this.searchCriteria.numSeries = '';
     this.searchCriteria.compania = '';
     this.searchCriteria.fechaFin = '';
