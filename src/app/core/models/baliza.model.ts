@@ -5,6 +5,7 @@ import { Operacion } from './operacion.model';
 import { Server } from './server.model';
 import { Unit } from './unit.model';
 
+
 @HateoasResource('balizas')
 export class Baliza extends Resource {
   public id!: number;
