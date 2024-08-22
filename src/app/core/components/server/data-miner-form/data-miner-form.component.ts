@@ -39,6 +39,7 @@ export class DataMinerFormComponent implements OnInit {
       password: ['', [Validators.required]],
       dmaID: ['', []],
       viewIDs: ['', []],
+      ruta: ['', []],
     });
   }
 
@@ -68,6 +69,9 @@ export class DataMinerFormComponent implements OnInit {
         this.formModalServer.controls['viewIDs'].setValue(
           this.serverToEdit!.viewIDs
         );
+        this.formModalServer.controls['ruta'].setValue(
+          this.serverToEdit!.ruta
+        );
       });
     }
   }
@@ -87,6 +91,7 @@ export class DataMinerFormComponent implements OnInit {
     newServer.password = this.formModalServer.value.password;
     newServer.dmaID = this.formModalServer.value.dmaID;
     newServer.viewIDs = this.formModalServer.value.viewIDs;
+    newServer.ruta = this.formModalServer.value.ruta;
 
     const accion = this.serverToEdit ? FrmActions.EDITAR : FrmActions.AGREGAR;
 
@@ -103,6 +108,10 @@ export class DataMinerFormComponent implements OnInit {
         Validators.required,
       ]);
       this.formModalServer.controls['viewIDs'].setValidators([
+        Validators.required,
+      ]);
+    } else if (this.formModalServer.value.servicio == 'FTP') {
+      this.formModalServer.controls['ruta'].setValidators([
         Validators.required,
       ]);
     } else {

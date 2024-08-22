@@ -66,6 +66,15 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item *ngIf="formModalServer.value.servicio == tipoServidor.FTP">
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="ruta">Ruta</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="rutaErrorTpl">
+      <input type="text" nz-input formControlName="ruta" placeholder="Ruta" />
+      <ng-template #viewIDsErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca la Ruta</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
 
   <nz-form-item>
     <nz-form-control>

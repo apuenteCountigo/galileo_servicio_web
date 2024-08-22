@@ -10,4 +10,5 @@ export class Server extends Resource {
   public password?: string;
   public dmaID?: number;
   public viewIDs?: number;
+  public ruta?: string;
 }
