@@ -160,10 +160,6 @@ export class GeocercasComponent implements OnInit, OnChanges, OnDestroy {
   setGeocercasInterval() {
     this.myGeoInterval = setInterval(() => {
       this.loadGeocerca();
-      alert(location.pathname);
-      // if(location.pathname)
-      // clearInterval(this.myInterval);
-      // this.myGeoInterval = null;
     }, 60000);
   }
 
