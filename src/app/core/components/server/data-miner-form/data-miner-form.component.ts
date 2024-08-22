@@ -42,11 +42,11 @@ export class DataMinerFormComponent implements OnInit {
       viewIDs: ['', []],
       ruta: ['', []],
     });
-    console.log("*****this.listOfServer");
-    console.log(this.listOfServer);
   }
 
   ngAfterViewInit(): void {
+    console.log("*****this.listOfServer");
+    console.log(this.listOfServer);
     if (this.serverToEdit) {
       this.button.label = 'EDITAR';
       this.button.icon = 'edit';
