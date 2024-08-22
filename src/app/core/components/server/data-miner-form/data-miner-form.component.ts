@@ -86,6 +86,7 @@ export class DataMinerFormComponent implements OnInit {
         !listOfServer.some(server => server.servicio === tipo)
       );
     }
+    console.log(this.tipoServicio);
   }
 
   checkForm() {
