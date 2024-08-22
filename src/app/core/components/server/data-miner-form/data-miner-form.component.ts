@@ -82,10 +82,12 @@ export class DataMinerFormComponent implements OnInit {
     console.log(this.listOfServer);
     if(this.listOfServer){
       let listOfServer: Server[];
+      listOfServer=this.listOfServer;
       this.tipoServicio = this.tipoServicio.filter(tipo => 
         !listOfServer.some(server => server.servicio === tipo)
       );
     }
+    console.log("this.tipoServicio");
     console.log(this.tipoServicio);
   }
 
