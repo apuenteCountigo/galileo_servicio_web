@@ -45,14 +45,6 @@ export class DataMinerFormComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    console.log("*****this.listOfServer");
-    console.log(this.listOfServer);
-    if(this.listOfServer){
-      let listOfServer: Server[];
-      this.tipoServicio = this.tipoServicio.filter(tipo => 
-        !listOfServer.some(server => server.servicio === tipo)
-      );
-    }
     if (this.serverToEdit) {
       this.button.label = 'EDITAR';
       this.button.icon = 'edit';
@@ -85,7 +77,16 @@ export class DataMinerFormComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("*****this.listOfServer");
+    console.log(this.listOfServer);
+    if(this.listOfServer){
+      let listOfServer: Server[];
+      this.tipoServicio = this.tipoServicio.filter(tipo => 
+        !listOfServer.some(server => server.servicio === tipo)
+      );
+    }
+  }
 
   checkForm() {
     return this.formModalServer.invalid ? true : false;
