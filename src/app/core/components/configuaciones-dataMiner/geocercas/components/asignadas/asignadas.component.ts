@@ -112,6 +112,15 @@ export class AsignadasComponent extends TableBase implements OnInit {
       : 'icon-class icon-size';
   }
 
+  isGeocercaIncomplete(geocerca: Asignadas): boolean {
+    return (
+      geocerca.bottomLeftLatitude === 'EMPTY' || geocerca.bottomLeftLatitude === '0' ||
+      geocerca.bottomLeftLongitude === 'EMPTY' || geocerca.bottomLeftLongitude === '0' ||
+      geocerca.topRightLatitude === 'EMPTY' || geocerca.topRightLatitude === '0' ||
+      geocerca.topRightLongitude === 'EMPTY' || geocerca.topRightLongitude === '0'
+    );
+  }
+
   changeGeocercaState(geocerca: Asignadas, index: number) {
     this.loadingSwitch[index] = true;
     console.log(":::::::::::::geocerca::::::");

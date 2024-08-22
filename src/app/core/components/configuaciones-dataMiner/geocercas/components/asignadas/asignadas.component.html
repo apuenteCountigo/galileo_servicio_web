@@ -21,9 +21,13 @@
           <td>{{ geocerca.topRightLatitude }}</td>
           <td>{{ geocerca.topRightLongitude }}</td>
           <!-- <td>{{ geocerca.activa? 'Activa':'Desactivada' }}</td> -->
-          <td>
+          <!-- <td>
             <nz-switch [(ngModel)]="geocerca.activa" [nzControl]="true" (click)="changeGeocercaState(geocerca, i)"
               [nzLoading]="loadingSwitch[i]" [disabled]="allowEdit"></nz-switch>
+          </td> -->
+          <td>
+            <nz-switch [(ngModel)]="geocerca.activa" [nzControl]="true" (click)="changeGeocercaState(geocerca, i)"
+              [nzLoading]="loadingSwitch[i]" [disabled]="allowEdit || isGeocercaIncomplete(geocerca)"></nz-switch>
           </td>
         </tr>
       </ng-container>
