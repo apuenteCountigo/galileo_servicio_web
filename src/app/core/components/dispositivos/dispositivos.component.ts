@@ -59,6 +59,13 @@ export class DispositivosComponent extends TableBase implements OnInit {
     this.loading = false;
   }
 
+  ngOnDestroy(): void {
+    if (this.idInterval) {
+      clearInterval(this.idInterval);
+      this.idInterval=null;
+    }
+  }
+
   loadData() {
     this.loading = true;
     this._objetivoService
