@@ -14,6 +14,7 @@ import { ButtonInterface } from '../../user/user-form/user-form.component';
 })
 export class DataMinerFormComponent implements OnInit {
   @Input() serverToEdit?: Server;
+  @Input() listOfServer?: Server[];
 
   formModalServer: FormGroup;
 
@@ -41,6 +42,8 @@ export class DataMinerFormComponent implements OnInit {
       viewIDs: ['', []],
       ruta: ['', []],
     });
+    console.log("*****this.listOfServer");
+    console.log(this.listOfServer);
   }
 
   ngAfterViewInit(): void {

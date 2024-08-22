@@ -118,6 +118,7 @@ export class ServidoresDataMinerComponent
       nzContent: DataMinerFormComponent,
       nzComponentParams: {
         serverToEdit: this.selectedServer,
+        listOfServer: this.listOfServer,
       },
     });
 
