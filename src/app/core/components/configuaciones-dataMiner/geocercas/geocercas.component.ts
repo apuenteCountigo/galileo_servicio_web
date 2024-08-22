@@ -43,6 +43,7 @@ export class GeocercasComponent implements OnInit, OnChanges, OnDestroy {
   estadoEnvio!: EstadoPeticionRequestDto;
 
   myInterval: any;
+  myGeoInterval: any;
 
   suscriptions: Array<any> = [];
 
@@ -56,6 +57,11 @@ export class GeocercasComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     if (this.myInterval) {
       clearInterval(this.myInterval);
+      this.myInterval=null;
+    }
+    if (this.myGeoInterval) {
+      clearInterval(this.myGeoInterval);
+      this.myGeoInterval=null;
     }
     this.suscriptions.forEach((s) => s.unsubscribe());
   }
@@ -119,6 +125,10 @@ export class GeocercasComponent implements OnInit, OnChanges, OnDestroy {
           if (!this.estadoEnvio) {
             this.loadEstadoConfig();
           }
+
+          if (!this.myGeoInterval) {
+            this.setGeocercasInterval();
+          }
         },
         error: (e) => {
           this.loading = false;
@@ -145,6 +155,16 @@ export class GeocercasComponent implements OnInit, OnChanges, OnDestroy {
         })
       );
     }, 10000);
+  }
+
+  setGeocercasInterval() {
+    this.myGeoInterval = setInterval(() => {
+      this.loadGeocerca();
+      alert(location.pathname);
+      // if(location.pathname)
+      // clearInterval(this.myInterval);
+      // this.myGeoInterval = null;
+    }, 60000);
   }
 
   onChange(event: boolean) {
