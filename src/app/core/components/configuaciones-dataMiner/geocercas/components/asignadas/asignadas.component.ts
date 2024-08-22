@@ -122,34 +122,36 @@ export class AsignadasComponent extends TableBase implements OnInit {
   }
 
   changeGeocercaState(geocerca: Asignadas, index: number) {
-    this.loadingSwitch[index] = true;
     console.log(":::::::::::::geocerca::::::");
     console.log(geocerca);
-    // this._geocercaService
-    //   .changeGeocercaState(geocerca, this.urlToReplace)
-    //   .subscribe({
-    //     next: (result) => {
-    //       this.loadingSwitch[index] = false;
-    //       geocerca.activa = !geocerca.activa;
-    //       this._notificationService.notificationSuccess(
-    //         'Confirmación',
-    //         'La petición para activar/desactivar la geocerca ha sido enviada a Dataminer.'
-    //       );
-    //       this.onEventChange.emit(true);
-    //     },
-    //     error: (e) => {
-    //       this.loadingSwitch[index] = false;
-    //       geocerca.activa
-    //         ? this._notificationService.notificationError(
-    //             'Error',
-    //             'No se ha activado la geocerca en Dataminer.'
-    //           )
-    //         : this._notificationService.notificationError(
-    //             'Error',
-    //             'No se ha desactivado la geocerca en Dataminer.'
-    //           );
-    //     },
-    //   });
+    if(!this.isGeocercaIncomplete(geocerca)){
+      this.loadingSwitch[index] = true;
+      this._geocercaService
+        .changeGeocercaState(geocerca, this.urlToReplace)
+        .subscribe({
+          next: (result) => {
+            this.loadingSwitch[index] = false;
+            geocerca.activa = !geocerca.activa;
+            this._notificationService.notificationSuccess(
+              'Confirmación',
+              'La petición para activar/desactivar la geocerca ha sido enviada a Dataminer.'
+            );
+            this.onEventChange.emit(true);
+          },
+          error: (e) => {
+            this.loadingSwitch[index] = false;
+            geocerca.activa
+              ? this._notificationService.notificationError(
+                  'Error',
+                  'No se ha activado la geocerca en Dataminer.'
+                )
+              : this._notificationService.notificationError(
+                  'Error',
+                  'No se ha desactivado la geocerca en Dataminer.'
+                );
+          },
+        });
+    }
   }
 
   removeGeocercas() {
