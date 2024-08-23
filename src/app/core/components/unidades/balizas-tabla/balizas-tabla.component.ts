@@ -10,6 +10,8 @@ import { LoggedUserService } from 'src/app/core/services/logged-user.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { TableBase } from 'src/app/core/utils/table.base';
 import { Baliza } from './../../../models/baliza.model';
+import { NzModalService } from 'ng-zorro-antd/modal';
+
 export interface SearchData {
   clave: string;
   marca: string;
@@ -53,7 +55,8 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
     private _balizaService: BalizaService,
     private _notificationService: NotificationService,
     private _loggedUserService: LoggedUserService,
-    private _estadoService: EstadoService
+    private _estadoService: EstadoService,
+    private modalService: NzModalService,
   ) {
     super();
   }
@@ -152,6 +155,18 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
 
   showAsignBalizas(): void {
     alert("showAsignBalizas");
+
+    const modalTitle = 'Asignar balizas';
+    const modalRef = this.modalService.create({
+      nzTitle: modalTitle,
+      nzStyle: { top: '20px', width: '600px' },
+      nzMaskClosable: false,
+      // nzContent: SelectOficialSaComponent,
+      // nzComponentParams: {
+      //   unidad: this.selectedUnit ? this.selectedUnit : null,
+      // },
+    });
+
     this.searchCriteria.unidad = -2;//this.selectedUnit.id;
     const userLogeado = this._loggedUserService.getLoggedUser();
     this.sort = { ...this.sort, fechaCreacion: 'DESC' };
