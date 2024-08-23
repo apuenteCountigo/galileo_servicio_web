@@ -31,14 +31,14 @@ export class SelectBalizasComponent
   extends TableBase
   implements OnInit, OnDestroy
 {
-  @Input() unidad!: Unit;
-  freeOficialList: Array<User> = [];
-  selectedOficialList: Array<User> = [];
-  filter = {
-    descripcion: '',
-    id: 0,
-    idTipoEntidad: 4,
-  };
+//   @Input() unidad!: Unit;
+//   freeOficialList: Array<User> = [];
+//   selectedOficialList: Array<User> = [];
+//   filter = {
+//     descripcion: '',
+//     id: 0,
+//     idTipoEntidad: 4,
+//   };
 
   searchCriteria: SearchData = {
     clave: '',
@@ -84,7 +84,7 @@ export class SelectBalizasComponent
 
   ngOnInit(): void {
     this.loading = true;
-    this.searchCriteria.unidad = this.unidad.id;
+    this.searchCriteria.unidad = -2;//this.unidad.id;
     this.suscriptions.push(
       this._estadoService.filterByType(this.filter).subscribe({
         next: (result) => {
