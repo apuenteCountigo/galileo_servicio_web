@@ -13,7 +13,7 @@
   <nz-form-item *ngIf="button.label == 'EDITAR'">
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="servicio">Servicio</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="servicioErrorTpl">
-      <label formControlName="servicio"></label>
+      <input type="text" nz-input formControlName="servicio" readonly/>
       <ng-template #servicioErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">Introduzca el servicio</ng-container>
       </ng-template>
