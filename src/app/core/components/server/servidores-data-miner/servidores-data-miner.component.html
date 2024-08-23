@@ -25,6 +25,7 @@
         <th id="serverPassword" nzColumnKey="password">Contraseña</th>
         <th id="serverdmaID" nzColumnKey="dmaID" [nzSortFn]="true">DMA ID</th>
         <th id="serverviewIDs" nzColumnKey="viewIDs" [nzSortFn]="true">ViewIDs</th>
+        <th id="serverruta" nzColumnKey="ruta" [nzSortFn]="true">Ruta</th>
       </tr>
     </thead>
     <tbody>
@@ -40,6 +41,7 @@
           <td>{{ server.password! | passwordMask}}</td>
           <td>{{ server.dmaID }}</td>
           <td>{{ server.viewIDs }}</td>
+          <td>{{ server.ruta }}</td>
         </tr>
       </ng-container>
     </tbody>

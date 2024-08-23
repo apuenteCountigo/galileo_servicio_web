@@ -78,8 +78,6 @@ export class DataMinerFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("*****this.listOfServer");
-    console.log(this.listOfServer);
     if(this.listOfServer){
       let listOfServer: Server[];
       listOfServer=this.listOfServer;
@@ -87,8 +85,6 @@ export class DataMinerFormComponent implements OnInit {
         !listOfServer.some(server => server.servicio === tipo)
       );
     }
-    console.log("this.tipoServicio");
-    console.log(this.tipoServicio);
   }
 
   checkForm() {
