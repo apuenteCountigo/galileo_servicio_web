@@ -40,7 +40,7 @@ export class DataMinerFormComponent implements OnInit {
       password: ['', [Validators.required]],
       dmaID: ['', []],
       viewIDs: ['', []],
-      ruta: ['', []],
+      ruta: ['', [Validators.required]],
     });
   }
 
