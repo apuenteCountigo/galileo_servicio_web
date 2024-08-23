@@ -152,11 +152,11 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
 
   showAsignBalizas(): void {
     alert("showAsignBalizas");
-    this.searchCriteria.unidad = this.selectedUnit.id;
+    this.searchCriteria.unidad = -2;//this.selectedUnit.id;
     const userLogeado = this._loggedUserService.getLoggedUser();
     this.sort = { ...this.sort, fechaCreacion: 'DESC' };
     this._balizaService
-      .search(this.searchCriteria, this.params2, this.sort)
+      .search(this.searchCriteria, this.params, this.sort)
       .subscribe({
         next: (relations: PagedResourceCollection<any>) => {
           // this.loading = false;
