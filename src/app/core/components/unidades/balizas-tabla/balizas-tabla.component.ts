@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { TableBase } from 'src/app/core/utils/table.base';
 import { Baliza } from './../../../models/baliza.model';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { SelectBalizasComponent } from '../../unit/select-balizas/select-balizas.component';
 
 export interface SearchData {
   clave: string;
@@ -161,7 +162,7 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
       nzTitle: modalTitle,
       nzStyle: { top: '20px', width: '600px' },
       nzMaskClosable: false,
-      // nzContent: SelectOficialSaComponent,
+      nzContent: SelectBalizasComponent,
       // nzComponentParams: {
       //   unidad: this.selectedUnit ? this.selectedUnit : null,
       // },
