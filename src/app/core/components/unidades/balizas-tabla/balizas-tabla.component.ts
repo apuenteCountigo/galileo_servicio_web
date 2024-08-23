@@ -42,6 +42,7 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
   };
 
   listOfBalizas: Baliza[] = [];
+  listUnAsigned: Baliza[] = [];
 
   selectedBaliza: any | null;
 
@@ -146,6 +147,10 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
       this.selectedBaliza = null;
       this.isBalizaDisponible = false;
     }
+  }
+
+  showAsignBalizas(): void {
+    alert("showAsignBalizas");
   }
 
   removeBalizaToGeneralStock(): void {

@@ -72,7 +72,7 @@
 <ng-template #extraTemplate>
   <div nz-row [nzGutter]="24">
     <div nz-col class="gutter-row" [nzSpan]="7" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN]">
-      <button nz-button nzType="text" nzSize="large" (click)="alert('TEST')" nz-tooltip
+      <button nz-button nzType="text" nzSize="large" (click)="showAsignBalizas()" nz-tooltip
         [disabled]="this.isBalizaDisponible == true" nzTooltipTitle="Asignar balizas">
         <em nz-icon nzType="container" nzTheme="outline" [class]="setStyleClassIcon()"></em>
       </button>
