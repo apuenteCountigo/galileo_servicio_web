@@ -197,10 +197,11 @@ export class SelectBalizasComponent
 //   }
 
   checkFormValidity() {
-    return this.statusRelationForm.invalid ||
-      this.selectedOficialList.length == 0
-      ? true
-      : false;
+    return true;
+    // this.statusRelationForm.invalid ||
+    //   this.selectedOficialList.length == 0
+    //   ? true
+    //   : false;
   }
 
   onSearchFilterGuest() {
