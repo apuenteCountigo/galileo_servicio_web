@@ -50,6 +50,7 @@ export class SelectBalizasComponent
   };
 
   listUnAsigned: Baliza[] = [];
+  selectedBalizasList: Baliza[] = [];
 
   estados!: Array<Estado>;
   defaultState?: Estado;
@@ -199,11 +200,10 @@ export class SelectBalizasComponent
 //   }
 
   checkFormValidity() {
-    return true;
-    // this.statusRelationForm.invalid ||
-    //   this.selectedOficialList.length == 0
-    //   ? true
-    //   : false;
+    return this.statusRelationForm.invalid ||
+      this.selectedBalizasList.length == 0
+      ? true
+      : false;
   }
 
   onSearchFilterGuest() {
@@ -234,17 +234,17 @@ export class SelectBalizasComponent
     this.resetForm();
   }
 
-//   onItemChecked(user: User, checked: boolean): void {
-//     // this.updateCheckedSet(id, checked);
-//     if (checked) {
-//       this.expandSet.add(user.id);
-//       this.selectedOficialList.push(user);
-//     } else {
-//       this.expandSet.delete(user.id);
-//       const index = this.selectedOficialList.findIndex(
-//         (so) => so.id == user.id
-//       );
-//       this.selectedOficialList.splice(index, 1);
-//     }
-//   }
+  onItemChecked(baliza: Baliza, checked: boolean): void {
+    // this.updateCheckedSet(id, checked);
+    if (checked) {
+      this.expandSet.add(baliza.id);
+      this.selectedBalizasList.push(baliza);
+    } else {
+      this.expandSet.delete(baliza.id);
+      const index = this.selectedBalizasList.findIndex(
+        (so) => so.id == baliza.id
+      );
+      this.selectedBalizasList.splice(index, 1);
+    }
+  }
 }
