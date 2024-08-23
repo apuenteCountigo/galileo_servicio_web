@@ -26,6 +26,11 @@ export class TableBase {
     size: this.pageSize,
   };
 
+  params2: PageParam = {
+    page: this.pageIndex - 2,
+    size: this.pageSize,
+  };
+
   constructor() {}
 
   showModal() {}

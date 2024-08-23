@@ -105,6 +105,7 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
     this.params.size = pageSize;
     this.onSearchUnitOfBalizas();
   }
+
   onSearchUnitOfBalizas(): void {
     this.searchCriteria.unidad = this.selectedUnit.id;
 
@@ -151,6 +152,26 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
 
   showAsignBalizas(): void {
     alert("showAsignBalizas");
+    this.searchCriteria.unidad = this.selectedUnit.id;
+    const userLogeado = this._loggedUserService.getLoggedUser();
+    this.sort = { ...this.sort, fechaCreacion: 'DESC' };
+    this._balizaService
+      .search(this.searchCriteria, this.params2, this.sort)
+      .subscribe({
+        next: (relations: PagedResourceCollection<any>) => {
+          // this.loading = false;
+          this.listUnAsigned = [...relations.resources];
+          //this.totalOfic = relations.totalElements;
+        },
+        error: (err) => {
+          // this.loading = false;
+          this.listUnAsigned = [];
+          this._notificationService.notificationError(
+            'Error',
+            'Ha ocurrido un error al cargar las balizas.'
+          );
+        },
+      });
   }
 
   removeBalizaToGeneralStock(): void {
