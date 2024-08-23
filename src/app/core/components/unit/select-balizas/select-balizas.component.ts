@@ -139,20 +139,20 @@ export class SelectBalizasComponent
     // );
   }
 
-//   override onQueryParamsChange(params: NzTableQueryParams): void {
-//     const { pageSize, pageIndex, sort } = params;
-//     this.sort = {} as Sort;
-//     sort.forEach((s) => {
-//       if (s.value) {
-//         this.sort[s.key] = s.value == 'ascend' ? 'ASC' : 'DESC';
-//       }
-//     });
+  override onQueryParamsChange(params: NzTableQueryParams): void {
+    const { pageSize, pageIndex, sort } = params;
+    this.sort = {} as Sort;
+    sort.forEach((s) => {
+      if (s.value) {
+        this.sort[s.key] = s.value == 'ascend' ? 'ASC' : 'DESC';
+      }
+    });
 
-//     this.params.page = pageIndex - 1;
-//     this.params.size = pageSize;
+    this.params.page = pageIndex - 1;
+    this.params.size = pageSize;
 
-//     this.loadData();
-//   }
+    this.loadData();
+  }
 
 //   selectStatusChange(event: any) {
 //     if (event) {
@@ -177,27 +177,28 @@ export class SelectBalizasComponent
     this.modalRef.close({ accion: FrmActions.CANCELAR });
   }
 
-//   assignUsers() {
-//     let dateFinal;
-//     if (this.isGuestStatus) {
-//       dateFinal = formatISO(
-//         this.statusRelationForm.value.fecha.setHours(23, 59, 59)
-//       );
-//       dateFinal = dateFinal.slice(0, -6);
-//     }
-//     this.modalRef.close({
-//       accion: FrmActions.ASIGNAR,
-//       data: {
-//         usuarios: this.selectedOficialList,
-//         unidad: this.unidad,
-//         estado: this.statusRelationForm.value.estado,
-//         expira: this.statusRelationForm.value.fecha
-//           ? // ? formatISO(this.statusRelationForm.value.fecha)
-//             dateFinal
-//           : '',
-//       },
-//     });
-//   }
+  assignUsers() {
+    alert('ASIGNAR BALIZAS');
+    // let dateFinal;
+    // if (this.isGuestStatus) {
+    //   dateFinal = formatISO(
+    //     this.statusRelationForm.value.fecha.setHours(23, 59, 59)
+    //   );
+    //   dateFinal = dateFinal.slice(0, -6);
+    // }
+    // this.modalRef.close({
+    //   accion: FrmActions.ASIGNAR,
+    //   data: {
+    //     usuarios: this.selectedOficialList,
+    //     unidad: this.unidad,
+    //     estado: this.statusRelationForm.value.estado,
+    //     expira: this.statusRelationForm.value.fecha
+    //       ? // ? formatISO(this.statusRelationForm.value.fecha)
+    //         dateFinal
+    //       : '',
+    //   },
+    // });
+  }
 
   checkFormValidity() {
     return this.statusRelationForm.invalid ||
