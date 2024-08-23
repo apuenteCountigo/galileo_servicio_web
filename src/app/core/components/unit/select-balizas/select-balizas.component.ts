@@ -10,7 +10,6 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { FrmActions } from 'src/app/core/enums/form-acctios';
 import { UserService } from 'src/app/core/services/user.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
-import { Sort } from '@lagoshny/ngx-hateoas-client';
 import { Unit } from 'src/app/core/models/unit.model';
 
 import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';

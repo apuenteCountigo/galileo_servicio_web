@@ -29,6 +29,7 @@ import { WizardPositionsComponent } from '../../components/objetivos/wizard-posi
 import { StringListPipe } from '../../pipes/string-list.pipe';
 import { InformeTablaComponent } from '../../components/objetivos/informe-tabla/informe-tabla.component';
 import { SelectOficialSaComponent } from '../../components/unit/select-oficial-sa/select-oficial-sa.component';
+import { SelectBalizasComponent } from '../../components/unit/select-balizas/select-balizas.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { SelectOficialSaComponent } from '../../components/unit/select-oficial-s
     StringListPipe,
     InformeTablaComponent,
     SelectOficialSaComponent,
+    SelectBalizasComponent,
   ],
   imports: [
     CommonModule,
