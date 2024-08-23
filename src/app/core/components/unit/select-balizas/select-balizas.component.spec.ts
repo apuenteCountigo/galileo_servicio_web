@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectBalizasComponent } from './select-oficial-sa.component';
 import { SelectBalizasComponent } from './select-balizas.component';
 
 describe('SelectBalizasComponent', () => {
