@@ -16,7 +16,7 @@ import { Unit } from 'src/app/core/models/unit.model';
 import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
 import { LoggedUserService } from 'src/app/core/services/logged-user.service';
 import { BalizaService } from 'src/app/core/services/baliza.service';
-
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 import { formatISO } from 'date-fns';
 import { SearchData } from '../../unidades/balizas-tabla/balizas-tabla.component';
