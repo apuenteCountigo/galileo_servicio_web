@@ -77,7 +77,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
       ],
       tipoBaliza: ['', []],
       marca: ['', [Validators.required, Validators.maxLength(11)]],
-      idModeloBaliza: ['', [Validators.required, Validators.maxLength(11)]],
+      // idModeloBaliza: ['', [Validators.required, Validators.maxLength(11)]],
       numSerie: ['', [Validators.required, Validators.maxLength(50)]],
       coordenada: ['', []],
       telefono: ['', [Validators.required, Validators.pattern]],
@@ -154,10 +154,10 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
       );
       this.formModalBaliza.controls['marca'].setValue(this.balizaToEdit!.marca);
       this.formModalBaliza.controls['marca'].disable();
-      this.formModalBaliza.controls['modelo'].setValue(
-        this.balizaToEdit!.idModeloBaliza
-      );
-      this.formModalBaliza.controls['modelo'].disable();
+      // this.formModalBaliza.controls['modelo'].setValue(
+      //   this.balizaToEdit!.idModeloBaliza
+      // );
+      // this.formModalBaliza.controls['modelo'].disable();
       this.formModalBaliza.controls['numSerie'].setValue(
         this.balizaToEdit!.numSerie
       );
@@ -229,9 +229,9 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     newBaliza.marca = this.formModalBaliza.value.marca
       ? this.formModalBaliza.value.marca
       : this.balizaToEdit?.clave;
-    newBaliza.idModeloBaliza = this.formModalBaliza.value.modelo
-      ? this.formModalBaliza.value.modelo
-      : this.balizaToEdit?.idModeloBaliza;
+    // newBaliza.idModeloBaliza = this.formModalBaliza.value.modelo
+      // ? this.formModalBaliza.value.modelo
+      // : this.balizaToEdit?.idModeloBaliza;
     newBaliza.numSerie = this.formModalBaliza.value.numSerie
       ? this.formModalBaliza.value.numSerie
       : this.balizaToEdit?.numSerie;
