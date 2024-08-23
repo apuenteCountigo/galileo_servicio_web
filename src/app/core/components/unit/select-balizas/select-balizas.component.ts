@@ -85,16 +85,16 @@ export class SelectBalizasComponent
   ngOnInit(): void {
     this.loading = true;
     this.searchCriteria.unidad = -2;//this.unidad.id;
-    this.suscriptions.push(
-      this._estadoService.filterByType(this.filter).subscribe({
-        next: (result) => {
-          this.estados = [...result.resources];
-          this.defaultState = this.estados.find(
-            (e) => e.descripcion == EstadosUser.PERMANENTE
-          );
-        },
-      })
-    );
+    // this.suscriptions.push(
+    //   this._estadoService.filterByType(this.filter).subscribe({
+    //     next: (result) => {
+    //       this.estados = [...result.resources];
+    //       this.defaultState = this.estados.find(
+    //         (e) => e.descripcion == EstadosUser.PERMANENTE
+    //       );
+    //     },
+    //   })
+    // );
   }
 
   ngOnDestroy(): void {
