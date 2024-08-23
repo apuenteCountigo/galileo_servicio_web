@@ -1,5 +1,5 @@
 <form nz-form [formGroup]="formModalServer">
-  <nz-form-item *ngIf="button.label = 'AGREGAR'">
+  <nz-form-item *ngIf="button.label == 'AGREGAR'">
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="servicio">Servicio</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="servicioErrorTpl">
       <nz-select formControlName="servicio" nzPlaceHolder="Servicio" (ngModelChange)="updateValidators()">
@@ -10,7 +10,7 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item *ngIf="button.label = 'EDITAR'">
+  <nz-form-item *ngIf="button.label == 'EDITAR'">
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="servicio">Servicio</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="servicioErrorTpl">
       <label formControlName="servicio"></label>
