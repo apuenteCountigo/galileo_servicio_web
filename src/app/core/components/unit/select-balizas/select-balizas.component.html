@@ -1,6 +1,179 @@
-<nz-card nzSize="default" >
-    <b>Prueba</b>
+<!-- <nz-card style="margin-bottom: 20px" nzSize="default">
+    <form [formGroup]="statusRelationForm">
+      <nz-form-item>
+        <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="estado">Estado</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="errorEstadoRel">
+          <nz-select formControlName="estado" nzPlaceHolder="Seleccionar estado" [(ngModel)]="defaultState"
+            (ngModelChange)="selectStatusChange($event)">
+            <nz-option *ngFor="let estado of estados" [nzValue]="estado" [nzLabel]="estado.descripcion!">
+            </nz-option>
+          </nz-select>
+          <ng-template #errorEstadoRel let-control>
+            <ng-container *ngIf="control.hasError('required')">Debe seleccionar el estado de la relación</ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item *ngIf="isGuestStatus">
+        <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="fecha">Fecha de expiración</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="errorFechaRel">
+          <nz-date-picker formControlName="fecha" [nzDisabledDate]="disabledDate" style="width: 250px;"></nz-date-picker>
+          <ng-template #errorFechaRel let-control>
+            <ng-container *ngIf="control.hasError('required')">Debe seleccionar la fecha de expiración
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-card> -->
+  
+  <!-- <nz-card *ngIf="showSearchForm" nzTitle="Búsqueda" style="margin-bottom: 20px" [nzExtra]="extraTemplateSearch"
+    nzSize="default">
+    <nz-row nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <input nz-input placeHolder="Tip" [(ngModel)]="searchCriteria.tip" />
+        </div>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <input nz-input placeHolder="Nombre" [(ngModel)]="searchCriteria.nombre" />
+        </div>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <div class="inner-box">
+          <input nz-input placeHolder="Apellidos" [(ngModel)]="searchCriteria.apellidos" />
+        </div>
+      </div>
+    </nz-row>
+  </nz-card> -->
+  
+  
+  <nz-card nzSize="default" [nzExtra]="extraTemplate">
+    <nz-table #headerTable nzShowSizeChanger [nzData]="listUnAsigned" [nzFrontPagination]="false" [nzLoading]="loading"
+      [nzTotal]="total" [nzScroll]="{ x: '240px', y: '300px' }" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+      (nzQueryParams)="onQueryParamsChange($event)">
+      <thead>
+        <tr>
+          <th id="unasingnedBalizaSelect" nzWidth="35px" [nzLeft]="true"></th>
+          <th id="balizaClave" nzColumnKey="clave" [nzSortFn]="true">Clave</th>
+          <th id="balizaMarca" nzColumnKey="marca" [nzSortFn]="true">Marca</th>
+          <th id="balizaPuerto" nzColumnKey="puerto" [nzSortFn]="true">Puerto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let bl of listUnAsigned">
+          <tr>
+            <td [nzChecked]="expandSet.has(bl.id)" (nzCheckedChange)="onItemChecked(bl, $event)">
+            </td>
+            <td>{{ bl.clave }}</td>
+            <td>{{ bl.marca }}</td>
+            <td>{{ bl.puerto }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </nz-table>
     <div *nzModalFooter>
-      <button nz-button >Cancelar</button>
+      <button nz-button nzType="default" (click)="cancelForm()">Cancelar</button>
+      <button nz-button nzType="primary" (click)="assignUsers()" [disabled]="checkFormValidity()">Asignar</button>
     </div>
   </nz-card>
+  
+  <ng-template #noResult>
+    <nz-empty [nzNotFoundContent]="contentTpl"></nz-empty>
+    <ng-template #contentTpl>
+      <h5 nz-typography nzType="secondary">No existen datos</h5>
+    </ng-template>
+  </ng-template>
+  
+  
+  <ng-template #extraTemplate>
+    <div nz-row nzJustify="end">
+      <div *ngIf="!showSearchForm" nz-col class="gutter-row">
+        <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
+          nzTooltipTitle="Filtros de búsqueda">
+          <em nz-icon nzType="filter" nzTheme="outline" [class]="'icon-class'"></em>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+  
+  <ng-template #extraTemplateSearch>
+    <div nz-row [nzGutter]="24" nzJustify="end">
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <button nz-button nzType="text" nzShape="circle" (click)="onSearchFilterGuest()"
+          [disabled]="isNullSearchGestForm()" nz-tooltip nzTooltipTitle="Buscar">
+          <em nz-icon nzType="search" nzTheme="outline" [class]="setIconClass()"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <button nz-button nzType="text" nzShape="circle" (click)="resetForm()" [disabled]="isNullSearchGestForm()"
+          nz-tooltip nzTooltipTitle="Limpiar">
+          <em nz-icon nzType="clear" nzTheme="outline" [class]="setIconClass()"></em>
+        </button>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="8">
+        <button nz-button nzType="text" nzShape="circle" (click)="closeSearchForm()" nz-tooltip nzTooltipTitle="Cerrar">
+          <em nz-icon nzType="close" nzTheme="outline" [class]="'icon-class'"></em>
+        </button>
+      </div>
+    </div>
+  </ng-template>
+  
+  <!-- <ng-template #cardHeaderTpl>
+    <form [formGroup]="searchGestOficialsForm">
+      <nz-row nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+        <div nz-col class="gutter-row" [nzSpan]="10">
+          <div class="inner-box">
+            <nz-form-item>
+              <nz-form-control>
+                <input nz-input placeHolder="Tip" formControlName="tip" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="2">
+          <div class="inner-box">
+            <button nz-button nzType="primary" nzSize="small" (click)="onSearchFilterGuest()"
+              [disabled]="isNullSearchGestForm()" nz-tooltip nzTooltipTitle="Buscar">
+              <em nz-icon nzType="search" nzTheme="outline"></em>
+            </button>
+          </div>
+        </div>
+        <div nz-col class="gutter-row" [nzSpan]="2">
+          <div class="inner-box">
+            <button nz-button nzType="primary" nzSize="small" (click)="resetForm()" [disabled]="isNullSearchGestForm()"
+              nz-tooltip nzTooltipTitle="Limpiar">
+              <em nz-icon nzType="clear" nzTheme="outline"></em>
+            </button>
+          </div>
+        </div>
+      </nz-row>
+    </form>
+    <form [formGroup]="statusRelationForm">
+      <nz-form-item *ngIf="isGuestStatus">
+        <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="fecha">Fecha de expiración</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="errorFechaRel">
+          <nz-date-picker formControlName="fecha" [nzDisabledDate]="disabledDate"></nz-date-picker>
+          <ng-template #errorFechaRel let-control>
+            <ng-container *ngIf="control.hasError('required')">Debe seleccionar la fecha de expiración
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="estado">Estado</nz-form-label>
+        <nz-form-control [nzSpan]="12" [nzErrorTip]="errorEstadoRel" nzHasFeedback>
+          <nz-select formControlName="estado" nzPlaceHolder="Seleccionar estado"
+            ((ngModel)Change)="selectStatusChange($event)">
+            <nz-option *ngFor="let estado of estados" [nzValue]="estado" [nzLabel]="estado.descripcion!">
+            </nz-option>
+          </nz-select>
+          <ng-template #errorEstadoRel let-control>
+            <ng-container *ngIf="control.hasError('required')">Debe seleccionar el estado de la relación</ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </ng-template> -->
+  

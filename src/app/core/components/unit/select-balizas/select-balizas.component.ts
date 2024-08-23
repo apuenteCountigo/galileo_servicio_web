@@ -84,7 +84,9 @@ export class SelectBalizasComponent
 
   ngOnInit(): void {
     this.loading = true;
-    this.searchCriteria.unidad = -2;//this.unidad.id;
+    this.searchCriteria.unidad = -2;
+    this.loadData();
+    //this.unidad.id;
     // this.suscriptions.push(
     //   this._estadoService.filterByType(this.filter).subscribe({
     //     next: (result) => {
