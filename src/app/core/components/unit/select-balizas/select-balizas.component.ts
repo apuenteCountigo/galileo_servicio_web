@@ -113,13 +113,15 @@ export class SelectBalizasComponent
       .search(this.searchCriteria, this.params, this.sort)
       .subscribe({
         next: (relations: PagedResourceCollection<any>) => {
-          // this.loading = false;
-          this.listUnAsigned = [...relations.resources];
-          //this.totalOfic = relations.totalElements;
+            // this.loading = false;
+            this.listUnAsigned = [...relations.resources];
+            this.loading = false;
+            //this.totalOfic = relations.totalElements;
         },
         error: (err) => {
           // this.loading = false;
           this.listUnAsigned = [];
+          this.loading = false;
           this._notificationService.notificationError(
             'Error',
             'Ha ocurrido un error al cargar las balizas.'
