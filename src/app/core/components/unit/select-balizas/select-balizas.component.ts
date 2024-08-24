@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ElementRef } from '@angular/core';
 import { Estado } from 'src/app/core/models/estado.model';
 import { User } from 'src/app/core/models/users.model';
 import { EstadoService } from 'src/app/core/services/estado.service';
@@ -7,6 +7,7 @@ import { differenceInCalendarDays } from 'date-fns';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Estados, EstadosUser } from 'src/app/core/enums/estados.enum';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { FrmActions } from 'src/app/core/enums/form-acctios';
 import { UserService } from 'src/app/core/services/user.service';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
@@ -70,6 +71,7 @@ export class SelectBalizasComponent
     private _balizaService: BalizaService,
     private _notificationService: NotificationService,
     private _loggedUserService: LoggedUserService,
+    private modalService: NzModalService,
     private _estadoService: EstadoService,
     private _userService: UserService,
     private fb: FormBuilder,
@@ -179,28 +181,71 @@ export class SelectBalizasComponent
     this.modalRef.close({ accion: FrmActions.CANCELAR });
   }
 
-  assignUsers() {
+  async assignUsers() {
     alert('ASIGNAR BALIZAS:: '+this.unidad.denominacion);
-    // this._balizaService.
-    // let dateFinal;
-    // if (this.isGuestStatus) {
-    //   dateFinal = formatISO(
-    //     this.statusRelationForm.value.fecha.setHours(23, 59, 59)
-    //   );
-    //   dateFinal = dateFinal.slice(0, -6);
+    this.modalService.confirm({
+      nzTitle: 'Confirmación',
+      nzContent: `Está seguro que desea asignar las balizas seleccionadas a la unidad ${
+        this.unidad.denominacion
+      }?`,
+      nzOnOk: () => {
+        for (const baliza of this.selectedBalizasList) {
+          baliza.unidades!.id=this.unidad.id;
+          this.suscriptions.push(
+            this._balizaService.put(baliza).subscribe({
+              next: () => {
+                console.log(":::::baliza put::::");
+                console.log(baliza);
+                
+                // this._notificationService.notificationSuccess(
+                //   'Información',
+                //   'Se ha eliminado la baliza correctamente'
+                // );
+                // this.loadData();
+              },
+              error: (error) => {
+                console.error(error);
+                
+                // this.resetSelection();
+  
+                // this.handleErrorMessage(
+                //   error,
+                //   'Ocurrió un error al eliminar la baliza'
+                // );
+              },
+            })
+          );
+        }
+        this.loadData();
+      },
+      nzOnCancel: ()=>{
+        alert('cancelado');
+      }
+    });
+    // for await (const el of this.selectedBalizasList) {
+    //   console.log("*****el***");
+    //   console.log(el);
+      
     // }
-    // this.modalRef.close({
-    //   accion: FrmActions.ASIGNAR,
-    //   data: {
-    //     usuarios: this.selectedOficialList,
-    //     unidad: this.unidad,
-    //     estado: this.statusRelationForm.value.estado,
-    //     expira: this.statusRelationForm.value.fecha
-    //       ? // ? formatISO(this.statusRelationForm.value.fecha)
-    //         dateFinal
-    //       : '',
-    //   },
-    // });
+    // this._balizaService
+    //   .put()
+    //   .subscribe({
+    //     next: (relations: PagedResourceCollection<any>) => {
+    //         // this.loading = false;
+    //         this.listUnAsigned = [...relations.resources];
+    //         this.loading = false;
+    //         //this.totalOfic = relations.totalElements;
+    //     },
+    //     error: (err) => {
+    //       // this.loading = false;
+    //       this.listUnAsigned = [];
+    //       this.loading = false;
+    //       this._notificationService.notificationError(
+    //         'Error',
+    //         'Ha ocurrido un error al cargar las balizas.'
+    //       );
+    //     },
+    //   });
   }
 
   checkFormValidity() {
