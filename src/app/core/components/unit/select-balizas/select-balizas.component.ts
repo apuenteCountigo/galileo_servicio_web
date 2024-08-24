@@ -18,10 +18,10 @@ import { LoggedUserService } from 'src/app/core/services/logged-user.service';
 import { BalizaService } from 'src/app/core/services/baliza.service';
 import { NzCardModule } from 'ng-zorro-antd/card';
 
-import { formatISO } from 'date-fns';
 import { SearchData } from '../../unidades/balizas-tabla/balizas-tabla.component';
 import { Baliza } from 'src/app/core/models/baliza.model';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { BalizaPayload } from './balizaPayload';
 
 @Component({
   selector: 'app-select-balizas',
@@ -190,8 +190,10 @@ export class SelectBalizasComponent
       }?`,
       nzOnOk: () => {
         for (const baliza of this.selectedBalizasList) {
-          const newBaliza = { ...baliza };
-          newBaliza.unidades=this.unidad;
+          let newBaliza:BalizaPayload; 
+          newBaliza= { ...baliza };
+          newBaliza.unidades={...this.unidad};
+          //delete newBaliza.unidades._links;
 
           console.log("newBaliza.unidades");
           console.log(newBaliza.unidades);
