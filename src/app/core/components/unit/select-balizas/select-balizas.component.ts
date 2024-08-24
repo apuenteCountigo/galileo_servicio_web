@@ -142,6 +142,7 @@ export class SelectBalizasComponent
   }
 
   override onQueryParamsChange(params: NzTableQueryParams): void {
+    console.log("onQueryParamsChange");
     const { pageSize, pageIndex, sort } = params;
     this.sort = {} as Sort;
     sort.forEach((s) => {
@@ -249,5 +250,7 @@ export class SelectBalizasComponent
       );
       this.selectedBalizasList.splice(index, 1);
     }
+    console.log("******selectedBalizasList");
+    console.log(this.selectedBalizasList);
   }
 }
