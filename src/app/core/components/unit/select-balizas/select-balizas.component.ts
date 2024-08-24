@@ -191,8 +191,37 @@ export class SelectBalizasComponent
       nzOnOk: () => {
         for (const baliza of this.selectedBalizasList) {
           let newBaliza:BalizaPayload; 
-          newBaliza= { ...baliza };
-          newBaliza.unidades={...this.unidad};
+          newBaliza= {
+            id: baliza.id,
+            clave: baliza.clave,
+            tipoBaliza: baliza.tipoBaliza,
+            marca: baliza.marca,
+            idModeloBaliza: baliza.idModeloBaliza,
+            numSerie: baliza.numSerie,
+            tipoCoordenada: baliza.tipoCoordenada,
+            imei: baliza.imei,
+            telefono1: baliza.telefono1,
+            compania: baliza.compania,
+            tipoContrato: baliza.tipoContrato,
+            pin1: baliza.pin1,
+            pin2: baliza.pin2,
+            puk: baliza.puk,
+            iccTarjeta: baliza.iccTarjeta,
+            fechaAlta: baliza.fechaAlta,
+            fechaAsignaUni: baliza.fechaAsignaUni,
+            fechaAsignaOp: baliza.fechaAsignaOp,
+            estados: baliza.estados,
+            idDataminer: baliza.idDataminer,
+            idElement: baliza.idElement,
+            serverIp: baliza.serverIp,
+            puerto: baliza.puerto,
+            unidades: this.unidad,
+            operacion: baliza.operacion,
+            notas: baliza.notas,
+            servidor: baliza.servidor,
+            objetivo: baliza.objetivo,
+          };
+          // newBaliza.unidades={...this.unidad};
           //delete newBaliza.unidades._links;
 
           console.log("newBaliza.unidades");
