@@ -49,7 +49,7 @@
   
   
   <nz-card nzSize="default" [nzExtra]="extraTemplate">
-    <nz-table #headerTable nzShowSizeChanger [nzData]="listUnAsigned" [nzFrontPagination]="false" [nzLoading]="loading"
+    <nz-table #headerTable nzShowSizeChanger [nzData]="listUnAsigned" [nzFrontPagination]="true" [nzLoading]="loading"
       [nzTotal]="total" [nzScroll]="{ x: '240px', y: '300px' }" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
       (nzQueryParams)="onQueryParamsChange($event)">
       <thead>

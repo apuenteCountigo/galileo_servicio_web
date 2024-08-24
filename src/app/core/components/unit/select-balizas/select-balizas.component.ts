@@ -151,7 +151,7 @@ export class SelectBalizasComponent
     });
 
     this.params.page = pageIndex - 1;
-    this.params.size = pageSize;
+    this.params.size = 2;//pageSize;
 
     this.loadData();
   }
