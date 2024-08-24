@@ -22,6 +22,7 @@ import { SearchData } from '../../unidades/balizas-tabla/balizas-tabla.component
 import { Baliza } from 'src/app/core/models/baliza.model';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { BalizaPayload } from './balizaPayload';
+import { NomencladoresRoutingModule } from 'src/app/core/pages/nomencladores/nomencladores-routing.module';
 
 @Component({
   selector: 'app-select-balizas',
@@ -190,20 +191,21 @@ export class SelectBalizasComponent
       }?`,
       nzOnOk: () => {
         for (const baliza of this.selectedBalizasList) {
-          let newBaliza:BalizaPayload ={...baliza};
+          let newBaliza ={...baliza};
+          delete newBaliza.unidades;
           newBaliza.unidades={
-              provincia: this.unidad.provincia || undefined,
-              denominacion: this.unidad.denominacion || '',
-              oficialResponsable: this.unidad.oficialResponsable || undefined,
-              usuarios:this.unidad.usuarios || undefined,
-              groupWise: this.unidad.groupWise || '',
-              telefono: this.unidad.telefono || '',
-              email: this.unidad.email || '',
-              direccion: this.unidad.direccion || '',
-              codigoPostal: this.unidad.codigoPostal || '',
-              localidad: this.unidad.localidad || '',
-              notas: this.unidad.notas || '',
-              id: this.unidad.id
+              provincia: this.unidad?.provincia || undefined,
+              denominacion: this.unidad?.denominacion || '',
+              oficialResponsable: this.unidad?.oficialResponsable || undefined,
+              usuarios:this.unidad?.usuarios || undefined,
+              groupWise: this.unidad?.groupWise || '',
+              telefono: this.unidad?.telefono || '',
+              email: this.unidad?.email || '',
+              direccion: this.unidad?.direccion || '',
+              codigoPostal: this.unidad?.codigoPostal || '',
+              localidad: this.unidad?.localidad || '',
+              notas: this.unidad?.notas || '',
+              id: this.unidad!.id
           };
           // newBaliza= {
           //   id: baliza.id,
