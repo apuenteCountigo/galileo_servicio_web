@@ -99,7 +99,6 @@ export class EvidenceService extends HateoasResourceOperation<Position> {
     idAuth: number,
     zipPath: string = this.TEMP_ZIP_PATH
   ) {
-    console.log(zipPath);
 
     return this.http.get(this.API_URL_DESCARGA_ZIP, {
       params: { idAuth, zipPath },

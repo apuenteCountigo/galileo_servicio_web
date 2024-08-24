@@ -140,8 +140,6 @@ export class ConfiguracionGpsComponent implements OnInit, OnChanges, OnDestroy {
             this.configWriteGPS = value.filter(
               (config: { Type: string }) => config.Type == 'Write'
             );    
-            console.log(this.configReadGPS);
-                    
             this.cargarDatosApi();
             emitir ? this.loadingGeneral.emit(false) : null;
           },

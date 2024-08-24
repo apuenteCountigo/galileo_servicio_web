@@ -145,7 +145,6 @@ export class SelectBalizasComponent
   }
 
   override onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log("onQueryParamsChange");
     const { pageSize, pageIndex, sort } = params;
     this.sort = {} as Sort;
     sort.forEach((s) => {
@@ -185,7 +184,6 @@ export class SelectBalizasComponent
   }
 
   async assignUsers() {
-    alert('ASIGNAR BALIZAS:: '+this.unidad.denominacion);
     this.modalService.confirm({
       nzTitle: 'Confirmación',
       nzContent: `Está seguro que desea asignar las balizas seleccionadas a la unidad ${
@@ -211,14 +209,9 @@ export class SelectBalizasComponent
               id: this.unidad!.id
           };
 
-          console.log("newBaliza.unidades");
-          console.log(newBaliza.unidades);
-          
           this.suscriptions.push(
             this._balizaService.put(newBaliza as Baliza).subscribe({
               next: () => {
-                console.log(":::::baliza put::::");
-                console.log(newBaliza);
                 if(this.selectedBalizasList.length==qtyBalizas){
                   this.loadData();
                 }
@@ -245,7 +238,7 @@ export class SelectBalizasComponent
         }
       },
       nzOnCancel: ()=>{
-        alert('cancelado');
+        this.loadData();
       }
     });
     // for await (const el of this.selectedBalizasList) {
@@ -321,7 +314,5 @@ export class SelectBalizasComponent
       );
       this.selectedBalizasList.splice(index, 1);
     }
-    console.log("******selectedBalizasList");
-    console.log(this.selectedBalizasList);
   }
 }

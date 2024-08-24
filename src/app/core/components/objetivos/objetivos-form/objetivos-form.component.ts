@@ -123,8 +123,6 @@ export class ObjetivosFormComponent
 
   ngAfterViewInit(): void {
     if (this.objetivoToEdit) {
-      console.log(this.objetivoToEdit);
-
       this.balizaOriginal = this.objetivoToEdit.balizas;
 
       this.button.label = 'EDITAR';

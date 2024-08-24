@@ -155,8 +155,6 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
   }
 
   showAsignBalizas(): void {
-    alert("showAsignBalizas");
-
     const modalTitle = 'Asignar balizas';
     const modalRef = this.modalService.create({
       nzTitle: modalTitle,

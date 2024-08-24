@@ -122,8 +122,6 @@ export class AsignadasComponent extends TableBase implements OnInit {
   }
 
   changeGeocercaState(geocerca: Asignadas, index: number) {
-    console.log(":::::::::::::geocerca::::::");
-    console.log(geocerca);
     if(!this.isGeocercaIncomplete(geocerca)){
       this.loadingSwitch[index] = true;
       this._geocercaService
