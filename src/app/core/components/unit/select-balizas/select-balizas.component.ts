@@ -191,8 +191,7 @@ export class SelectBalizasComponent
       }?`,
       nzOnOk: () => {
         for (const baliza of this.selectedBalizasList) {
-          let newBaliza ={...baliza};
-          delete newBaliza.unidades;
+          let newBaliza:BalizaPayload ={...baliza};
           newBaliza.unidades={
               provincia: this.unidad?.provincia || undefined,
               denominacion: this.unidad?.denominacion || '',

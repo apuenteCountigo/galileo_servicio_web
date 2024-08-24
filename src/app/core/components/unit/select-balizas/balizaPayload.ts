@@ -29,7 +29,7 @@ export class BalizaPayload {
     public idElement?: string;
     public serverIp?: string;
     public puerto?: string;
-    public unidades?: Unit;
+    public unidades?: {};
     public operacion?: string;
     public notas?: string;
     public servidor?: Server;
