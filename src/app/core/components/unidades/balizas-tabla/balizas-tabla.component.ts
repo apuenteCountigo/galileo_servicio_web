@@ -163,9 +163,9 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
       nzStyle: { top: '20px', width: '600px' },
       nzMaskClosable: false,
       nzContent: SelectBalizasComponent,
-      // nzComponentParams: {
-      //   unidad: this.selectedUnit ? this.selectedUnit : null,
-      // },
+      nzComponentParams: {
+        unidad: this.selectedUnit ? this.selectedUnit : null,
+      },
     });
 
     this.searchCriteria.unidad = -2;//this.selectedUnit.id;

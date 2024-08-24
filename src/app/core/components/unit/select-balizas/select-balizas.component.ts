@@ -31,7 +31,7 @@ export class SelectBalizasComponent
   extends TableBase
   implements OnInit, OnDestroy
 {
-//   @Input() unidad!: Unit;
+  @Input() unidad!: Unit;
 //   freeOficialList: Array<User> = [];
 //   selectedOficialList: Array<User> = [];
 //   filter = {
@@ -151,7 +151,7 @@ export class SelectBalizasComponent
     });
 
     this.params.page = pageIndex - 1;
-    this.params.size = 2;//pageSize;
+    this.params.size = pageSize;
 
     this.loadData();
   }
@@ -180,7 +180,7 @@ export class SelectBalizasComponent
   }
 
   assignUsers() {
-    alert('ASIGNAR BALIZAS');
+    alert('ASIGNAR BALIZAS:: '+this.unidad.denominacion);
     // let dateFinal;
     // if (this.isGuestStatus) {
     //   dateFinal = formatISO(
