@@ -190,18 +190,17 @@ export class SelectBalizasComponent
       }?`,
       nzOnOk: () => {
         for (const baliza of this.selectedBalizasList) {
-          let unidad:Unit;
-          unidad=this.unidad;
+          const newBaliza = { ...baliza };
+          newBaliza.unidades=this.unidad;
 
-          baliza.unidades=unidad;
-          console.log("baliza.unidades");
-          console.log(baliza.unidades);
+          console.log("newBaliza.unidades");
+          console.log(newBaliza.unidades);
           
           this.suscriptions.push(
-            this._balizaService.put(baliza).subscribe({
+            this._balizaService.put(newBaliza as Baliza).subscribe({
               next: () => {
                 console.log(":::::baliza put::::");
-                console.log(baliza);
+                console.log(newBaliza);
                 
                 // this._notificationService.notificationSuccess(
                 //   'Información',
