@@ -191,6 +191,9 @@ export class SelectBalizasComponent
       nzOnOk: () => {
         for (const baliza of this.selectedBalizasList) {
           baliza.unidades=this.unidad;
+          console.log("baliza.unidades");
+          console.log(baliza.unidades);
+          
           this.suscriptions.push(
             this._balizaService.put(baliza).subscribe({
               next: () => {
