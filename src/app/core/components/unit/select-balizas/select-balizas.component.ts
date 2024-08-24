@@ -190,7 +190,7 @@ export class SelectBalizasComponent
       }?`,
       nzOnOk: () => {
         for (const baliza of this.selectedBalizasList) {
-          baliza.unidades!.id=this.unidad.id;
+          baliza.unidades=this.unidad;
           this.suscriptions.push(
             this._balizaService.put(baliza).subscribe({
               next: () => {
@@ -204,6 +204,7 @@ export class SelectBalizasComponent
                 // this.loadData();
               },
               error: (error) => {
+                console.error("****error***");
                 console.error(error);
                 
                 // this.resetSelection();
