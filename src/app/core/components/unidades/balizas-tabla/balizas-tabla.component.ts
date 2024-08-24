@@ -164,30 +164,30 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
       nzMaskClosable: false,
       nzContent: SelectBalizasComponent,
       nzComponentParams: {
-        unidad: this.selectedUnit ? this.selectedUnit : null,
+        unidad: this.selectedUnit ? this.selectedUnit : undefined,
       },
     });
 
-    this.searchCriteria.unidad = -2;//this.selectedUnit.id;
-    const userLogeado = this._loggedUserService.getLoggedUser();
-    this.sort = { ...this.sort, fechaCreacion: 'DESC' };
-    this._balizaService
-      .search(this.searchCriteria, this.params, this.sort)
-      .subscribe({
-        next: (relations: PagedResourceCollection<any>) => {
-          // this.loading = false;
-          this.listUnAsigned = [...relations.resources];
-          //this.totalOfic = relations.totalElements;
-        },
-        error: (err) => {
-          // this.loading = false;
-          this.listUnAsigned = [];
-          this._notificationService.notificationError(
-            'Error',
-            'Ha ocurrido un error al cargar las balizas.'
-          );
-        },
-      });
+    // this.searchCriteria.unidad = -2;//this.selectedUnit.id;
+    // const userLogeado = this._loggedUserService.getLoggedUser();
+    // this.sort = { ...this.sort, fechaCreacion: 'DESC' };
+    // this._balizaService
+    //   .search(this.searchCriteria, this.params, this.sort)
+    //   .subscribe({
+    //     next: (relations: PagedResourceCollection<any>) => {
+    //       // this.loading = false;
+    //       this.listUnAsigned = [...relations.resources];
+    //       //this.totalOfic = relations.totalElements;
+    //     },
+    //     error: (err) => {
+    //       // this.loading = false;
+    //       this.listUnAsigned = [];
+    //       this._notificationService.notificationError(
+    //         'Error',
+    //         'Ha ocurrido un error al cargar las balizas.'
+    //       );
+    //     },
+    //   });
   }
 
   removeBalizaToGeneralStock(): void {
