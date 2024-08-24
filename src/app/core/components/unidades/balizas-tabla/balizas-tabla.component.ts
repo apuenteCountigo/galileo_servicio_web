@@ -162,6 +162,7 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
       nzTitle: modalTitle,
       nzStyle: { top: '20px', width: '600px' },
       nzMaskClosable: false,
+      nzOnCancel: () =>this.onSearchUnitOfBalizas(),
       nzContent: SelectBalizasComponent,
       nzComponentParams: {
         unidad: this.selectedUnit ? this.selectedUnit : undefined,
