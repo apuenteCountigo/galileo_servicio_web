@@ -190,7 +190,9 @@ export class SelectBalizasComponent
         this.unidad.denominacion
       }?`,
       nzOnOk: () => {
+        let qtyBalizas=0;
         for (const baliza of this.selectedBalizasList) {
+          qtyBalizas++;
           let newBaliza:BalizaPayload ={...baliza};
           newBaliza.unidades={
               provincia: this.unidad?.provincia || undefined,
@@ -206,51 +208,6 @@ export class SelectBalizasComponent
               notas: this.unidad?.notas || '',
               id: this.unidad!.id
           };
-          // newBaliza= {
-          //   id: baliza.id,
-          //   clave: baliza.clave,
-          //   tipoBaliza: baliza.tipoBaliza,
-          //   marca: baliza.marca,
-          //   idModeloBaliza: baliza.idModeloBaliza,
-          //   numSerie: baliza.numSerie,
-          //   tipoCoordenada: baliza.tipoCoordenada,
-          //   imei: baliza.imei,
-          //   telefono1: baliza.telefono1,
-          //   compania: baliza.compania,
-          //   tipoContrato: baliza.tipoContrato,
-          //   pin1: baliza.pin1,
-          //   pin2: baliza.pin2,
-          //   puk: baliza.puk,
-          //   iccTarjeta: baliza.iccTarjeta || '',
-          //   fechaAlta: baliza.fechaAlta,
-          //   fechaAsignaUni: baliza.fechaAsignaUni,
-          //   fechaAsignaOp: baliza.fechaAsignaOp,
-          //   estados: baliza.estados,
-          //   idDataminer: baliza.idDataminer,
-          //   idElement: baliza.idElement,
-          //   serverIp: baliza.serverIp,
-          //   puerto: baliza.puerto,
-          //   unidades: {
-          //     provincia: this.unidad.provincia,
-          //     denominacion: this.unidad.denominacion || '',
-          //     oficialResponsable: this.unidad.oficialResponsable || undefined,
-          //     usuarios:this.unidad.usuarios,
-          //     groupWise: this.unidad.groupWise || '',
-          //     telefono: this.unidad.telefono || '',
-          //     email: this.unidad.email,
-          //     direccion: this.unidad.direccion || '',
-          //     codigoPostal: this.unidad.codigoPostal || '',
-          //     localidad: this.unidad.localidad || '',
-          //     notas: this.unidad.notas || '',
-          //     id: 1
-          // },
-          //   operacion: baliza.operacion,
-          //   notas: baliza.notas,
-          //   servidor: baliza.servidor,
-          //   objetivo: baliza.objetivo,
-          // };
-          // newBaliza.unidades={...this.unidad};
-          //delete newBaliza.unidades._links;
 
           console.log("newBaliza.unidades");
           console.log(newBaliza.unidades);
@@ -260,17 +217,20 @@ export class SelectBalizasComponent
               next: () => {
                 console.log(":::::baliza put::::");
                 console.log(newBaliza);
-                
+                if(this.selectedBalizasList.length==qtyBalizas){
+                  this.loadData();
+                }
                 // this._notificationService.notificationSuccess(
                 //   'Información',
                 //   'Se ha eliminado la baliza correctamente'
                 // );
-                // this.loadData();
               },
               error: (error) => {
                 console.error("****error***");
                 console.error(error);
-                
+                if(this.selectedBalizasList.length==qtyBalizas){
+                  this.loadData();
+                }
                 // this.resetSelection();
   
                 // this.handleErrorMessage(
@@ -281,7 +241,6 @@ export class SelectBalizasComponent
             })
           );
         }
-        this.loadData();
       },
       nzOnCancel: ()=>{
         alert('cancelado');
