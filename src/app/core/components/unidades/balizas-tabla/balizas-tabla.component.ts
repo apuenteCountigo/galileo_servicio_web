@@ -165,6 +165,7 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
       nzContent: SelectBalizasComponent,
       nzComponentParams: {
         unidad: this.selectedUnit ? this.selectedUnit : undefined,
+        loadBalizas:this.onSearchUnitOfBalizas,
       },
     });
 

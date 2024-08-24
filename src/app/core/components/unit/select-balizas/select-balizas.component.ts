@@ -34,6 +34,7 @@ export class SelectBalizasComponent
   implements OnInit, OnDestroy
 {
   @Input() unidad!: Unit;
+  @Input() loadBalizas: any;
 //   freeOficialList: Array<User> = [];
 //   selectedOficialList: Array<User> = [];
 //   filter = {
@@ -180,6 +181,7 @@ export class SelectBalizasComponent
 
   cancelForm(): void {
     this.modalRef.close({ accion: FrmActions.CANCELAR });
+    this.loadBalizas();
   }
 
   async assignUsers() {
