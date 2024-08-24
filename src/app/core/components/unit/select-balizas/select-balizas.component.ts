@@ -190,7 +190,10 @@ export class SelectBalizasComponent
       }?`,
       nzOnOk: () => {
         for (const baliza of this.selectedBalizasList) {
-          baliza.unidades=this.unidad;
+          let unidad:Unit;
+          unidad=this.unidad;
+
+          baliza.unidades=unidad;
           console.log("baliza.unidades");
           console.log(baliza.unidades);
           
