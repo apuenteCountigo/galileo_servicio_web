@@ -181,7 +181,7 @@ export class SelectBalizasComponent
 
   assignUsers() {
     alert('ASIGNAR BALIZAS:: '+this.unidad.denominacion);
-    this._balizaService.
+    // this._balizaService.
     // let dateFinal;
     // if (this.isGuestStatus) {
     //   dateFinal = formatISO(
