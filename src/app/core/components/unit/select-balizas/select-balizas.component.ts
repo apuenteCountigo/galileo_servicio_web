@@ -192,18 +192,18 @@ export class SelectBalizasComponent
         for (const baliza of this.selectedBalizasList) {
           let newBaliza:BalizaPayload ={...baliza};
           newBaliza.unidades={
-              provincia: this.unidad.provincia,
+              provincia: this.unidad.provincia || undefined,
               denominacion: this.unidad.denominacion || '',
               oficialResponsable: this.unidad.oficialResponsable || undefined,
-              usuarios:this.unidad.usuarios,
+              usuarios:this.unidad.usuarios || undefined,
               groupWise: this.unidad.groupWise || '',
               telefono: this.unidad.telefono || '',
-              email: this.unidad.email,
+              email: this.unidad.email || '',
               direccion: this.unidad.direccion || '',
               codigoPostal: this.unidad.codigoPostal || '',
               localidad: this.unidad.localidad || '',
               notas: this.unidad.notas || '',
-              id: 1
+              id: this.unidad.id
           };
           // newBaliza= {
           //   id: baliza.id,
