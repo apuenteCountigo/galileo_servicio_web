@@ -191,6 +191,9 @@ export class SelectBalizasComponent
       }?`,
       nzOnOk: () => {
         let qtyBalizas=0;
+        let qtyErrors=0;
+        let qtySuccess=0;
+
         for (const baliza of this.selectedBalizasList) {
           qtyBalizas++;
           let newBaliza:BalizaPayload ={...baliza};
@@ -212,18 +215,23 @@ export class SelectBalizasComponent
           this.suscriptions.push(
             this._balizaService.put(newBaliza as Baliza).subscribe({
               next: () => {
+                qtySuccess++;
                 if(this.selectedBalizasList.length==qtyBalizas){
+                  this._notificationService.notificationSuccess(
+                    'Información',
+                    'Asignaciones: '+qtySuccess+' Errores: '+qtyErrors
+                  );
                   this.loadData();
                 }
-                // this._notificationService.notificationSuccess(
-                //   'Información',
-                //   'Se ha eliminado la baliza correctamente'
-                // );
+                
               },
               error: (error) => {
-                console.error("****error***");
-                console.error(error);
+                qtyErrors++;
                 if(this.selectedBalizasList.length==qtyBalizas){
+                  this._notificationService.notificationSuccess(
+                    'Información',
+                    'Asignaciones: '+qtySuccess+' Errores: '+qtyErrors
+                  );
                   this.loadData();
                 }
                 // this.resetSelection();
