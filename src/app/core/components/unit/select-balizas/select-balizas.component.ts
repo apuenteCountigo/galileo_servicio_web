@@ -54,6 +54,10 @@ export class SelectBalizasComponent
 
   listUnAsigned: Baliza[] = [];
   selectedBalizasList: Baliza[] = [];
+  isVisibleModalInforme: boolean=false;
+  qtySuccess: number =0;
+  qtyErrors: number =0;
+  errorsAsigns: string[] = [];
 
   estados!: Array<Estado>;
   defaultState?: Estado;
@@ -191,9 +195,6 @@ export class SelectBalizasComponent
       }?`,
       nzOnOk: async () => {
         let qtyBalizas = 0;
-        let qtyErrors = 0;
-        let qtySuccess = 0;
-        const errorKeys: string[] = [];
   
         const promises = this.selectedBalizasList.map((baliza) => {
           qtyBalizas++;
@@ -214,33 +215,34 @@ export class SelectBalizasComponent
           };
   
           return this._balizaService.put(newBaliza as Baliza).toPromise().then(() => {
-            qtySuccess++;
+            this.qtySuccess++;
           }).catch((error) => {
-            qtyErrors++;
-            errorKeys.push(baliza!.clave!); // Agregar la clave de la baliza que falló
+            this.qtyErrors++;
+            this.errorsAsigns.push(baliza!.clave!); // Agregar la clave de la baliza que falló
           });
         });
   
         await Promise.all(promises);
   
         // Mostrar un cuadro de diálogo con los resultados
-        this.modalService.create({
-          nzTitle: 'Resultado de Asignación',
-          nzContent: `
-            <div>
-              <p>Asignaciones: <span style="color: green;">${qtySuccess}</span> Errores: <span style="color: red;">${qtyErrors}</span></p>
-              ${qtyErrors > 0 ? `
-                <nz-list nzBordered nzSize="small" style="max-height: 200px; overflow-y: auto;">
-                  <nz-list-item *ngFor="let key of ${JSON.stringify(errorKeys)}">
-                    {{key}}
-                  </nz-list-item>
-                </nz-list>
-              ` : ''}
-            </div>
-          `,
-          nzFooter: null,
-          nzWidth: 400
-        });
+        this.isVisibleModalInforme=true
+        // this.modalService.create({
+        //   nzTitle: 'Resultado de Asignación',
+        //   nzContent: `
+        //     <div>
+        //       <p>Asignaciones: <span style="color: green;">${this.qtySuccess}</span> Errores: <span style="color: red;">${this.qtyErrors}</span></p>
+        //       ${this.qtyErrors > 0 ? `
+        //         <nz-list nzBordered nzSize="small" style="max-height: 200px; overflow-y: auto;">
+        //           <nz-list-item *ngFor="let key of ${JSON.stringify(errorsAsigns)}">
+        //             {{key}}
+        //           </nz-list-item>
+        //         </nz-list>
+        //       ` : ''}
+        //     </div>
+        //   `,
+        //   nzFooter: null,
+        //   nzWidth: 400
+        // });
   
         this.loadData();
       },
@@ -298,5 +300,9 @@ export class SelectBalizasComponent
       );
       this.selectedBalizasList.splice(index, 1);
     }
+  }
+
+  hideModal() {
+    this.isVisibleModalInforme = false;
   }
 }

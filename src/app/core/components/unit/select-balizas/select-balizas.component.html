@@ -118,6 +118,25 @@
       </div>
     </div>
   </ng-template>
+
+  <nz-modal [(nzVisible)]="isVisibleModalInforme" nzTitle="Informe de asignaciones" [nzContent]="modalContent" (nzOnCancel)="hideModal()"
+    [nzFooter]="modalFooter">
+    <ng-template #modalContent>
+      <div nz-row style="padding-bottom: 25px;">
+        <span nz-col nzSpan="12" nz-typography nzType="success">Asignaciones Correctas: {{qtySuccess}}</span>
+        <span nz-col nzSpan="12" nz-typography nzType="danger">Asignaciones Incorrectas: {{qtyErrors}}</span>
+      </div>
+      <div *ngFor="let clave of errorsAsigns; index as i;">
+        <span nz-typography><strong>{{i+1}}- {{clave}}</strong></span> <br>
+        <!-- <span nz-typography>{{error.mensaje}}</span> -->
+      </div>
+
+    </ng-template>
+
+    <ng-template #modalFooter>
+      <button nz-button nzType="default" (click)="hideModal()">Cerrar</button>
+    </ng-template>
+  </nz-modal>
   
   <!-- <ng-template #cardHeaderTpl>
     <form [formGroup]="searchGestOficialsForm">
