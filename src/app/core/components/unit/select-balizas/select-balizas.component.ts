@@ -217,7 +217,7 @@ export class SelectBalizasComponent
             qtySuccess++;
           }).catch((error) => {
             qtyErrors++;
-            errorKeys.push(baliza.clave); // Agregar la clave de la baliza que falló
+            errorKeys.push(baliza!.clave!); // Agregar la clave de la baliza que falló
           });
         });
   
