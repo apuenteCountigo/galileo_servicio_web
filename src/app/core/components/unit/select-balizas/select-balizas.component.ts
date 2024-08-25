@@ -183,97 +183,74 @@ export class SelectBalizasComponent
     this.loadBalizas();
   }
 
-  async assignUsers() {
+  async assignBaliza() {
     this.modalService.confirm({
       nzTitle: 'Confirmación',
       nzContent: `Está seguro que desea asignar las balizas seleccionadas a la unidad ${
         this.unidad.denominacion
       }?`,
-      nzOnOk: () => {
-        let qtyBalizas=0;
-        let qtyErrors=0;
-        let qtySuccess=0;
-
-        for (const baliza of this.selectedBalizasList) {
-          qtyBalizas++;
-          let newBaliza:BalizaPayload ={...baliza};
-          newBaliza.unidades={
-              provincia: this.unidad?.provincia || undefined,
-              denominacion: this.unidad?.denominacion || '',
-              oficialResponsable: this.unidad?.oficialResponsable || undefined,
-              usuarios:this.unidad?.usuarios || undefined,
-              groupWise: this.unidad?.groupWise || '',
-              telefono: this.unidad?.telefono || '',
-              email: this.unidad?.email || '',
-              direccion: this.unidad?.direccion || '',
-              codigoPostal: this.unidad?.codigoPostal || '',
-              localidad: this.unidad?.localidad || '',
-              notas: this.unidad?.notas || '',
-              id: this.unidad!.id
-          };
-
-          this.suscriptions.push(
-            this._balizaService.put(newBaliza as Baliza).subscribe({
-              next: () => {
-                qtySuccess++;
-                if(this.selectedBalizasList.length==qtyBalizas){
-                  this._notificationService.notificationSuccess(
-                    'Información',
-                    'Asignaciones: '+qtySuccess+' Errores: '+qtyErrors
-                  );
-                  this.loadData();
-                }
-                
-              },
-              error: (error) => {
-                qtyErrors++;
-                if(this.selectedBalizasList.length==qtyBalizas){
-                  this._notificationService.notificationSuccess(
-                    'Información',
-                    'Asignaciones: '+qtySuccess+' Errores: '+qtyErrors
-                  );
-                  this.loadData();
-                }
-                // this.resetSelection();
+      nzOnOk: async () => {
+        let qtyBalizas = 0;
+        let qtyErrors = 0;
+        let qtySuccess = 0;
+        const errorKeys: string[] = [];
   
-                // this.handleErrorMessage(
-                //   error,
-                //   'Ocurrió un error al eliminar la baliza'
-                // );
-              },
-            })
-          );
-        }
+        const promises = this.selectedBalizasList.map((baliza) => {
+          qtyBalizas++;
+          let newBaliza: BalizaPayload = { ...baliza };
+          newBaliza.unidades = {
+            provincia: this.unidad?.provincia || undefined,
+            denominacion: this.unidad?.denominacion || '',
+            oficialResponsable: this.unidad?.oficialResponsable || undefined,
+            usuarios: this.unidad?.usuarios || undefined,
+            groupWise: this.unidad?.groupWise || '',
+            telefono: this.unidad?.telefono || '',
+            email: this.unidad?.email || '',
+            direccion: this.unidad?.direccion || '',
+            codigoPostal: this.unidad?.codigoPostal || '',
+            localidad: this.unidad?.localidad || '',
+            notas: this.unidad?.notas || '',
+            id: this.unidad!.id
+          };
+  
+          return this._balizaService.put(newBaliza as Baliza).toPromise().then(() => {
+            qtySuccess++;
+          }).catch((error) => {
+            qtyErrors++;
+            errorKeys.push(baliza!.clave!); // Agregar la clave de la baliza que falló
+          });
+        });
+  
+        await Promise.all(promises);
+  
+        // Crear el contenido de la notificación
+        const notificationContent = `
+          <div>
+            <p><span style="color: green;">Asignaciones: ${qtySuccess}</span> <span style="color: red;">Errores: ${qtyErrors}</span></p>
+            ${qtyErrors > 0 ? `
+              <div style="max-height: 100px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; margin-top: 8px;">
+                <strong>Claves con errores:</strong>
+                <ul>
+                  ${errorKeys.map(key => `<li>${key}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+          </div>
+        `;
+  
+        this._notificationService.notificationInfo(
+          'Información',
+          notificationContent,
+          //{ nzDuration: 0, nzStyle: { width: '300px' } } // Configura el estilo y duración
+        );
+        this.loadData();
       },
-      nzOnCancel: ()=>{
+      nzOnCancel: () => {
         this.loadData();
       }
     });
-    // for await (const el of this.selectedBalizasList) {
-    //   console.log("*****el***");
-    //   console.log(el);
-      
-    // }
-    // this._balizaService
-    //   .put()
-    //   .subscribe({
-    //     next: (relations: PagedResourceCollection<any>) => {
-    //         // this.loading = false;
-    //         this.listUnAsigned = [...relations.resources];
-    //         this.loading = false;
-    //         //this.totalOfic = relations.totalElements;
-    //     },
-    //     error: (err) => {
-    //       // this.loading = false;
-    //       this.listUnAsigned = [];
-    //       this.loading = false;
-    //       this._notificationService.notificationError(
-    //         'Error',
-    //         'Ha ocurrido un error al cargar las balizas.'
-    //       );
-    //     },
-    //   });
   }
+  
 
   checkFormValidity() {
     return this.statusRelationForm.invalid ||
