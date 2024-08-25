@@ -232,7 +232,7 @@ export class SelectBalizasComponent
               ${qtyErrors > 0 ? `
                 <nz-list nzBordered nzSize="small" style="max-height: 200px; overflow-y: auto;">
                   <nz-list-item *ngFor="let key of ${JSON.stringify(errorKeys)}">
-                    ${key}
+                    {{key}}
                   </nz-list-item>
                 </nz-list>
               ` : ''}
