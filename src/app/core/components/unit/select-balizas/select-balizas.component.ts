@@ -186,7 +186,7 @@ export class SelectBalizasComponent
   async assignBaliza() {
     this.modalService.confirm({
       nzTitle: 'Confirmación',
-      nzContent: `Está seguro que desea asignar las balizas seleccionadas a la unidad ${
+      nzContent: `¿Está seguro que desea asignar las balizas seleccionadas a la unidad ${
         this.unidad.denominacion
       }?`,
       nzOnOk: async () => {
@@ -217,39 +217,38 @@ export class SelectBalizasComponent
             qtySuccess++;
           }).catch((error) => {
             qtyErrors++;
-            errorKeys.push(baliza!.clave!); // Agregar la clave de la baliza que falló
+            errorKeys.push(baliza.clave); // Agregar la clave de la baliza que falló
           });
         });
   
         await Promise.all(promises);
   
-        // Crear el contenido de la notificación
-        const notificationContent = `
-          <div>
-            <p><span style="color: green;">Asignaciones: ${qtySuccess}</span> <span style="color: red;">Errores: ${qtyErrors}</span></p>
-            ${qtyErrors > 0 ? `
-              <div style="max-height: 100px; overflow-y: auto; border: 1px solid #ddd; padding: 8px; margin-top: 8px;">
-                <strong>Claves con errores:</strong>
-                <ul>
-                  ${errorKeys.map(key => `<li>${key}</li>`).join('')}
-                </ul>
-              </div>
-            ` : ''}
-          </div>
-        `;
+        // Mostrar un cuadro de diálogo con los resultados
+        this.modalService.create({
+          nzTitle: 'Resultado de Asignación',
+          nzContent: `
+            <div>
+              <p>Asignaciones: <span style="color: green;">${qtySuccess}</span> Errores: <span style="color: red;">${qtyErrors}</span></p>
+              ${qtyErrors > 0 ? `
+                <nz-list nzBordered nzSize="small" style="max-height: 200px; overflow-y: auto;">
+                  <nz-list-item *ngFor="let key of ${JSON.stringify(errorKeys)}">
+                    ${key}
+                  </nz-list-item>
+                </nz-list>
+              ` : ''}
+            </div>
+          `,
+          nzFooter: null,
+          nzWidth: 400
+        });
   
-        this._notificationService.notificationInfo(
-          'Información',
-          notificationContent,
-          //{ nzDuration: 0, nzStyle: { width: '300px' } } // Configura el estilo y duración
-        );
         this.loadData();
       },
       nzOnCancel: () => {
         this.loadData();
       }
     });
-  }
+  }    
   
 
   checkFormValidity() {
