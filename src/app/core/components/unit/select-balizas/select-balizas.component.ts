@@ -223,27 +223,8 @@ export class SelectBalizasComponent
         });
   
         await Promise.all(promises);
-  
         // Mostrar un cuadro de diálogo con los resultados
-        this.isVisibleModalInforme=true
-        // this.modalService.create({
-        //   nzTitle: 'Resultado de Asignación',
-        //   nzContent: `
-        //     <div>
-        //       <p>Asignaciones: <span style="color: green;">${this.qtySuccess}</span> Errores: <span style="color: red;">${this.qtyErrors}</span></p>
-        //       ${this.qtyErrors > 0 ? `
-        //         <nz-list nzBordered nzSize="small" style="max-height: 200px; overflow-y: auto;">
-        //           <nz-list-item *ngFor="let key of ${JSON.stringify(errorsAsigns)}">
-        //             {{key}}
-        //           </nz-list-item>
-        //         </nz-list>
-        //       ` : ''}
-        //     </div>
-        //   `,
-        //   nzFooter: null,
-        //   nzWidth: 400
-        // });
-  
+        this.isVisibleModalInforme=true;
         this.loadData();
       },
       nzOnCancel: () => {

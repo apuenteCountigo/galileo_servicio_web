@@ -24,6 +24,7 @@ interface BusquedaOperacion {
 })
 export class NomencladorComponent extends TableBase implements OnInit {
   @Input() dataEntrante!: string;
+  @Input() dataTitle!: string;
   @Input() dataTooltip!: string;
 
   //creamos los array para los distintos nomencladores
