@@ -176,7 +176,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
   deleteNomenclador() {    
     this.modalService.confirm({
       nzTitle: 'Confirmación',
-      nzContent: `Está seguro de eliminar ${this.selectedNomenclador.descripcion}?`,
+      nzContent: `Está seguro que desea eliminar el modelo "${this.selectedNomenclador.descripcion}"?`,
       nzOnOk: () => {
         switch (this.dataEntrante) {
           case 'Juzgado':
