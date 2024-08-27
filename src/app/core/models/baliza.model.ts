@@ -1,6 +1,6 @@
 import { HateoasResource, Resource } from '@lagoshny/ngx-hateoas-client';
 import { Estado } from './estado.model';
-import { TipoBaliza, TipoContrato } from './momencaldores.model';
+import { ModeloBaliza, TipoBaliza, TipoContrato } from './momencaldores.model';
 import { Operacion } from './operacion.model';
 import { Server } from './server.model';
 import { Unit } from './unit.model';
@@ -12,7 +12,7 @@ export class Baliza extends Resource {
   public clave?: string;
   public tipoBaliza?: TipoBaliza | null;
   public marca?: string;
-  public idModeloBaliza?: string;
+  public modelo?: ModeloBaliza;
   public numSerie?: string;
   public tipoCoordenada?: string | null;
   public imei?: string;

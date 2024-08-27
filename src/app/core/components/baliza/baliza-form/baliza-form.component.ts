@@ -131,6 +131,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
       puerto: ['', [Validators.required]],
       notas: ['', []],
       servidor: ['', [Validators.required]],
+      modelo: ['', [Validators.required]],
     });
   }
 
@@ -229,6 +230,9 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
         this.serverList!.find((s) => s.id === this.balizaToEdit!.servidor?.id)
       );
       this.formModalBaliza.controls['servidor'].disable();
+      this.formModalBaliza.controls['modelo'].setValue(
+        this.listModelosBalizas!.find((s) => s.id === this.balizaToEdit!.modelo?.id)
+      );
       this.formModalBaliza.controls['notas'].setValue(this.balizaToEdit!.notas);
     }
   }
@@ -295,6 +299,16 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       newBaliza.tipoContrato = this.balizaToEdit?.tipoContrato;
     }
+
+    if(this.formModalBaliza.value.modelo){
+      newBaliza.modelo = {
+        id: this.formModalBaliza.value.modelo.id,
+        descripcion: this.formModalBaliza.value.modelo.descripcion,
+      } as ModeloBaliza;
+    }else{
+      newBaliza.modelo =this.balizaToEdit?.modelo;
+    }
+
     newBaliza.idDataminer = this.formModalBaliza.value.idDataminer;
     newBaliza.idElement = this.formModalBaliza.value.idElement;
     newBaliza.serverIp = '';
