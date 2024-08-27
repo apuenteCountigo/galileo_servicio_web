@@ -32,15 +32,6 @@
         </ng-template>
       </nz-form-control>
     </nz-form-item>
-    <!-- <nz-form-item>
-      <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="modelo">Modelo</nz-form-label>
-      <nz-form-control [nzSpan]="12" [nzErrorTip]="modeloErrorTpl">
-        <input type="text" nz-input formControlName="modelo" placeholder="Modelo" maxlength="11" />
-        <ng-template #modeloErrorTpl let-control>
-          <ng-container *ngIf="control.hasError('required')">Introduzca el modelo</ng-container>
-        </ng-template>
-      </nz-form-control>
-    </nz-form-item> -->
     <nz-form-item>
       <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="numSerie">Serie</nz-form-label>
       <nz-form-control [nzSpan]="12" [nzErrorTip]="numSerieErrorTpl">
@@ -103,9 +94,9 @@
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="modeloBaliza">Modelo Baliza</nz-form-label>
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="modelo">Modelo Baliza</nz-form-label>
       <nz-form-control [nzSpan]="12" [nzErrorTip]="modeloErrorTpl">
-        <nz-select formControlName="modeloBaliza" nzPlaceHolder="Seleccione un modelo">
+        <nz-select formControlName="modelo" nzPlaceHolder="Seleccione un modelo">
           <nz-option *ngFor="let modelo of listModelosBalizas" [nzValue]="modelo" [nzLabel]="modelo.descripcion!">
           </nz-option>
         </nz-select>
