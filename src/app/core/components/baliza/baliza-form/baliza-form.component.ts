@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { NzSpinModule} from 'ng-zorro-antd/spin';
 import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
 import { Baliza } from 'src/app/core/models/baliza.model';
 import { Estado } from 'src/app/core/models/estado.model';
