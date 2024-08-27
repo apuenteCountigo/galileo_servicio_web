@@ -7,9 +7,11 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
 import { Baliza } from 'src/app/core/models/baliza.model';
 import { Estado } from 'src/app/core/models/estado.model';
 import {
+  ModeloBaliza,
   TipoBaliza,
   TipoContrato,
 } from 'src/app/core/models/momencaldores.model';
@@ -19,6 +21,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { ButtonInterface } from '../../user/user-form/user-form.component';
 import { SearchData } from '../stock-table/stock-table.component';
 import { validatePhoneNumber } from 'src/app/core/utils/validate-phone';
+import { NomencladorModelosBalizasService } from 'src/app/core/services/nomencladores/modelosbalizas.service';
 
 @Component({
   selector: 'app-baliza-form',
@@ -63,12 +66,16 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   formatterNumber = (value: number): string => `+${value}`;
 
+  listModelosBalizas: any[] = [];
+  isLoading: boolean=false;
+
   /** Constructor */
   constructor(
     private fb: FormBuilder,
     private modalRef: NzModalRef,
     private _balizaService: BalizaService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _nomencladorModelosBalizas: NomencladorModelosBalizasService,
   ) {
     this.formModalBaliza = this.fb.group({
       clave: [
@@ -129,6 +136,14 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   /**On Init AfterView Methods */
 
   ngOnInit(): void {
+    this.isLoading = true;
+    this._nomencladorModelosBalizas
+      .getAll()
+      .subscribe((modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
+        this.isLoading = false;
+        this.listModelosBalizas = [...modeloBaliza.resources];
+        // this.total = modeloBaliza.totalElements;
+      });
     if (this.balizaToEdit) {
       this.formModalBaliza.controls['servidor'].clearValidators();
       this.formModalBaliza.updateValueAndValidity();
