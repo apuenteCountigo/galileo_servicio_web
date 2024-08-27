@@ -101,6 +101,20 @@
         </ng-template>
       </nz-form-control>
     </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="modeloBaliza">Modelo Baliza</nz-form-label>
+      <nz-form-control [nzSpan]="12" [nzErrorTip]="modeloErrorTpl">
+        <nz-select formControlName="modeloBaliza" nzPlaceHolder="Seleccione un modelo">
+          <nz-option *ngFor="let modelo of listModelosBalizas" [nzValue]="modelo" [nzLabel]="modelo.descripcion!">
+          </nz-option>
+        </nz-select>
+        <ng-template #modeloErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">Seleccione un modelo</ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
     <nz-form-item>
       <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="compania">Compañía</nz-form-label>
       <nz-form-control [nzSpan]="12" [nzErrorTip]="contractoErrorTpl">
