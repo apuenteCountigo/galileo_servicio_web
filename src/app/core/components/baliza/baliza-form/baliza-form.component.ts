@@ -156,9 +156,11 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
         // this.isLoading = false;
         this.listModelosBalizas = [...modeloBaliza.resources];
+        alert('ngAfterViewInit-01');
+        this.isLoading = false;
         // this.total = modeloBaliza.totalElements;
       });
-      
+
     if (this.balizaToEdit) {
       this.button.label = 'EDITAR';
       this.button.icon = 'edit';
