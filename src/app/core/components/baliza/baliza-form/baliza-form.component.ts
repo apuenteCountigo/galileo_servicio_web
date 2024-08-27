@@ -156,6 +156,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    alert('ngAfterViewInit');
     if (this.balizaToEdit) {
       this.button.label = 'EDITAR';
       this.button.icon = 'edit';
