@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { NzSpinModule} from 'ng-zorro-antd/spin';
 import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
 import { Baliza } from 'src/app/core/models/baliza.model';
 import { Estado } from 'src/app/core/models/estado.model';
@@ -22,6 +23,7 @@ import { ButtonInterface } from '../../user/user-form/user-form.component';
 import { SearchData } from '../stock-table/stock-table.component';
 import { validatePhoneNumber } from 'src/app/core/utils/validate-phone';
 import { NomencladorModelosBalizasService } from 'src/app/core/services/nomencladores/modelosbalizas.service';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-baliza-form',
@@ -67,7 +69,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   formatterNumber = (value: number): string => `+${value}`;
 
   listModelosBalizas: any[] = [];
-  isLoading: boolean=false;
+  isLoading: boolean=true;
 
   /** Constructor */
   constructor(
@@ -140,7 +142,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this._nomencladorModelosBalizas
       .getAll()
       .subscribe((modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
-        this.isLoading = false;
+        // this.isLoading = false;
         this.listModelosBalizas = [...modeloBaliza.resources];
         // this.total = modeloBaliza.totalElements;
       });
