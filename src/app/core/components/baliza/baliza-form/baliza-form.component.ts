@@ -137,14 +137,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   /**On Init AfterView Methods */
 
   ngOnInit(): void {
-    this.isLoading = true;
-    this._nomencladorModelosBalizas
-      .getAll()
-      .subscribe((modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
-        // this.isLoading = false;
-        this.listModelosBalizas = [...modeloBaliza.resources];
-        // this.total = modeloBaliza.totalElements;
-      });
+    
     if (this.balizaToEdit) {
       this.formModalBaliza.controls['servidor'].clearValidators();
       this.formModalBaliza.updateValueAndValidity();
@@ -157,6 +150,15 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     alert('ngAfterViewInit');
+    this.isLoading = true;
+    this._nomencladorModelosBalizas
+      .getAll()
+      .subscribe((modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
+        // this.isLoading = false;
+        this.listModelosBalizas = [...modeloBaliza.resources];
+        // this.total = modeloBaliza.totalElements;
+      });
+      
     if (this.balizaToEdit) {
       this.button.label = 'EDITAR';
       this.button.icon = 'edit';
