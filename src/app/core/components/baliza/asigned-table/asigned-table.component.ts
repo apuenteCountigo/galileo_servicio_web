@@ -351,7 +351,7 @@ export class AsignedTableComponent
         id: baliza.id,
         clave: baliza.clave,
         marca: baliza.marca,
-        modelo: baliza.idModeloBaliza,
+        modelo: baliza.modelo?.descripcion,
         numSerie: baliza.numSerie,
         compania: baliza.compania,
         estados: baliza.estados?.descripcion,

@@ -1,5 +1,5 @@
 import { Estado } from "src/app/core/models/estado.model";
-import { TipoBaliza, TipoContrato } from "src/app/core/models/momencaldores.model";
+import { ModeloBaliza, TipoBaliza, TipoContrato } from "src/app/core/models/momencaldores.model";
 import { UnitProvince } from "src/app/core/models/province.model";
 import { Server } from "src/app/core/models/server.model";
 import { Unit } from "src/app/core/models/unit.model";
@@ -10,7 +10,7 @@ export class BalizaPayload {
     public clave?: string;
     public tipoBaliza?: TipoBaliza | null;
     public marca?: string;
-    public idModeloBaliza?: string;
+    public modelo?: ModeloBaliza | null;
     public numSerie?: string;
     public tipoCoordenada?: string | null;
     public imei?: string;

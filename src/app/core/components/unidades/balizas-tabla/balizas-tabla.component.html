@@ -27,7 +27,7 @@
         <th id="unidadSelect" nzWidth="35px" [nzLeft]="true"></th>
         <th id="balizaStockClave" nzColumnKey="clave" nzWidth="100px" [nzSortFn]="true">Clave</th>
         <th id="balizaStockMarca" nzColumnKey="marca" [nzSortFn]="true">Marca</th>
-        <th id="balizaStockModelo" nzColumnKey="idModeloBaliza" [nzSortFn]="true">Modelo</th>
+        <th id="balizaStockModelo" nzColumnKey="modelo" [nzSortFn]="true">Modelo</th>
         <th id="balizaStockNumSerie" nzColumnKey="numSerie" [nzSortFn]="true">Número de Serie</th>
         <th id="balizaStockCompania" nzColumnKey="compania" [nzSortFn]="true">Compañía</th>
         <th id="balizaStockFechaAlta" nzColumnKey="fechaAlta" [nzSortFn]="true">Fecha de Alta</th>
@@ -40,7 +40,7 @@
           <td [nzChecked]="expandSet.has(baliza.id)" (nzCheckedChange)="onCheckChange(baliza, $event)"></td>
           <td>{{ baliza.clave }}</td>
           <td>{{ baliza.marca }}</td>
-          <td>{{ baliza.idModeloBaliza }}</td>
+          <td>{{ baliza.modelo.descripcion }}</td>
           <td>{{ baliza.numSerie }}</td>
           <td>{{ baliza.compania }}</td>
           <td>{{ baliza.fechaAlta! | date: 'dd/MM/yyyy' }}</td>

@@ -12,7 +12,7 @@ export class Baliza extends Resource {
   public clave?: string;
   public tipoBaliza?: TipoBaliza | null;
   public marca?: string;
-  public modelo?: ModeloBaliza;
+  public modelo?: ModeloBaliza | null;
   public numSerie?: string;
   public tipoCoordenada?: string | null;
   public imei?: string;
