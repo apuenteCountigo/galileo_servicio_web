@@ -302,7 +302,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.formModalBaliza.value.modelo){
       newBaliza.modelo = {
         id: this.formModalBaliza.value.modelo.id,
-        descripcion: this.formModalBaliza.value.modelo.descripcion,
+        descripcion: this.formModalBaliza.value.modelo?.descripcion,
       } as ModeloBaliza;
     }else{
       newBaliza.modelo =this.balizaToEdit?.modelo;

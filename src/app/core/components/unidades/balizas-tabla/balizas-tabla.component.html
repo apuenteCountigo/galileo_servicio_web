@@ -40,7 +40,7 @@
           <td [nzChecked]="expandSet.has(baliza.id)" (nzCheckedChange)="onCheckChange(baliza, $event)"></td>
           <td>{{ baliza.clave }}</td>
           <td>{{ baliza.marca }}</td>
-          <td>{{ baliza.modelo.descripcion }}</td>
+          <td>{{ baliza.modelo?.descripcion }}</td>
           <td>{{ baliza.numSerie }}</td>
           <td>{{ baliza.compania }}</td>
           <td>{{ baliza.fechaAlta! | date: 'dd/MM/yyyy' }}</td>
