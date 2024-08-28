@@ -245,7 +245,7 @@ export class WizardPositionsComponent
           this.sort
         )
         .subscribe({
-          next: (relations: PagedResourceCollection<any>) => {
+          next: (relations: PagedResourceCollection<Objetivo>) => {
             this.loading = false;
             this.listOfObjetivos = [...relations.resources];
             this.total = relations.totalElements;
@@ -287,6 +287,9 @@ export class WizardPositionsComponent
   }
 
   onItemChecked(item: any, checked: boolean): void {
+    console.log("@@@@@@item#####");
+    console.log(item);
+    
     this.updateCheckedSet(item, checked);
   }
 
