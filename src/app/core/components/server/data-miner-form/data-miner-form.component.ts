@@ -40,7 +40,7 @@ export class DataMinerFormComponent implements OnInit {
       password: ['', [Validators.required]],
       dmaID: ['', []],
       viewIDs: ['', []],
-      ruta: ['', [Validators.required]],
+      ruta: ['', []],
     });
   }
 
@@ -126,8 +126,10 @@ export class DataMinerFormComponent implements OnInit {
     } else {
       this.formModalServer.controls['dmaID'].clearValidators();
       this.formModalServer.controls['viewIDs'].clearValidators();
+      this.formModalServer.controls['ruta'].clearValidators();
     }
     this.formModalServer.controls['dmaID'].updateValueAndValidity();
     this.formModalServer.controls['viewIDs'].updateValueAndValidity();
+    this.formModalServer.controls['ruta'].updateValueAndValidity();
   }
 }
