@@ -124,7 +124,6 @@ export class NomencladorComponent extends TableBase implements OnInit {
               .create(result.nomemcladorAux)
               .subscribe({
                 next: (response:any) => {
-                  console.log('Éxito:', response);
                   let msg = isEdit ? 'modificado' : 'agregado';
                   this.notificationService.notificationSuccess(
                     'Información',
@@ -158,7 +157,6 @@ export class NomencladorComponent extends TableBase implements OnInit {
                 .create(result.nomemcladorAux)
                 .subscribe({
                   next: (response:any) => {
-                    console.log('Éxito:', response);
                     let msg = isEdit ? 'modificado' : 'agregado';
                     this.notificationService.notificationSuccess(
                       'Información',
@@ -167,6 +165,8 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     this.loadDataFromLocal();
                   },
                   error: (err:any) => {
+                    console.log("antes del 409");
+                    console.log(err);
                     if (err.status == 409) {
                       if (err.message.includes('constraint [descripcion]')) {
                         this.notificationService.notificationError(
