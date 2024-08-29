@@ -123,7 +123,18 @@ export class NomencladorComponent extends TableBase implements OnInit {
             this._nomencladorJuzgado
               .create(result.nomemcladorAux)
               .subscribe(() => {
-                this.loadDataFromLocal();
+                next: (response) => {
+                  console.log('Éxito:', response);
+                  let msg = isEdit ? 'modificado' : 'agregado';
+                  this.notificationService.notificationSuccess(
+                    'Información',
+                    `El registro ha sido ${msg} satisfactoriamente.`
+                  );
+                  this.loadDataFromLocal();
+                },
+                error: (err) => {
+                  console.error('Error:', err);
+                }
               });
             break;
             case 'ModelosBalizas':
@@ -166,17 +177,12 @@ export class NomencladorComponent extends TableBase implements OnInit {
             break;
         }
       }
-      let msg = isEdit ? 'modificado' : 'agregado';
-      this.notificationService.notificationSuccess(
-        'Información',
-        `Se ha ${msg} el nomenclador correctamente.`
-      );
     });
   }
   deleteNomenclador() {    
     this.modalService.confirm({
       nzTitle: 'Confirmación',
-      nzContent: `Está seguro que desea eliminar el modelo "${this.selectedNomenclador.descripcion}"?`,
+      nzContent: `¿Está seguro que desea eliminar el elemento, "${this.selectedNomenclador.descripcion}"?`,
       nzOnOk: () => {
         switch (this.dataEntrante) {
           case 'Juzgado':
@@ -186,7 +192,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                 next: () => {
                   this.notificationService.notificationSuccess(
                     'Información',
-                    'Se ha eliminado el juzgado correctamente.'
+                    'El registro ha sido eliminado satisfactoriamente.'
                   );
                   this.loadDataFromLocal();
                 },
@@ -194,12 +200,12 @@ export class NomencladorComponent extends TableBase implements OnInit {
                   if (err.status == 409) {
                     this.notificationService.notificationError(
                       'Error',
-                      'El juzgado esta siendo usado, no puede ser eliminado.'
+                      'El registro no puede ser eliminado, por estar en uso.'
                     );
                   } else {
                     this.notificationService.notificationError(
                       'Error',
-                      'Ha ocurrido un error al eliminar el juzgado.'
+                      'Ha ocurrido un error al eliminar el registro.'
                     );
                   }
                 },
@@ -212,7 +218,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                   next: () => {
                     this.notificationService.notificationSuccess(
                       'Información',
-                      'Se ha eliminado el modelo correctamente.'
+                      'El registro ha sido eliminado satisfactoriamente.'
                     );
                     this.loadDataFromLocal();
                   },
@@ -220,12 +226,12 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     if (err.status == 409) {
                       this.notificationService.notificationError(
                         'Error',
-                        'El modelo esta siendo usado, no puede ser eliminado.'
+                        'El registro no puede ser eliminado, por estar en uso.'
                       );
                     } else {
                       this.notificationService.notificationError(
                         'Error',
-                        'Ha ocurrido un error al eliminar el modelo.'
+                        'Ha ocurrido un error al eliminar el registro.'
                       );
                     }
                   },
@@ -239,7 +245,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
               next: () => {
                 this.notificationService.notificationSuccess(
                   'Información',
-                  'Se ha eliminado el empleo correctamente.'
+                  'El registro ha sido eliminado satisfactoriamente.'
                 );
                 this.loadDataFromLocal();
               },
@@ -247,12 +253,12 @@ export class NomencladorComponent extends TableBase implements OnInit {
                 if (err.status == 409) {
                   this.notificationService.notificationError(
                     'Error',
-                    'El empleo esta siendo usado, no puede ser eliminado.'
+                    'El registro no puede ser eliminado, por estar en uso.'
                   );
                 } else {
                   this.notificationService.notificationError(
                     'Error',
-                    'Ha ocurrido un error al eliminar el empleo.'
+                    'Ha ocurrido un error al eliminar el registro.'
                   );
                 }
               },
