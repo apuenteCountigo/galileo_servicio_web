@@ -168,7 +168,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     console.log("antes del 409");
                     console.log(err);
                     if (err.status == 409) {
-                      if (err.message.includes('constraint [descripcion]')) {
+                      if (err.error.message.includes('constraint [descripcion]')) {
                         this.notificationService.notificationError(
                           'Error',
                           'Ya existe un registro con igual descripción.'
