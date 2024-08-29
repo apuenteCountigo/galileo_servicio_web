@@ -138,11 +138,12 @@ export class NomencladorComponent extends TableBase implements OnInit {
                         'Error',
                         'Ya existe un registro con igual descripción.'
                       );
+                    }else{
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                      );
                     }
-                    this.notificationService.notificationError(
-                      'Error',
-                      'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
-                    );
                   } else {
                     this.notificationService.notificationError(
                       'Error',
@@ -165,19 +166,18 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     this.loadDataFromLocal();
                   },
                   error: (err:any) => {
-                    console.log("antes del 409");
-                    console.log(err);
                     if (err.status == 409) {
                       if (err.error.message.includes('constraint [descripcion]')) {
                         this.notificationService.notificationError(
                           'Error',
                           'Ya existe un registro con igual descripción.'
                         );
+                      }else{
+                        this.notificationService.notificationError(
+                          'Error',
+                          'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                        );
                       }
-                      this.notificationService.notificationError(
-                        'Error',
-                        'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
-                      );
                     } else {
                       this.notificationService.notificationError(
                         'Error',
@@ -204,11 +204,12 @@ export class NomencladorComponent extends TableBase implements OnInit {
                       'Error',
                       'Ya existe un registro con igual descripción.'
                     );
+                  }else{
+                    this.notificationService.notificationError(
+                      'Error',
+                      'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                    );
                   }
-                  this.notificationService.notificationError(
-                    'Error',
-                    'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
-                  );
                 } else {
                   this.notificationService.notificationError(
                     'Error',
