@@ -227,20 +227,101 @@ export class NomencladorComponent extends TableBase implements OnInit {
           case 'Juzgado':
             this._nomencladorJuzgado
               .put(result.nomemcladorAux)
-              .subscribe(() => {
-                this.loadDataFromLocal();
+              .subscribe({
+                next: (response:any) => {
+                  let msg = isEdit ? 'modificado' : 'agregado';
+                  this.notificationService.notificationSuccess(
+                    'Información',
+                    `El registro ha sido ${msg} satisfactoriamente.`
+                  );
+                  this.loadDataFromLocal();
+                },
+                error: (err:any) => {
+                  if (err.status == 409) {
+                    if (err.error.message.includes('constraint [descripcion]')) {
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ya existe un registro con igual descripción.'
+                      );
+                    }else{
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                      );
+                    }
+                  } else {
+                    this.notificationService.notificationError(
+                      'Error',
+                      'Ha ocurrido un error, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                    );
+                  }
+                }
               });
             break;
           case 'ModelosBalizas':
             this._nomencladorModelosBalizas
               .put(result.nomemcladorAux)
-              .subscribe(() => {
-                this.loadDataFromLocal();
+              .subscribe({
+                next: (response:any) => {
+                  let msg = isEdit ? 'modificado' : 'agregado';
+                  this.notificationService.notificationSuccess(
+                    'Información',
+                    `El registro ha sido ${msg} satisfactoriamente.`
+                  );
+                  this.loadDataFromLocal();
+                },
+                error: (err:any) => {
+                  if (err.status == 409) {
+                    if (err.error.message.includes('constraint [descripcion]')) {
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ya existe un registro con igual descripción.'
+                      );
+                    }else{
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                      );
+                    }
+                  } else {
+                    this.notificationService.notificationError(
+                      'Error',
+                      'Ha ocurrido un error, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                    );
+                  }
+                }
               });
             break;
           case 'Empleo':
-            this._empleoService.put(result.nomemcladorAux).subscribe(() => {
-              this.loadDataFromLocal();
+            this._empleoService.put(result.nomemcladorAux).subscribe({
+              next: (response:any) => {
+                let msg = isEdit ? 'modificado' : 'agregado';
+                this.notificationService.notificationSuccess(
+                  'Información',
+                  `El registro ha sido ${msg} satisfactoriamente.`
+                );
+                this.loadDataFromLocal();
+              },
+              error: (err:any) => {
+                if (err.status == 409) {
+                  if (err.error.message.includes('constraint [descripcion]')) {
+                    this.notificationService.notificationError(
+                      'Error',
+                      'Ya existe un registro con igual descripción.'
+                    );
+                  }else{
+                    this.notificationService.notificationError(
+                      'Error',
+                      'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                    );
+                  }
+                } else {
+                  this.notificationService.notificationError(
+                    'Error',
+                    'Ha ocurrido un error, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                  );
+                }
+              }
             });
             break;
           default:
