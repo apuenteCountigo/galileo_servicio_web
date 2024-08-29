@@ -122,8 +122,8 @@ export class NomencladorComponent extends TableBase implements OnInit {
           case 'Juzgado':
             this._nomencladorJuzgado
               .create(result.nomemcladorAux)
-              .subscribe(() => {
-                next: (response) => {
+              .subscribe({
+                next: (response:any) => {
                   console.log('Éxito:', response);
                   let msg = isEdit ? 'modificado' : 'agregado';
                   this.notificationService.notificationSuccess(
@@ -132,7 +132,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                   );
                   this.loadDataFromLocal();
                 },
-                error: (err) => {
+                error: (err:any) => {
                   console.error('Error:', err);
                 }
               });
@@ -140,8 +140,19 @@ export class NomencladorComponent extends TableBase implements OnInit {
             case 'ModelosBalizas':
               this._nomencladorModelosBalizas
                 .create(result.nomemcladorAux)
-                .subscribe(() => {
-                  this.loadDataFromLocal();
+                .subscribe({
+                  next: (response:any) => {
+                    console.log('Éxito:', response);
+                    let msg = isEdit ? 'modificado' : 'agregado';
+                    this.notificationService.notificationSuccess(
+                      'Información',
+                      `El registro ha sido ${msg} satisfactoriamente.`
+                    );
+                    this.loadDataFromLocal();
+                  },
+                  error: (err:any) => {
+                    console.error('Error:', err);
+                  }
                 });
               break;
             case 'Empleo':
