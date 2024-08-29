@@ -133,7 +133,23 @@ export class NomencladorComponent extends TableBase implements OnInit {
                   this.loadDataFromLocal();
                 },
                 error: (err:any) => {
-                  console.error('Error:', err);
+                  if (err.status == 409) {
+                    if (err.message.includes('constraint [descripcion]')) {
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ya existe un registro con igual descripción.'
+                      );
+                    }
+                    this.notificationService.notificationError(
+                      'Error',
+                      'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                    );
+                  } else {
+                    this.notificationService.notificationError(
+                      'Error',
+                      'Ha ocurrido un error, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                    );
+                  }
                 }
               });
             break;
@@ -151,13 +167,55 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     this.loadDataFromLocal();
                   },
                   error: (err:any) => {
-                    console.error('Error:', err);
+                    if (err.status == 409) {
+                      if (err.message.includes('constraint [descripcion]')) {
+                        this.notificationService.notificationError(
+                          'Error',
+                          'Ya existe un registro con igual descripción.'
+                        );
+                      }
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                      );
+                    } else {
+                      this.notificationService.notificationError(
+                        'Error',
+                        'Ha ocurrido un error, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                      );
+                    }
                   }
                 });
               break;
             case 'Empleo':
-            this._empleoService.create(result.nomemcladorAux).subscribe(() => {
-              this.loadDataFromLocal();
+            this._empleoService.create(result.nomemcladorAux).subscribe({
+              next: (response:any) => {
+                let msg = isEdit ? 'modificado' : 'agregado';
+                this.notificationService.notificationSuccess(
+                  'Información',
+                  `El registro ha sido ${msg} satisfactoriamente.`
+                );
+                this.loadDataFromLocal();
+              },
+              error: (err:any) => {
+                if (err.status == 409) {
+                  if (err.message.includes('constraint [descripcion]')) {
+                    this.notificationService.notificationError(
+                      'Error',
+                      'Ya existe un registro con igual descripción.'
+                    );
+                  }
+                  this.notificationService.notificationError(
+                    'Error',
+                    'Ocurrió un conflicto, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                  );
+                } else {
+                  this.notificationService.notificationError(
+                    'Error',
+                    'Ha ocurrido un error, al intentar ejecutar la acción. Consulte al administrador del sistema.'
+                  );
+                }
+              }
             });
             break;
           default:
