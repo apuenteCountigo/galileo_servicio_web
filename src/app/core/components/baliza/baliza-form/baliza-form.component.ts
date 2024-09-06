@@ -267,20 +267,15 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     await this._nomencladorModelosBalizas
       .getModelos()
       .subscribe({
-        next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
+        next: (modeloBaliza: Array<ModeloBaliza>) => {
           try {
             console.log("INTO MODEL LOAD NEXT");
             this.loadingModelo = false;
             console.log("this.loadingModelo = false;");
             console.log(modeloBaliza);
-            
-            this.listModelosBalizas = [...modeloBaliza.resources];
-            console.log("modeloBaliza.resources");
-            console.log(modeloBaliza.resources);
+            this.listModelosBalizas = [...modeloBaliza];
             this.obsModelosBalizas.next(this.listModelosBalizas);
             this.cdr.detectChanges(); // Forzar la detección de cambios
-            console.log("obsModelosBalizas");
-            console.log(this.obsModelosBalizas);
           } catch (error) {
             console.log(error);
           }

@@ -30,8 +30,8 @@ export class NomencladorModelosBalizasService extends HateoasResourceOperation<M
       });
   }
 
-  public getModelos(): Observable<PagedResourceCollection<ModeloBaliza>> {
-    return this.http.get<PagedResourceCollection<ModeloBaliza>>(
+  public getModelos(): Observable<Observable<never> | Array<ModeloBaliza>> {
+    return this.http.get<Array<ModeloBaliza>>(
       environment.API_URL_MODELOSBALIZAS+'/modelosbalizas'
     );
   }
