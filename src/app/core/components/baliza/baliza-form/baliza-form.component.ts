@@ -272,6 +272,8 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
             console.log("INTO MODEL LOAD NEXT");
             this.loadingModelo = false;
             console.log("this.loadingModelo = false;");
+            console.log(modeloBaliza);
+            
             this.listModelosBalizas = [...modeloBaliza.resources];
             console.log("modeloBaliza.resources");
             console.log(modeloBaliza.resources);
