@@ -166,8 +166,11 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     this.suscriptions.forEach((s) => s.unsubscribe());
   }
 
+  ngBeforeViewInit(): void {
+    console.log("SIEMPRE QUE ABRE CARGA");
+    
+  }
   ngAfterViewInit(): void {
-
     if (this.balizaToEdit) {
       this.button.label = 'EDITAR';
       this.button.icon = 'edit';
@@ -251,7 +254,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log("INTO MODEL LOAD");
     this.loadingModelo = true;
     this._nomencladorModelosBalizas
-      .getAll()
+      .getModelos()
       .subscribe({
         next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
           console.log("INTO MODEL LOAD NEXT");

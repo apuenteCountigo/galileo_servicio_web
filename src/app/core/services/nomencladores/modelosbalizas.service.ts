@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PageParam, Sort } from '@lagoshny/ngx-hateoas-client/lib/model/declarations';
 import { ModeloBaliza } from 'src/app/core/models/momencaldores.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class NomencladorModelosBalizasService extends HateoasResourceOperation<M
 
   constructor(
     public resourceService: HateoasResourceService,
+    private http: HttpClient,
     private hateoasConfig: NgxHateoasClientConfigurationService
     ) {
       super(ModeloBaliza)
@@ -26,6 +28,13 @@ export class NomencladorModelosBalizasService extends HateoasResourceOperation<M
         pageParams: params,
         sort,
       });
+  }
+
+  public getModelos() {
+    return this.http.post<Array<ModeloBaliza>>(
+      environment.API_URL_MODELOSBALIZAS,
+      null
+    );
   }
 
   public create(
