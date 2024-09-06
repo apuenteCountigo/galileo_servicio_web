@@ -157,8 +157,15 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
           this.isLoading = false;
           this.listModelosBalizas = [...modeloBaliza.resources];
+          console.log("modeloBaliza.resources");
+          console.log(modeloBaliza.resources);
+          
           this.obsModelosBalizas.next(this.listModelosBalizas);
           this.cdr.detectChanges(); // Forzar la detección de cambios
+          console.log("this.obsModelosBalizas");
+          console.log(this.obsModelosBalizas);
+          
+          
         },
         error: (error) => {
           this.isLoading = false;
@@ -264,8 +271,12 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log("INTO MODEL LOAD NEXT");
           this.loadingModelo = false;
           this.listModelosBalizas = [...modeloBaliza.resources];
+          console.log("modeloBaliza.resources");
+          console.log(modeloBaliza.resources);
           this.obsModelosBalizas.next(this.listModelosBalizas);
           this.cdr.detectChanges(); // Forzar la detección de cambios
+          console.log("obsModelosBalizas");
+          console.log(this.obsModelosBalizas);
         },
         error: (error) => {
           console.log("INTO MODEL LOAD ERROR");
