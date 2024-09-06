@@ -5,6 +5,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
@@ -67,7 +69,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   formatterNumber = (value: number): string => `+${value}`;
 
-  listModelosBalizas: any[] = [];
+  listModelosBalizas: Observable<any[] | Iterable<any> | undefined> = [];
   isLoading: boolean=true;
   loadingModelo: boolean=false;
 
