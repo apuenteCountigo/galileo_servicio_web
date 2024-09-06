@@ -48,7 +48,8 @@
   </nz-card> -->
   
   
-  <nz-card nzSize="default" [nzExtra]="extraTemplate">
+  <!-- <nz-card nzSize="default" [nzExtra]="extraTemplate"> -->
+  <nz-card nzSize="default">
     <nz-table #headerTable nzShowSizeChanger [nzData]="listUnAsigned" [nzFrontPagination]="true" [nzLoading]="loading"
       [nzTotal]="total" [nzScroll]="{ x: '240px', y: '300px' }" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
       (nzQueryParams)="onQueryParamsChange($event)">
@@ -86,7 +87,7 @@
   </ng-template>
   
   
-  <ng-template #extraTemplate>
+  <!-- <ng-template #extraTemplate>
     <div nz-row nzJustify="end">
       <div *ngIf="!showSearchForm" nz-col class="gutter-row">
         <button nz-button nzType="text" nzSize="large" (click)="showHideSearchForm()" nz-tooltip
@@ -117,7 +118,7 @@
         </button>
       </div>
     </div>
-  </ng-template>
+  </ng-template> -->
 
   <nz-modal [(nzVisible)]="isVisibleModalInforme" nzTitle="Informe de asignaciones" [nzContent]="modalContent" (nzOnCancel)="hideModal()"
     [nzFooter]="modalFooter">
@@ -137,62 +138,4 @@
       <button nz-button nzType="default" (click)="hideModal()">Cerrar</button>
     </ng-template>
   </nz-modal>
-  
-  <!-- <ng-template #cardHeaderTpl>
-    <form [formGroup]="searchGestOficialsForm">
-      <nz-row nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
-        <div nz-col class="gutter-row" [nzSpan]="10">
-          <div class="inner-box">
-            <nz-form-item>
-              <nz-form-control>
-                <input nz-input placeHolder="Tip" formControlName="tip" />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="2">
-          <div class="inner-box">
-            <button nz-button nzType="primary" nzSize="small" (click)="onSearchFilterGuest()"
-              [disabled]="isNullSearchGestForm()" nz-tooltip nzTooltipTitle="Buscar">
-              <em nz-icon nzType="search" nzTheme="outline"></em>
-            </button>
-          </div>
-        </div>
-        <div nz-col class="gutter-row" [nzSpan]="2">
-          <div class="inner-box">
-            <button nz-button nzType="primary" nzSize="small" (click)="resetForm()" [disabled]="isNullSearchGestForm()"
-              nz-tooltip nzTooltipTitle="Limpiar">
-              <em nz-icon nzType="clear" nzTheme="outline"></em>
-            </button>
-          </div>
-        </div>
-      </nz-row>
-    </form>
-    <form [formGroup]="statusRelationForm">
-      <nz-form-item *ngIf="isGuestStatus">
-        <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="fecha">Fecha de expiración</nz-form-label>
-        <nz-form-control [nzSpan]="12" [nzErrorTip]="errorFechaRel">
-          <nz-date-picker formControlName="fecha" [nzDisabledDate]="disabledDate"></nz-date-picker>
-          <ng-template #errorFechaRel let-control>
-            <ng-container *ngIf="control.hasError('required')">Debe seleccionar la fecha de expiración
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-  
-      <nz-form-item>
-        <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="estado">Estado</nz-form-label>
-        <nz-form-control [nzSpan]="12" [nzErrorTip]="errorEstadoRel" nzHasFeedback>
-          <nz-select formControlName="estado" nzPlaceHolder="Seleccionar estado"
-            ((ngModel)Change)="selectStatusChange($event)">
-            <nz-option *ngFor="let estado of estados" [nzValue]="estado" [nzLabel]="estado.descripcion!">
-            </nz-option>
-          </nz-select>
-          <ng-template #errorEstadoRel let-control>
-            <ng-container *ngIf="control.hasError('required')">Debe seleccionar el estado de la relación</ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  </ng-template> -->
   
