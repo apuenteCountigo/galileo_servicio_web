@@ -261,6 +261,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async cargarModelos(): Promise<void> {
     console.log("INTO MODEL LOAD");
+    this.obsModelosBalizas.next(new Array<ModeloBaliza>());
     this.loadingModelo = true;
     this._nomencladorModelosBalizas
       .getModelos()
