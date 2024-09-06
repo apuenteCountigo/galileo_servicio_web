@@ -143,6 +143,23 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.formModalBaliza.controls['servidor'].clearValidators();
       this.formModalBaliza.updateValueAndValidity();
     }
+
+    this.isLoading = true;
+    this._nomencladorModelosBalizas
+      .getAll()
+      .subscribe({
+        next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
+          this.isLoading = false;
+          this.listModelosBalizas = [...modeloBaliza.resources];
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.handleErrorMessage(
+            error,
+            'Error al obtener los modelos de balizas:'
+          );
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -150,22 +167,6 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // this.isLoading = true;
-    // this._nomencladorModelosBalizas
-    //   .getAll()
-    //   .subscribe({
-    //     next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
-    //       this.isLoading = false;
-    //       this.listModelosBalizas = [...modeloBaliza.resources];
-    //     },
-    //     error: (error) => {
-    //       this.isLoading = false;
-    //       this.handleErrorMessage(
-    //         error,
-    //         'Error al obtener los modelos de balizas:'
-    //       );
-    //     }
-    //   });
 
     if (this.balizaToEdit) {
       this.button.label = 'EDITAR';
@@ -247,15 +248,18 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   cargarModelos(): void {
+    console.log("INTO MODEL LOAD");
     this.loadingModelo = true;
     this._nomencladorModelosBalizas
       .getAll()
       .subscribe({
         next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
+          console.log("INTO MODEL LOAD NEXT");
           this.loadingModelo = false;
           this.listModelosBalizas = [...modeloBaliza.resources];
         },
         error: (error) => {
+          console.log("INTO MODEL LOAD ERROR");
           this.loadingModelo = false;
           this.handleErrorMessage(
             error,
