@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -69,7 +69,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   formatterNumber = (value: number): string => `+${value}`;
 
-  listModelosBalizas: Observable<any[] | Iterable<any> | undefined> = [];
+  listModelosBalizas: Observable<ModeloBaliza[]> = of([]);
   isLoading: boolean=true;
   loadingModelo: boolean=false;
 
