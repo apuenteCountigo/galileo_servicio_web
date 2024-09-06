@@ -35,10 +35,13 @@ export class NomencladorModelosBalizasService extends HateoasResourceOperation<M
     sort?: Sort
     ): Observable<PagedResourceCollection<ModeloBaliza>> {
       this.changeUrl();
-      return super.resourceService.getPage(ModeloBaliza, {
+      const getOptions = () => ({
         pageParams: params,
         sort,
+        // Añadimos un parámetro único para evitar el caché
+        params: { timestamp: new Date().getTime() }
       });
+      return this.resourceService.getPage(ModeloBaliza, getOptions());
   }
 
   // public async getModelos(): Observable<Array<ModeloBaliza>> {
