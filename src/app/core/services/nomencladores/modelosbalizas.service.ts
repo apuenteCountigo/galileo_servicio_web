@@ -35,7 +35,7 @@ export class NomencladorModelosBalizasService extends HateoasResourceOperation<M
     sort?: Sort
     ): Observable<PagedResourceCollection<ModeloBaliza>> {
       this.changeUrl();
-      return this.resourceService.getPage(ModeloBaliza, {
+      return super.resourceService.getPage(ModeloBaliza, {
         pageParams: params,
         sort,
       });
