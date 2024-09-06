@@ -32,8 +32,7 @@ export class NomencladorModelosBalizasService extends HateoasResourceOperation<M
 
   public getModelos() {
     return this.http.get<PagedResourceCollection<ModeloBaliza>>(
-      environment.API_URL_MODELOSBALIZAS+'/modelosbalizas',
-      null
+      environment.API_URL_MODELOSBALIZAS+'/modelosbalizas'
     );
   }
 
