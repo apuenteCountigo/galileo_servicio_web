@@ -72,7 +72,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   formatterNumber = (value: number): string => `+${value}`;
 
   listModelosBalizas: any[] = [];
-  obsModelosBalizas: Observable<any[]> = of([]);
+  obsModelosBalizas: Observable<any[]> = from(this.listModelosBalizas);
   isLoading: boolean=true;
   loadingModelo: boolean=false;
 
