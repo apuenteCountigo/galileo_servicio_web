@@ -72,7 +72,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   formatterNumber = (value: number): string => `+${value}`;
 
   listModelosBalizas: Array<ModeloBaliza> = new Array<ModeloBaliza>();
-  obsModelosBalizas: Observable<Array<ModeloBaliza>> = new Array<ModeloBaliza>();
+  obsModelosBalizas: Observable<Array<ModeloBaliza>> = of(new Array<ModeloBaliza>());
   isLoading: boolean=true;
   loadingModelo: boolean=false;
 
@@ -157,7 +157,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
           this.isLoading = false;
           this.listModelosBalizas = [...modeloBaliza.resources];
-          this.obsModelosBalizas.of(this.listModelosBalizas);
+          this.obsModelosBalizas = of(this.listModelosBalizas);
           this.cdr.detectChanges(); // Forzar la detección de cambios
         },
         error: (error) => {
@@ -173,11 +173,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
   }
-
-  ngBeforeViewInit(): void {
-    console.log("SIEMPRE QUE ABRE CARGA");
-    
-  }
+  
   ngAfterViewInit(): void {
     if (this.balizaToEdit) {
       this.button.label = 'EDITAR';
@@ -268,7 +264,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log("INTO MODEL LOAD NEXT");
           this.loadingModelo = false;
           this.listModelosBalizas = [...modeloBaliza.resources];
-          this.obsModelosBalizas.of(this.listModelosBalizas);
+          this.obsModelosBalizas = of(this.listModelosBalizas);
           this.cdr.detectChanges(); // Forzar la detección de cambios
         },
         error: (error) => {
