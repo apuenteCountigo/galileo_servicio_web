@@ -97,7 +97,7 @@
       <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="modelo">Modelo Baliza</nz-form-label>
       <nz-form-control [nzSpan]="12" [nzErrorTip]="modeloErrorTpl">
         <nz-select formControlName="modelo" nzPlaceHolder="Seleccione un modelo" (nzOpenChange)="onSelectOpen($event)">
-          <nz-option *ngFor="let modelo of listModelosBalizas | async" [nzValue]="modelo" [nzLabel]="modelo.descripcion!">
+          <nz-option *ngFor="let modelo of listModelosBalizas" [nzValue]="modelo" [nzLabel]="modelo.descripcion!">
           </nz-option>
           <!-- Mostrar opción de loading mientras carga -->
           <nz-option *ngIf="loadingModelo" nzDisabled nzCustomContent>
