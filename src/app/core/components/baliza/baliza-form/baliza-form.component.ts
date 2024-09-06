@@ -69,7 +69,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   listModelosBalizas: any[] = [];
   isLoading: boolean=true;
-  loadingModelo: boolean;
+  loadingModelo: boolean=false;
 
   /** Constructor */
   constructor(
