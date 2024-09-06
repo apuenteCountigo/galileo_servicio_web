@@ -152,7 +152,8 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe({
         next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
           this.isLoading = false;
-          this.listModelosBalizas = [...modeloBaliza.resources];
+          this.listModelosBalizas.next([...modeloBaliza.resources]);  // Emitir el nuevo valor
+          //this.listModelosBalizas = [...modeloBaliza.resources];
         },
         error: (error) => {
           this.isLoading = false;
