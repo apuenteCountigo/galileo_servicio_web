@@ -240,6 +240,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Custom Methods */
 
   onSelectOpen(isOpen: boolean): void {
+    console.log('Select abierto:', isOpen);
     if (isOpen) {
       this.cargarModelos();
     }
