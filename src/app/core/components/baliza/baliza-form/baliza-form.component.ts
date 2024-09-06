@@ -150,22 +150,22 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.isLoading = true;
-    this._nomencladorModelosBalizas
-      .getAll()
-      .subscribe({
-        next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
-          this.isLoading = false;
-          this.listModelosBalizas = [...modeloBaliza.resources];
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.handleErrorMessage(
-            error,
-            'Error al obtener los modelos de balizas:'
-          );
-        }
-      });
+    // this.isLoading = true;
+    // this._nomencladorModelosBalizas
+    //   .getAll()
+    //   .subscribe({
+    //     next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
+    //       this.isLoading = false;
+    //       this.listModelosBalizas = [...modeloBaliza.resources];
+    //     },
+    //     error: (error) => {
+    //       this.isLoading = false;
+    //       this.handleErrorMessage(
+    //         error,
+    //         'Error al obtener los modelos de balizas:'
+    //       );
+    //     }
+    //   });
 
     if (this.balizaToEdit) {
       this.button.label = 'EDITAR';
