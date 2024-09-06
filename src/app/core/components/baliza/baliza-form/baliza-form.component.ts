@@ -69,6 +69,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   listModelosBalizas: any[] = [];
   isLoading: boolean=true;
+  loadingModelo: boolean;
 
   /** Constructor */
   constructor(
@@ -237,6 +238,31 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /** Custom Methods */
+
+  onSelectOpen(isOpen: boolean): void {
+    if (isOpen) {
+      this.cargarModelos();
+    }
+  }
+
+  cargarModelos(): void {
+    this.loadingModelo = true;
+    this._nomencladorModelosBalizas
+      .getAll()
+      .subscribe({
+        next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
+          this.loadingModelo = false;
+          this.listModelosBalizas = [...modeloBaliza.resources];
+        },
+        error: (error) => {
+          this.loadingModelo = false;
+          this.handleErrorMessage(
+            error,
+            'Error al obtener los modelos de balizas:'
+          );
+        }
+      });
+  }
 
   checkForm() {
     return this.formModalBaliza.invalid ? true : false;
