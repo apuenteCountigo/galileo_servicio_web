@@ -30,12 +30,23 @@ export class NomencladorModelosBalizasService extends HateoasResourceOperation<M
       });
   }
 
-  public async getModelos(): Observable<Array<ModeloBaliza>> {
-    let rsc=await this.http.get<PagedResourceCollection<ModeloBaliza>>(
-      environment.API_URL_MODELOSBALIZAS+'/modelosbalizas'
-    );
-    return rsc._embedded.modelosbalizas || [];
+  public getModelos(
+    params?: PageParam,
+    sort?: Sort
+    ): Observable<PagedResourceCollection<ModeloBaliza>> {
+      this.changeUrl();
+      return this.resourceService.getPage(ModeloBaliza, {
+        pageParams: params,
+        sort,
+      });
   }
+
+  // public async getModelos(): Observable<Array<ModeloBaliza>> {
+  //   let rsc=await this.http.get<PagedResourceCollection<ModeloBaliza>>(
+  //     environment.API_URL_MODELOSBALIZAS+'/modelosbalizas'
+  //   );
+  //   return rsc._embedded.modelosbalizas || [];
+  // }
 
   public create(
     modeloBaliza: ModeloBaliza

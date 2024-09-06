@@ -164,8 +164,6 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cdr.detectChanges(); // Forzar la detección de cambios
           console.log("this.obsModelosBalizas");
           console.log(this.obsModelosBalizas);
-          
-          
         },
         error: (error) => {
           this.isLoading = false;
@@ -264,24 +262,26 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   async cargarModelos(): Promise<void> {
     console.log("INTO MODEL LOAD");
     this.loadingModelo = true;
-    await this._nomencladorModelosBalizas
+    this._nomencladorModelosBalizas
       .getModelos()
       .subscribe({
-        next: (modeloBaliza: Array<ModeloBaliza>) => {
+        next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
           try {
-            console.log("INTO MODEL LOAD NEXT");
             this.loadingModelo = false;
-            console.log("this.loadingModelo = false;");
-            console.log(modeloBaliza);
-            this.listModelosBalizas = [...modeloBaliza];
+            console.log("INTO MODEL LOAD NEXT");
+            this.listModelosBalizas = [...modeloBaliza.resources];
+            console.log("modeloBaliza.resources");
+            console.log(modeloBaliza.resources);
+            
             this.obsModelosBalizas.next(this.listModelosBalizas);
             this.cdr.detectChanges(); // Forzar la detección de cambios
+            console.log("this.obsModelosBalizas");
+            console.log(this.obsModelosBalizas);
           } catch (error) {
             console.log(error);
           }
         },
         error: (error) => {
-          console.log("INTO MODEL LOAD ERROR");
           this.loadingModelo = false;
           this.handleErrorMessage(
             error,
@@ -289,6 +289,31 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
           );
         }
       });
+    // await this._nomencladorModelosBalizas
+    //   .getModelos()
+    //   .subscribe({
+    //     next: (modeloBaliza: Array<ModeloBaliza>) => {
+    //       try {
+    //         console.log("INTO MODEL LOAD NEXT");
+    //         this.loadingModelo = false;
+    //         console.log("this.loadingModelo = false;");
+    //         console.log(modeloBaliza);
+    //         this.listModelosBalizas = [...modeloBaliza];
+    //         this.obsModelosBalizas.next(this.listModelosBalizas);
+    //         this.cdr.detectChanges(); // Forzar la detección de cambios
+    //       } catch (error) {
+    //         console.log(error);
+    //       }
+    //     },
+    //     error: (error) => {
+    //       console.log("INTO MODEL LOAD ERROR");
+    //       this.loadingModelo = false;
+    //       this.handleErrorMessage(
+    //         error,
+    //         'Error al obtener los modelos de balizas:'
+    //       );
+    //     }
+    //   });
   }
 
   checkForm() {
