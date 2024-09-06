@@ -254,29 +254,34 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Custom Methods */
 
-  onSelectOpen(isOpen: boolean): void {
+  async onSelectOpen(isOpen: boolean): Promise<void> {
     console.log('Select abierto:', isOpen);
     if (isOpen) {
-      this.cargarModelos();
+      await this.cargarModelos();
     }
   }
 
-  cargarModelos(): void {
+  async cargarModelos(): Promise<void> {
     console.log("INTO MODEL LOAD");
     this.loadingModelo = true;
-    this._nomencladorModelosBalizas
+    await this._nomencladorModelosBalizas
       .getModelos()
       .subscribe({
         next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
-          console.log("INTO MODEL LOAD NEXT");
-          this.loadingModelo = false;
-          this.listModelosBalizas = [...modeloBaliza.resources];
-          console.log("modeloBaliza.resources");
-          console.log(modeloBaliza.resources);
-          this.obsModelosBalizas.next(this.listModelosBalizas);
-          this.cdr.detectChanges(); // Forzar la detección de cambios
-          console.log("obsModelosBalizas");
-          console.log(this.obsModelosBalizas);
+          try {
+            console.log("INTO MODEL LOAD NEXT");
+            this.loadingModelo = false;
+            console.log("this.loadingModelo = false;");
+            this.listModelosBalizas = [...modeloBaliza.resources];
+            console.log("modeloBaliza.resources");
+            console.log(modeloBaliza.resources);
+            this.obsModelosBalizas.next(this.listModelosBalizas);
+            this.cdr.detectChanges(); // Forzar la detección de cambios
+            console.log("obsModelosBalizas");
+            console.log(this.obsModelosBalizas);
+          } catch (error) {
+            console.log(error);
+          }
         },
         error: (error) => {
           console.log("INTO MODEL LOAD ERROR");
