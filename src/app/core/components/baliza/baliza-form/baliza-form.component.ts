@@ -6,7 +6,10 @@ import {
   OnInit,
   ChangeDetectorRef,
 } from '@angular/core';
+import { of, , Observable } from 'rxjs';
+import { find, filter, first } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
 import { Baliza } from 'src/app/core/models/baliza.model';
@@ -69,6 +72,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   formatterNumber = (value: number): string => `+${value}`;
 
   listModelosBalizas: any[] = [];
+  obsModelosBalizas: Observable<any[]> = of([]);
   isLoading: boolean=true;
   loadingModelo: boolean=false;
 
@@ -153,6 +157,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
         next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
           this.isLoading = false;
           this.listModelosBalizas = [...modeloBaliza.resources];
+          // this.obsModelosBalizas.of(this.listModelosBalizas);
           this.cdr.detectChanges(); // Forzar la detección de cambios
         },
         error: (error) => {
@@ -263,6 +268,8 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log("INTO MODEL LOAD NEXT");
           this.loadingModelo = false;
           this.listModelosBalizas = [...modeloBaliza.resources];
+          // this.obsModelosBalizas.of(this.listModelosBalizas);
+          this.cdr.detectChanges(); // Forzar la detección de cambios
         },
         error: (error) => {
           console.log("INTO MODEL LOAD ERROR");
