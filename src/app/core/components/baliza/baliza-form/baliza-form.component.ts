@@ -4,9 +4,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  ChangeDetectorRef,
 } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
@@ -69,7 +68,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   formatterNumber = (value: number): string => `+${value}`;
 
-  listModelosBalizas: Observable<ModeloBaliza[]> = of([]);
+  listModelosBalizas: any[] = [];
   isLoading: boolean=true;
   loadingModelo: boolean=false;
 
@@ -80,6 +79,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     private _balizaService: BalizaService,
     private _notificationService: NotificationService,
     private _nomencladorModelosBalizas: NomencladorModelosBalizasService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formModalBaliza = this.fb.group({
       clave: [
@@ -152,8 +152,8 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe({
         next: (modeloBaliza: PagedResourceCollection<ModeloBaliza>) => {
           this.isLoading = false;
-          this.listModelosBalizas.next([...modeloBaliza.resources]);  // Emitir el nuevo valor
-          //this.listModelosBalizas = [...modeloBaliza.resources];
+          this.listModelosBalizas = [...modeloBaliza.resources];
+          this.cdr.detectChanges(); // Forzar la detección de cambios
         },
         error: (error) => {
           this.isLoading = false;
