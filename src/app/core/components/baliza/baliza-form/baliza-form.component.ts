@@ -458,4 +458,12 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   validatePhone(e: KeyboardEvent) {
     validatePhoneNumber(e, this.formModalBaliza.controls['telefono'].value);
   }
+
+  submitForm2(){
+    if (this.checkForm()) {
+      alert('VALIDO')
+    }else{
+      alert('NO VALIDO')
+    }
+  }
 }
