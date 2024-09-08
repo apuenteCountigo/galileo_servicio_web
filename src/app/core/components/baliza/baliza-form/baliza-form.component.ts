@@ -459,10 +459,12 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     validatePhoneNumber(e, this.formModalBaliza.controls['telefono'].value);
   }
 
-  onEnterKey(event: KeyboardEvent) {
-    if (event.key === 'Enter' && !event.shiftKey) {
+  onEnterKey(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent; // Hacer el cast a KeyboardEvent
+    if (keyboardEvent.key === 'Enter') {
+      // Aquí puedes manejar la lógica para cuando se presione la tecla Enter
       event.preventDefault(); // Prevent default form submission
-      this.submitForm2();
+      this.submitForm2(); // Llamada a la función de enviar formulario
     }
   }
 
