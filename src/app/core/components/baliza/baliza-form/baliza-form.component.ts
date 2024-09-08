@@ -460,8 +460,8 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onEnterKey(event: KeyboardEvent) {
-    event.preventDefault(); // Prevent default form submission
-    if (!event.shiftKey) { // Allow Shift+Enter for new lines in textareas
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault(); // Prevent default form submission
       this.submitForm2();
     }
   }

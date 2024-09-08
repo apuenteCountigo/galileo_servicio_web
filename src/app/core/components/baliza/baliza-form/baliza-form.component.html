@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="formModalBaliza" (ngSubmit)="submitForm2()" (keydown.enter)="onEnterKey($event)">
+<form nz-form [formGroup]="formModalBaliza" (ngSubmit)="submitForm2()" (keydown.enter)="onEnterKey($event as KeyboardEvent)">
   <nz-spin [nzSpinning]="isLoading" nzTip="Cargando nomencladores...">
     <nz-form-item>
       <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="clave">Clave</nz-form-label>
