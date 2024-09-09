@@ -159,6 +159,13 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy, Af
           this.isLoading = false;
           this.listModelosBalizas = [...modeloBaliza.resources];
           this.obsModelosBalizas.next(this.listModelosBalizas);
+          // Establecer el valor una vez que los modelos se hayan cargado
+          const modeloSeleccionado = this.listModelosBalizas.find(
+            (s) => s.id === this.balizaToEdit?.modelo?.id
+          );
+          if (modeloSeleccionado) {
+            this.formModalBaliza.controls['modelo'].setValue(modeloSeleccionado);
+          }
           this.cdr.detectChanges(); // Forzar la detección de cambios
         },
         error: (error) => {
@@ -171,14 +178,14 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy, Af
       });
   }
 
-  ngAfterContentInit(): void {
-    if (this.balizaToEdit && this.listModelosBalizas.length > 0) {
-      this.formModalBaliza.controls['modelo'].setValue(
-        this.listModelosBalizas.find((s) => s.id === this.balizaToEdit!.modelo?.id)
-      );
-      this.cdr.detectChanges(); // Forzar la detección de cambios
-    }
-  }
+  // ngAfterContentInit(): void {
+  //   if (this.balizaToEdit && this.listModelosBalizas.length > 0) {
+  //     this.formModalBaliza.controls['modelo'].setValue(
+  //       this.listModelosBalizas.find((s) => s.id === this.balizaToEdit!.modelo?.id)
+  //     );
+  //     this.cdr.detectChanges(); // Forzar la detección de cambios
+  //   }
+  // }
 
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
