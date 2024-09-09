@@ -70,6 +70,17 @@ export class NomencladorFormComponent implements OnInit {
     this.modalRef.close({ nomemcladorAux, accion: this.button.label });
   }
 
+  onEnterKey(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent; // Hacer el cast a KeyboardEvent
+    if (keyboardEvent.key === 'Enter') {
+      // Aquí puedes manejar la lógica para cuando se presione la tecla Enter
+      event.preventDefault(); // Prevent default form submission
+      if (!this.checkForm()) {
+        this.submitForm();
+      }
+    }
+  }
+
   closeForm() {
     this.modalRef.close({ accion: 'CANCELAR' });
   }
