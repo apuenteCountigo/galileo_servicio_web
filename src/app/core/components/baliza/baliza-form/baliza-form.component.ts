@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  AfterContentInit,
   Component,
   Input,
   OnDestroy,
@@ -33,7 +34,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
   templateUrl: './baliza-form.component.html',
   styleUrls: ['./baliza-form.component.less'],
 })
-export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy, AfterContentInit {
   /** Variables */
   @Input() balizaToEdit?: Baliza;
 
@@ -159,11 +160,6 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
           this.listModelosBalizas = [...modeloBaliza.resources];
           this.obsModelosBalizas.next(this.listModelosBalizas);
           this.cdr.detectChanges(); // Forzar la detección de cambios
-          if (this.balizaToEdit) {
-            this.formModalBaliza.controls['modelo'].setValue(
-              this.listModelosBalizas!.find((s) => s.id === this.balizaToEdit!.modelo?.id)
-            );
-          }
         },
         error: (error) => {
           this.isLoading = false;
@@ -173,6 +169,15 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
           );
         }
       });
+  }
+
+  ngAfterContentInit(): void {
+    if (this.balizaToEdit && this.listModelosBalizas.length > 0) {
+      this.formModalBaliza.controls['modelo'].setValue(
+        this.listModelosBalizas.find((s) => s.id === this.balizaToEdit!.modelo?.id)
+      );
+      this.cdr.detectChanges(); // Forzar la detección de cambios
+    }
   }
 
   ngOnDestroy(): void {
