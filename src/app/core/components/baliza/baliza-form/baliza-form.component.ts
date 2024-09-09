@@ -159,6 +159,11 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
           this.listModelosBalizas = [...modeloBaliza.resources];
           this.obsModelosBalizas.next(this.listModelosBalizas);
           this.cdr.detectChanges(); // Forzar la detección de cambios
+          if (this.balizaToEdit) {
+            this.formModalBaliza.controls['modelo'].setValue(
+              this.listModelosBalizas!.find((s) => s.id === this.balizaToEdit!.modelo?.id)
+            );
+          }
         },
         error: (error) => {
           this.isLoading = false;
@@ -238,9 +243,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
         this.serverList!.find((s) => s.id === this.balizaToEdit!.servidor?.id)
       );
       this.formModalBaliza.controls['servidor'].disable();
-      this.formModalBaliza.controls['modelo'].setValue(
-        this.listModelosBalizas!.find((s) => s.id === this.balizaToEdit!.modelo?.id)
-      );
+      
       this.formModalBaliza.controls['notas'].setValue(this.balizaToEdit!.notas);
     }
   }
