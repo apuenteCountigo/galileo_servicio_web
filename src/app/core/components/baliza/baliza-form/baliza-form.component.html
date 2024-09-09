@@ -93,7 +93,7 @@
       </nz-form-control>
     </nz-form-item>
 
-    <nz-form-item *ngIf="obsModelosBalizas.length>0">
+    <nz-form-item *ngIf="listModelosBalizas.length>0">
       <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="modelo">Modelo Baliza</nz-form-label>
       <nz-form-control [nzSpan]="12" [nzErrorTip]="modeloErrorTpl">
         <nz-select formControlName="modelo" nzPlaceHolder="Seleccione un modelo" (nzOpenChange)="onSelectOpen($event)">
