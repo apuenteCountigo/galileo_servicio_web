@@ -464,15 +464,9 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     if (keyboardEvent.key === 'Enter') {
       // Aquí puedes manejar la lógica para cuando se presione la tecla Enter
       event.preventDefault(); // Prevent default form submission
-      this.submitForm2(); // Llamada a la función de enviar formulario
-    }
-  }
-
-  submitForm2(){
-    if (this.checkForm()) {
-      alert('VALIDO')
-    }else{
-      alert('NO VALIDO')
+      if (!this.checkForm()) {
+        this.submitForm(); // Llamada a la función de enviar formulario
+      }
     }
   }
 }
