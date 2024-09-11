@@ -8,6 +8,7 @@ const BASE_API_APIS = BASE_API+'apis/'//'http://'+location.host+'/api/apis/';
 
 export const environment = {
   production: true,
+  WS_URL: BASE_WS,
   API_URL: BASE_API,
   API_URL_USUARIO: BASE_API + 'usuarios',
   API_URL_UNIDAD: BASE_API + 'unidades',

@@ -2,6 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const BASE_WS = 'ws://192.168.0.98:8090/ws';
 const BASE_API = 'http://192.168.0.98:8090/api/';
 const BASE_API_APIS = 'http://192.168.0.98:8090/api/apis/';
 
@@ -9,6 +10,7 @@ const BASE_API_APIS = 'http://192.168.0.98:8090/api/apis/';
 
 export const environment = {
   production: false,
+  WS_URL: BASE_WS,
   API_URL: BASE_API,
   API_URL_USUARIO: BASE_API + 'usuarios',
   API_URL_UNIDAD: BASE_API + 'unidades',

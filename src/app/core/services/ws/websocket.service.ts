@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,8 @@ export class WebSocketService {
 
   constructor() { }
 
-  connect(url: string): void {
-    this.socket = new WebSocket(url);
+  connect(): void {
+    this.socket = new WebSocket(environment.WS_URL);
 
     this.socket.onopen = (event) => {
       console.log('WebSocket conectado:', event);

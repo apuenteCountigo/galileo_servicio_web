@@ -25,6 +25,7 @@ import { OperacionService } from 'src/app/core/services/operacion.service';
 import { TableBase } from 'src/app/core/utils/table.base';
 import { OperacionesFormComponent } from '../operaciones-form/operaciones-form.component';
 import { Unit } from './../../../models/unit.model';
+import { WebSocketService } from 'src/app/core/services/ws/websocket.service';
 
 @Component({
   selector: 'app-operaciones-tabla',
@@ -75,7 +76,8 @@ export class OperacionesTablaComponent
     private _breadrumbService: BreadCrumbService,
     private _loggedUserService: LoggedUserService,
     private _estadoService: EstadoService,
-    private _juzgadoService: JuzgadoService
+    private _juzgadoService: JuzgadoService,
+    private webSocketService: WebSocketService
   ) {
     super();
   }
@@ -94,10 +96,13 @@ export class OperacionesTablaComponent
     );
     this.loadJuzgadosData();
     this.loadEstadosData();
+    this.webSocketService.connect();
+    this.webSocketService.sendMessage('Hola desde Angular');
   }
 
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
+    this.webSocketService.disconnect();
   }
 
   isNullBusqueda() {
@@ -123,6 +128,7 @@ export class OperacionesTablaComponent
   }
   //---CRUD---//
   override showModal(isEdit?: boolean) {
+    this.webSocketService.sendMessage('SHOWMODAL');
     const modalTitle = isEdit ? 'Editar Operación' : 'Agregar Operación';
     const modalRef = this.modalService.create({
       nzTitle: modalTitle,
