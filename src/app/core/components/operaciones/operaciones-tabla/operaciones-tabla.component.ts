@@ -141,25 +141,25 @@ export class OperacionesTablaComponent
   //---CRUD---//
   override showModal(isEdit?: boolean) {
     this.webSocketService.sendMessage('SHOWMODAL');
-    // const modalTitle = isEdit ? 'Editar Operación' : 'Agregar Operación';
-    // const modalRef = this.modalService.create({
-    //   nzTitle: modalTitle,
-    //   nzStyle: { top: '20px' },
-    //   nzMaskClosable: false,
-    //   nzContent: OperacionesFormComponent,
-    //   nzComponentParams: {
-    //     operacionToEdit: isEdit ? this.selectedOper : null,
-    //     selectedUnit: this.selectedUnit,
-    //     juzgadosList: this.juzgadosList,
-    //     estadosList: this.estadosList,
-    //   },
-    // });
-    // modalRef.afterClose.subscribe((result) => {
-    //   if (result.accion != FrmActions.CANCELAR) {
-    //     this.clearSelection();
-    //     this.onSearchUnitOfOperaciones();
-    //   }
-    // });
+    const modalTitle = isEdit ? 'Editar Operación' : 'Agregar Operación';
+    const modalRef = this.modalService.create({
+      nzTitle: modalTitle,
+      nzStyle: { top: '20px' },
+      nzMaskClosable: false,
+      nzContent: OperacionesFormComponent,
+      nzComponentParams: {
+        operacionToEdit: isEdit ? this.selectedOper : null,
+        selectedUnit: this.selectedUnit,
+        juzgadosList: this.juzgadosList,
+        estadosList: this.estadosList,
+      },
+    });
+    modalRef.afterClose.subscribe((result) => {
+      if (result.accion != FrmActions.CANCELAR) {
+        this.clearSelection();
+        this.onSearchUnitOfOperaciones();
+      }
+    });
   }
 
   deleteOperacion() {
