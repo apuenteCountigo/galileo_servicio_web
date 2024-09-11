@@ -100,13 +100,16 @@ export class OperacionesTablaComponent
     this.webSocketService.socket.onmessage=this.onMessage;
   }
 
-  onMessage(event:any): void{
+  onMessage(event:any): void {
+    console.log("onMessage");
+    console.log(event);
+    
     this.notificationService.notificationError(
       'Error',
       event.data
     );
   }
-  
+
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
     this.webSocketService.disconnect();
