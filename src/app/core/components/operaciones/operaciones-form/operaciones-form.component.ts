@@ -77,7 +77,8 @@ export class OperacionesFormComponent
     private _notificationService: NotificationService,
     private _serverService: ServerService,
     private _operacionService: OperacionService,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
+    private wsId: String
   ) {
     this.formModalOperacion = this.fb.group({
       descripcion: ['', [Validators.required, Validators.pattern]],
@@ -227,7 +228,7 @@ export class OperacionesFormComponent
 
     if (!this.operacionToEdit) {
       this.suscriptions.push(
-        this._operacionService.create(newOperacion).subscribe({
+        this._operacionService.create(newOperacion,this.wsId).subscribe({
           next: () => {
             this.buttonSending = false;
             this._notificationService.notificationSuccess(
@@ -291,10 +292,14 @@ export class OperacionesFormComponent
     console.log(event);
     if (event.data != undefined && event.data != '') {
       let errMsg:ErrorMessage =JSON.parse(event.data);
-      this._notificationService.notificationError(
-        'Error',
-        errMsg.message!
-      );
+      if (errMsg.status=='222') {
+        this.wsId=errMsg.message!;
+      }else{
+        this._notificationService.notificationError(
+          'Error',
+          errMsg.message!
+        );
+      }
     }
     
   }

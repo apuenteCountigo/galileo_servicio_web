@@ -31,9 +31,10 @@ export class OperacionService extends HateoasResourceOperation<Operacion> {
   }
 
   public create(
-    operacion: Operacion
+    operacion: Operacion,
+    wsId?: String
   ): Observable<Observable<never> | Operacion> {
-    this.changeUrl();
+    this.changeUrl(wsId || undefined);
     return super.createResource({ body: operacion });
   }
 
@@ -84,10 +85,10 @@ export class OperacionService extends HateoasResourceOperation<Operacion> {
       .pipe(shareReplay());
   }
 
-  changeUrl() {
+  changeUrl(wsID?:String) {
     this.hateoasConfig.configure({
       http: {
-        rootUrl: environment.API_URL_OPERACION,
+        rootUrl: environment.API_URL_OPERACION + wsID ? '?wsId='+wsID : '',
       },
       cache: {
         enabled: false,
