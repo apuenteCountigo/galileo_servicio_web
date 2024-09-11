@@ -97,9 +97,16 @@ export class OperacionesTablaComponent
     this.loadJuzgadosData();
     this.loadEstadosData();
     this.webSocketService.connect();
-    this.webSocketService.sendMessage('Hola desde Angular');
+    this.webSocketService.socket.onmessage=this.onMessage;
   }
 
+  onMessage(event:any): void{
+    this.notificationService.notificationError(
+      'Error',
+      event.data
+    );
+  }
+  
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
     this.webSocketService.disconnect();

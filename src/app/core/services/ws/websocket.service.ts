@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class WebSocketService {
-  private socket!: WebSocket;
+  public socket!: WebSocket;
 
   constructor() { }
 
@@ -16,9 +16,9 @@ export class WebSocketService {
       console.log('WebSocket conectado:', event);
     };
 
-    this.socket.onmessage = (event) => {
-      console.log('Mensaje recibido:', event.data);
-    };
+    // this.socket.onmessage = (event) => {
+    //   console.log('Mensaje recibido:', event.data);
+    // };
 
     this.socket.onerror = (event) => {
       console.error('WebSocket error:', event);
