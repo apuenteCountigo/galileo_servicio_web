@@ -96,10 +96,10 @@ export class OperacionesTablaComponent
     );
     this.loadJuzgadosData();
     this.loadEstadosData();
-    this.webSocketService.connect();
-    this.webSocketService.socket.onmessage=(event)=>{
-      this.onMessage(event);
-    };
+    // this.webSocketService.connect();
+    // this.webSocketService.socket.onmessage=(event)=>{
+    //   this.onMessage(event);
+    // };
   }
 
   onMessage(event:any): void {
@@ -114,7 +114,7 @@ export class OperacionesTablaComponent
 
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
-    this.webSocketService.disconnect();
+    // this.webSocketService.disconnect();
   }
 
   isNullBusqueda() {
@@ -140,7 +140,7 @@ export class OperacionesTablaComponent
   }
   //---CRUD---//
   override showModal(isEdit?: boolean) {
-    this.webSocketService.sendMessage('SHOWMODAL');
+    // this.webSocketService.sendMessage('SHOWMODAL');
     const modalTitle = isEdit ? 'Editar Operación' : 'Agregar Operación';
     const modalRef = this.modalService.create({
       nzTitle: modalTitle,

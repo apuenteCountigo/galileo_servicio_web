@@ -115,7 +115,7 @@ export class OperacionesFormComponent
   }
 
   ngAfterViewInit(): void {
-    this.webSocketService.sendMessage('SHOWMODAL');
+    // this.webSocketService.sendMessage('SHOWMODAL');
 
     if (this.operacionToEdit) {
       this.button.label = 'EDITAR';
