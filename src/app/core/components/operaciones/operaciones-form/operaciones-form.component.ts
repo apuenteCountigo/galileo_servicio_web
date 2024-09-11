@@ -111,9 +111,12 @@ export class OperacionesFormComponent
 
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
+    this.webSocketService.disconnect();
   }
 
   ngAfterViewInit(): void {
+    this.webSocketService.sendMessage('SHOWMODAL');
+
     if (this.operacionToEdit) {
       this.button.label = 'EDITAR';
       this.button.icon = 'edit';
