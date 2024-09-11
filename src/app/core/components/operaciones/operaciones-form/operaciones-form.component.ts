@@ -22,6 +22,8 @@ import { OperacionService } from 'src/app/core/services/operacion.service';
 import { ServerService } from 'src/app/core/services/server.service';
 import { ButtonInterface } from '../../user/user-form/user-form.component';
 import { UnitService } from './../../../services/unit.service';
+import { WebSocketService } from 'src/app/core/services/ws/websocket.service';
+import { ErrorMessage } from 'src/app/core/dto/errorMessage';
 
 @Component({
   selector: 'app-operaciones-form',
@@ -74,7 +76,8 @@ export class OperacionesFormComponent
     private _balizaUnidades: UnitService,
     private _notificationService: NotificationService,
     private _serverService: ServerService,
-    private _operacionService: OperacionService
+    private _operacionService: OperacionService,
+    private webSocketService: WebSocketService
   ) {
     this.formModalOperacion = this.fb.group({
       descripcion: ['', [Validators.required, Validators.pattern]],
@@ -274,6 +277,23 @@ export class OperacionesFormComponent
         (server) => server.servicio == TipoServidor.DATAMINER
       );
     });
+    this.webSocketService.connect();
+    this.webSocketService.socket.onmessage=(event)=>{
+      this.onMessage(event);
+    };
+  }
+
+  onMessage(event:any): void {
+    console.log("onMessage");
+    console.log(event);
+    if (event.data != undefined && event.data != '') {
+      let errMsg:ErrorMessage =JSON.parse(event.data);
+      this._notificationService.notificationError(
+        'Error',
+        errMsg.message!
+      );
+    }
+    
   }
 
   checkForm() {
