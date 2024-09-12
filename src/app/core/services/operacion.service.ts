@@ -88,7 +88,7 @@ export class OperacionService extends HateoasResourceOperation<Operacion> {
   changeUrl(wsID?:String) {
     this.hateoasConfig.configure({
       http: {
-        rootUrl: environment.API_URL_OPERACION + (wsID && wsID != '' ? '?wsId='+wsID : ''),
+        rootUrl: environment.API_URL_OPERACION, //+ (wsID && wsID != '' ? '?wsId='+wsID : ''),
       },
       cache: {
         enabled: false,
