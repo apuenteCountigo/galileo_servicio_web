@@ -227,6 +227,7 @@ export class OperacionesFormComponent
     }
 
     if (!this.operacionToEdit) {
+      console.log('INTO operacionToEdit');
       this.suscriptions.push(
         this._operacionService.create(newOperacion,this.wsId).subscribe({
           next: () => {
@@ -247,6 +248,7 @@ export class OperacionesFormComponent
         })
       );
     } else {
+      console.log('INTO NO operacionToEdit');
       this.suscriptions.push(
         this._operacionService.put(newOperacion).subscribe({
           next: (result) => {
@@ -291,8 +293,11 @@ export class OperacionesFormComponent
     console.log("onMessage");
     console.log(event);
     if (event.data != undefined && event.data != '') {
+      console.log('INTO EVENT.DATA');
       let errMsg:ErrorMessage =JSON.parse(event.data);
+      console.log('AFTER PARSE EVENT.DATA');
       if (errMsg.status=='222') {
+        console.log('INTO 222');
         this.wsId=errMsg.message!;
       }else{
         this._notificationService.notificationError(
