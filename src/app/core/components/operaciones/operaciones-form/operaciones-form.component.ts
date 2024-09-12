@@ -70,6 +70,8 @@ export class OperacionesFormComponent
 
   suscriptions: Array<any> = [];
 
+  wsId: String='';
+
   constructor(
     private fb: FormBuilder,
     private modalRef: NzModalRef,
@@ -77,8 +79,7 @@ export class OperacionesFormComponent
     private _notificationService: NotificationService,
     private _serverService: ServerService,
     private _operacionService: OperacionService,
-    private webSocketService: WebSocketService,
-    private wsId: String
+    private webSocketService: WebSocketService
   ) {
     this.formModalOperacion = this.fb.group({
       descripcion: ['', [Validators.required, Validators.pattern]],
