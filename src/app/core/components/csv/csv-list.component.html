@@ -4,10 +4,10 @@
       [nzVirtualHeight]="'300px'"
       [nzBlockNode]="true"
     ></nz-tree>
-    <ng-template #nzTreeTemplate let-node>
+    <ng-template #nzTreeTemplate let-node let-origin="origin">
       <span class="custom-node">
         <span *ngIf="!node.isLeaf">
-          <i nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)"></i>
+          <i nz-icon [nzType]="origin.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(origin)"></i>
           <span class="folder-name">{{ node.title }}</span>
         </span>
         <span *ngIf="node.isLeaf">

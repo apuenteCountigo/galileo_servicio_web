@@ -64,9 +64,9 @@ export class CsvListComponent implements OnInit {
     }
   }
 
-  openFolder(node: NzTreeNodeOptions): void {
+  openFolder(node: FileNode): void {
     if (node.children) {
-      node.isExpanded! = !node.isExpanded!;
+      node.isExpanded = !node.isExpanded;
     }
   }
 
