@@ -54,13 +54,15 @@ jobs:
             CN=$(docker ps -a --filter name="servicio-${{ secrets.SERVICIO }}" --format "{{.Names}}") &&
             if [[ -n "$CN" ]]; then
               echo "Dentro" &&
-              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME") &&
+              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) &&
               if [[ -n "$IMAGE_NAME" ]]; then
                 echo "Dentro" &&
                 docker stop "$CONTAINER_NAME" &&
                 docker rm "$CONTAINER_NAME" &&
                 docker rmi "$IMAGE_NAME" &&
                 echo "$IMAGE_NAME"
+              else
+                echo "El contenedor $CONTAINER_NAME no existe o no tiene imagen asociada"
               fi
             fi &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d &&
