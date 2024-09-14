@@ -53,17 +53,19 @@ jobs:
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
             CN=$(docker ps -a --filter name="servicio-${{ secrets.SERVICIO }}" --format "{{.Names}}") &&
             if [[ -n "$CN" ]]; then
-              echo "Dentro" &&
-              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) &&
+              echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
+              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) || { echo "Error: No se pudo inspeccionar el contenedor $CONTAINER_NAME"; exit 1; }
               if [[ -n "$IMAGE_NAME" ]]; then
-                echo "Dentro" &&
+                echo "Imagen encontrada: $IMAGE_NAME" &&
                 docker stop "$CONTAINER_NAME" &&
                 docker rm "$CONTAINER_NAME" &&
                 docker rmi "$IMAGE_NAME" &&
-                echo "$IMAGE_NAME"
+                echo "Imagen $IMAGE_NAME eliminada correctamente."
               else
                 echo "El contenedor $CONTAINER_NAME no existe o no tiene imagen asociada"
               fi
+            else
+              echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
             fi &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d &&
             yes | sudo docker builder prune'
