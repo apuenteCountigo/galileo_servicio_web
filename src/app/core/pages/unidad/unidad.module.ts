@@ -30,6 +30,7 @@ import { StringListPipe } from '../../pipes/string-list.pipe';
 import { InformeTablaComponent } from '../../components/objetivos/informe-tabla/informe-tabla.component';
 import { SelectOficialSaComponent } from '../../components/unit/select-oficial-sa/select-oficial-sa.component';
 import { SelectBalizasComponent } from '../../components/unit/select-balizas/select-balizas.component';
+import { CsvListComponent } from '../../components/csv/csv-list.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { SelectBalizasComponent } from '../../components/unit/select-balizas/sel
     InformeTablaComponent,
     SelectOficialSaComponent,
     SelectBalizasComponent,
+    CsvListComponent,
   ],
   imports: [
     CommonModule,
