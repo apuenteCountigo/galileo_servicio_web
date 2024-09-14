@@ -1,0 +1,25 @@
+<nz-tree
+      [nzData]="nodes"
+      [nzTreeTemplate]="nzTreeTemplate"
+      [nzVirtualHeight]="'300px'"
+      [nzBlockNode]="true"
+    ></nz-tree>
+    <ng-template #nzTreeTemplate let-node>
+      <span class="custom-node">
+        <span *ngIf="!node.isLeaf">
+          <i nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)"></i>
+          <span class="folder-name">{{ node.title }}</span>
+        </span>
+        <span *ngIf="node.isLeaf">
+          <i nz-icon nzType="file-excel" nzTheme="twotone" [nzTwotoneColor]="'#52c41a'"></i>
+          <span class="file-name">{{ node.title }}</span>
+        </span>
+      </span>
+    </ng-template>
+
+    <nz-pagination
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="totalItems"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="pageIndexChange($event)"
+    ></nz-pagination>

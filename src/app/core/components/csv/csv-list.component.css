@@ -1,0 +1,7 @@
+.custom-node {
+    display: flex;
+    align-items: center;
+  }
+  .folder-name, .file-name {
+    margin-left: 4px;
+  }
