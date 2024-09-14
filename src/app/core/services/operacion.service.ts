@@ -85,6 +85,7 @@ export class OperacionService extends HateoasResourceOperation<Operacion> {
       .pipe(shareReplay());
   }
 
+  //configurando hateoas
   changeUrl(wsID?:String) {
     this.hateoasConfig.configure({
       http: {
