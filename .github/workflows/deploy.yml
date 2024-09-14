@@ -51,7 +51,7 @@ jobs:
             git pull &&
             cd ../../ &&
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
-            CN=$(docker ps -a --filter name="servicio-${{ secrets.SERVICIO }}" --format "{{.Names}}") &&
+            CN=$(docker ps -a --filter name="^servicio-${{ secrets.SERVICIO }}$" --format "{{.Names}}") &&
             echo "Nombre del contenedor encontrado: $CN" &&
             if [[ -n "$CN" ]]; then
               echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
