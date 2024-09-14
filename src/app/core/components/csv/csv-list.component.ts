@@ -6,6 +6,7 @@ interface FileNode extends NzTreeNodeOptions {
   title: string;
   isLeaf: boolean;
   children?: FileNode[];
+  isExpanded?: boolean;
 }
 
 @Component({
@@ -35,16 +36,19 @@ export class CsvListComponent implements OnInit {
           key: `folder-${i}`,
           title: `Folder ${i / 5 + 1}`,
           isLeaf: false,
+          isExpanded: false,
           children: [
             {
               key: `file-${i + 1}`,
               title: `data${i + 1}.csv`,
-              isLeaf: true
+              isLeaf: true,
+              isExpanded: false,
             },
             {
               key: `file-${i + 2}`,
               title: `data${i + 2}.csv`,
-              isLeaf: true
+              isLeaf: true,
+              isExpanded: false,
             }
           ]
         });
@@ -53,7 +57,8 @@ export class CsvListComponent implements OnInit {
         this.nodes.push({
           key: `file-${i}`,
           title: `data${i}.csv`,
-          isLeaf: true
+          isLeaf: true,
+          isExpanded: false,
         });
       }
     }
@@ -61,7 +66,7 @@ export class CsvListComponent implements OnInit {
 
   openFolder(node: NzTreeNodeOptions): void {
     if (node.children) {
-      node.isExpanded = !node.isExpanded;
+      node.isExpanded! = !node.isExpanded!;
     }
   }
 
