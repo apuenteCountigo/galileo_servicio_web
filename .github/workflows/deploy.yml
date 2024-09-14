@@ -52,6 +52,7 @@ jobs:
             cd ../../ &&
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
             CN=$(docker ps -a --filter name="servicio-${{ secrets.SERVICIO }}" --format "{{.Names}}") &&
+            echo "Nombre del contenedor encontrado: $CN" &&
             if [[ -n "$CN" ]]; then
               echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
               IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) || { echo "Error: No se pudo inspeccionar el contenedor $CONTAINER_NAME"; exit 1; }
