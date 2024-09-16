@@ -27,7 +27,6 @@ export class CsvListComponent implements OnInit {
   constructor(private listCSVFiles: ListCSVFiles,private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    // this.loadNodesForPage(this.pageIndex);
     this.loadCSV();
   }
 
@@ -36,6 +35,7 @@ export class CsvListComponent implements OnInit {
       response => {
         this.files = response;
         console.log(this.files);
+        this.nodes = [];
         this.files?.content.forEach(el => {
           this.nodes.push({
             key: el,
@@ -44,6 +44,7 @@ export class CsvListComponent implements OnInit {
             isExpanded: false,
           });
         });
+        console.log(this.nodes);
         this.cdr.detectChanges(); // Forzar la detección de cambios
       },
       error => {
