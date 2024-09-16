@@ -28,12 +28,23 @@ export class CsvListComponent implements OnInit {
 
 
   ngOnInit() {
-    this.loadNodesForPage(this.pageIndex);
+    // this.loadNodesForPage(this.pageIndex);
+    this.loadCSV();
+  }
+
+  loadCSV(){
     this.listCSVFiles.getCsvFiles(0).subscribe(
       response => {
         this.files = response;
         console.log(this.files);
-        
+        this.files?.content.forEach(el => {
+          this.nodes.push({
+            key: el,
+            title: el,
+            isLeaf: true,
+            isExpanded: false,
+          });
+        });
       },
       error => {
         console.error('Error fetching CSV files', error);
