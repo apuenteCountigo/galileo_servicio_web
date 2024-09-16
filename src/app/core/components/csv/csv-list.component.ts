@@ -32,6 +32,8 @@ export class CsvListComponent implements OnInit {
     this.listCSVFiles.getCsvFiles(0).subscribe(
       response => {
         this.files = response;
+        console.log(this.files);
+        
       },
       error => {
         console.error('Error fetching CSV files', error);
