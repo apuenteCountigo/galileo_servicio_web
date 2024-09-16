@@ -1,4 +1,4 @@
-interface Pageable {
+export interface Pageable {
     sort: Sort;
     offset: number;
     pageNumber: number;

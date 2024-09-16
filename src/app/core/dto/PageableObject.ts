@@ -1,4 +1,7 @@
-interface PageableObjectResponse {
+import { Pageable } from "./Pageable";
+import { Sort } from "./sort";
+
+export interface PageableObjectResponse {
     content: string[];
     pageable: Pageable;
     totalPages: number;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { ListCSVFiles } from '../../services/listCSV.service';
+import { PageableObjectResponse } from '../../dto/PageableObject';
 
 interface FileNode extends NzTreeNodeOptions {
   key: string;
