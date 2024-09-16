@@ -15,6 +15,6 @@ import { PageableObjectResponse } from '../dto/PageableObject';
           .set('page', page.toString())
           .set('size', size.toString());
     
-        return this.http.get<PageableObjectResponse>(environment.API_URL_EVIDENCIAS+"/downloadCSV", { params });
+        return this.http.get<PageableObjectResponse>(environment.API_URL_EVIDENCIAS+"/listCSV", { params });
     }
 }
