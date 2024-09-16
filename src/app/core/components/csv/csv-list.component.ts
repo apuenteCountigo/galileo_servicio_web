@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
+import { ListCSVFiles } from '../../services/listCSV.service';
 
 interface FileNode extends NzTreeNodeOptions {
   key: string;
@@ -20,8 +21,21 @@ export class CsvListComponent implements OnInit {
   pageSize = 20;
   totalItems = 100; // This should be set to the total number of files
 
+  files: PageableObjectResponse | null = null;
+
+  constructor(private listCSVFiles: ListCSVFiles) {}
+
+
   ngOnInit() {
     this.loadNodesForPage(this.pageIndex);
+    this.listCSVFiles.getCsvFiles(0).subscribe(
+      response => {
+        this.files = response;
+      },
+      error => {
+        console.error('Error fetching CSV files', error);
+      }
+    );
   }
 
   loadNodesForPage(page: number) {
