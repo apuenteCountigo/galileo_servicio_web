@@ -5,3 +5,13 @@
   .folder-name, .file-name {
     margin-left: 4px;
   }
+
+.file-node {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.file-node .file-name {
+  flex-grow: 1;
+}

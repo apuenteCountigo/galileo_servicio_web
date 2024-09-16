@@ -10,10 +10,20 @@
           <i nz-icon [nzType]="origin.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(origin)"></i>
           <span class="folder-name">{{ node.title }}</span>
         </span>
-        <span *ngIf="node.isLeaf">
+        <span *ngIf="node.isLeaf" class="file-node">
           <i nz-icon nzType="file-excel" nzTheme="twotone" [nzTwotoneColor]="'#52c41a'"></i>
           <span class="file-name">{{ node.title }}</span>
-          <span nz-icon nzType="cloud-download" nzTheme="twotone" [nzTwotoneColor]="'#52c41a'"></span>
+          <!-- <span nz-icon nzType="cloud-download" nzTheme="twotone" [nzTwotoneColor]="'#52c41a'"></span> -->
+          <button 
+            nz-button 
+            nzType="link" 
+            nzShape="circle" 
+            (click)="downloadFile(node.title)" 
+            nz-tooltip 
+            nzTooltipTitle="Descargar"
+          >
+            <i nz-icon nzType="download"></i>
+          </button>
         </span>
       </span>
     </ng-template>
