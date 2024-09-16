@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { ListCSVFiles } from '../../services/listCSV.service';
 import { PageableObjectResponse } from '../../dto/PageableObject';
@@ -24,8 +24,7 @@ export class CsvListComponent implements OnInit {
 
   files: PageableObjectResponse | null = null;
 
-  constructor(private listCSVFiles: ListCSVFiles) {}
-
+  constructor(private listCSVFiles: ListCSVFiles,private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     // this.loadNodesForPage(this.pageIndex);
@@ -45,6 +44,7 @@ export class CsvListComponent implements OnInit {
             isExpanded: false,
           });
         });
+        this.cdr.detectChanges(); // Forzar la detección de cambios
       },
       error => {
         console.error('Error fetching CSV files', error);
