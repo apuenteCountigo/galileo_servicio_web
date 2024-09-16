@@ -44,7 +44,6 @@ export class CsvListComponent implements OnInit {
             isExpanded: false,
           });
         });
-        console.log(this.nodes);
         this.cdr.detectChanges(); // Forzar la detección de cambios
       },
       error => {
