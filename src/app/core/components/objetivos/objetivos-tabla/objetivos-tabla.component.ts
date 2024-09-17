@@ -490,11 +490,7 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
         const filterData = result.data;
         const objetivosList = filterData.objetivos;
 
-        this._generateEvidenceService.setObjetivos(objetivosList);
-
-        // this.listOfObjetivosToEvidencia = objetivosList;
-        console.log("&&&&&&listOfObjetivosToEvidencia*********");
-        console.log(this.listOfObjetivosToEvidencia);
+        this.listOfObjetivosToEvidencia = objetivosList;
         const filtro = {
           tipoPrecision: filterData.posType,
           fechaInicio: filterData.startDate,
@@ -511,6 +507,11 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
         this._generateEvidenceService.setGenerate(
           EstadosGeneracionEvidencia.INICIADA
         );
+
+        this._generateEvidenceService.setObjetivos(objetivosList);
+        console.log("&&&&&&listOfObjetivosToEvidencia*********");
+        console.log(this.listOfObjetivosToEvidencia);
+
         setTimeout(() => {
           cont++;
           if (cont > 1) {
