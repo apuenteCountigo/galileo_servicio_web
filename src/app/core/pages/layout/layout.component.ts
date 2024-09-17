@@ -16,6 +16,7 @@ import { ItemSelectedService } from '../../services/item-selected.service';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { NotificationService } from '../../services/notification.service';
 import { CsvListComponent } from '../../components/csv/csv-list.component';
+import { Objetivo } from '../../models/objetivo.modal';
 
 @Component({
   selector: 'app-layout',
@@ -31,6 +32,7 @@ export class LayoutComponent implements OnInit {
   public todayDate: Date = new Date();
   sizeSpacer = 30;
 
+  objetivos: Objetivo[] = [];
   isGenerating: boolean = false;
   isGenerating$: any;
   interval: any;
@@ -69,6 +71,7 @@ export class LayoutComponent implements OnInit {
               this.percent = result.valor ? result.valor : 0;
               if (this.percent==95 && !this.isOpenedListCSV) {
                 this.showModalCSV();
+                this.isOpenedListCSV=true;
               }else if (this.percent == 100) {
                 setTimeout(() => {
                   this.generateEvidenceService.setGenerate(
@@ -98,6 +101,14 @@ export class LayoutComponent implements OnInit {
         }, 10000);
       } else {
         clearInterval(this.interval);
+      }
+    });
+
+    this.generateEvidenceService.objetivos$.subscribe((result: Array<Objetivo>) => {
+      if (this.isGenerating){
+        this.objetivos=result;
+        console.log("##########this.objetivos$$$$$$$$$");
+        console.log(this.objetivos);
       }
     });
 
