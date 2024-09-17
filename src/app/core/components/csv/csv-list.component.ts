@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { ListCSVFiles } from '../../services/listCSV.service';
 import { PageableObjectResponse } from '../../dto/PageableObject';
+import { FtpDownloadService } from '../../services/downloaCSV.service';
+import { NotificationService } from '../../services/notification.service';
 
 interface FileNode extends NzTreeNodeOptions {
   key: string;
@@ -24,7 +26,12 @@ export class CsvListComponent implements OnInit {
 
   files: PageableObjectResponse | null = null;
 
-  constructor(private listCSVFiles: ListCSVFiles,private cdr: ChangeDetectorRef) {}
+  constructor(
+    private listCSVFiles: ListCSVFiles,
+    private cdr: ChangeDetectorRef,
+    private _notificationService: NotificationService,
+    private ftpDownloadService: FtpDownloadService
+  ) {}
 
   ngOnInit() {
     this.loadCSV();
@@ -48,6 +55,21 @@ export class CsvListComponent implements OnInit {
       },
       error => {
         console.error('Error fetching CSV files', error);
+      }
+    );
+  }
+
+  downloadFile(fileName: string): void {
+    this.ftpDownloadService.downloadFile(fileName).subscribe(
+      response => {
+        this.ftpDownloadService.saveFile(response);
+      },
+      error => {
+        console.error('Error al descargar el archivo', error);
+        this.handleErrorMessage(
+          error,
+          'Ocurrió un error al descargar el fichero.'
+        );
       }
     );
   }
@@ -101,5 +123,33 @@ export class CsvListComponent implements OnInit {
   pageIndexChange(newPageIndex: number): void {
     this.pageIndex = newPageIndex;
     this.loadNodesForPage(newPageIndex);
+  }
+
+  handleErrorMessage(error: any, defaultMsg: string): void {
+    if (error.status == 400) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 409) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 500) {
+      if (
+        error.error.message &&
+        (error.error.message.toLowerCase().includes('fallo') || error.error.message.toLowerCase().includes('falló'))
+      ) {
+        this._notificationService.notificationError(
+          'Error',
+          error.error.message
+        );
+      } else {
+        this._notificationService.notificationError('Error', defaultMsg);
+      }
+    } else {
+      this._notificationService.notificationError('Error', defaultMsg);
+    }
   }
 }

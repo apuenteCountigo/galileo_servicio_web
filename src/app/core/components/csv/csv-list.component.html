@@ -20,6 +20,7 @@
             nzShape="circle" 
             nz-tooltip 
             nzTooltipTitle="Descargar"
+            (click)="downloadFile(node.key)"
           >
             <i nz-icon nzType="download"></i>
           </button>
