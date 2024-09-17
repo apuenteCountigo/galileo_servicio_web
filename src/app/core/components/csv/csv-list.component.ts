@@ -1,9 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { ListCSVFiles } from '../../services/listCSV.service';
 import { PageableObjectResponse } from '../../dto/PageableObject';
 import { FtpDownloadService } from '../../services/downloaCSV.service';
 import { NotificationService } from '../../services/notification.service';
+import { EvidenceFilter } from '../../dto/evidenceFilter';
+import { Objetivo } from '../../models/objetivo.modal';
 
 interface FileNode extends NzTreeNodeOptions {
   key: string;
@@ -19,6 +21,9 @@ interface FileNode extends NzTreeNodeOptions {
   styleUrls: ['./csv-list.component.css'],
 })
 export class CsvListComponent implements OnInit {
+  @Input() filters: EvidenceFilter = new EvidenceFilter();
+  @Input() objetivos: Array<Objetivo> = new Array<Objetivo>;
+  
   nodes: FileNode[] = [];
   pageIndex = 1;
   pageSize = 20;
@@ -34,6 +39,9 @@ export class CsvListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.filters);
+    console.log(this.objetivos);
+    
     this.loadCSV();
   }
 

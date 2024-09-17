@@ -32,6 +32,7 @@ import { Baliza } from './../../../models/baliza.model';
 import { Estado } from './../../../models/estado.model';
 import { Operacion } from './../../../models/operacion.model';
 import { CsvListComponent } from '../../csv/csv-list.component';
+import { EvidenceFilter } from 'src/app/core/dto/evidenceFilter';
 
 interface BusquedaObjetivo {
   descripcion: string | null;
@@ -54,6 +55,7 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
   listOfObjetivos: Objetivo[] = [];
 
   listOfObjetivosToEvidencia: Array<Objetivo> = [];
+  evidenceFilters: EvidenceFilter = new EvidenceFilter();
 
   isGenerating!: boolean;
 
@@ -118,6 +120,9 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
     });
     this._generateEvidenceService.objetivos$.subscribe((result) => {
       this.listOfObjetivosToEvidencia = result;
+    });
+    this._generateEvidenceService.evidencefilter$.subscribe((result) => {
+      this.evidenceFilters = result;
     });
   }
   isNullBusqueda() {
@@ -508,10 +513,13 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
           EstadosGeneracionEvidencia.INICIADA
         );
 
-        this._generateEvidenceService.setObjetivos(objetivosList);
-        console.log("&&&&&&listOfObjetivosToEvidencia*********");
-        console.log(this.listOfObjetivosToEvidencia);
+        this.evidenceFilters.fechaFin=filtro.fechaFin;
+        this.evidenceFilters.fechaInicio=filtro.fechaInicio;
+        this.evidenceFilters.tipoPrecision=filtro.tipoPrecision;
 
+        this._generateEvidenceService.setFilters(this.evidenceFilters);
+        this._generateEvidenceService.setObjetivos(objetivosList);
+        
         setTimeout(() => {
           cont++;
           if (cont > 1) {
