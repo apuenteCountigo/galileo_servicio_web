@@ -15,6 +15,7 @@ import { GenerateEvidenceService } from '../../services/generate-evidence.servic
 import { ItemSelectedService } from '../../services/item-selected.service';
 import { LoggedUserService } from '../../services/logged-user.service';
 import { NotificationService } from '../../services/notification.service';
+import { CsvListComponent } from '../../components/csv/csv-list.component';
 
 @Component({
   selector: 'app-layout',
@@ -34,6 +35,8 @@ export class LayoutComponent implements OnInit {
   isGenerating$: any;
   interval: any;
   percent: number = 0;
+
+  isOpenedListCSV: boolean = false;
 
   /** User logged */
   loggedUser!: LoggedUser;
@@ -64,7 +67,9 @@ export class LayoutComponent implements OnInit {
           this.evidenceService.getProgreso().subscribe({
             next: (result: any) => {
               this.percent = result.valor ? result.valor : 0;
-              if (this.percent == 100) {
+              if (this.percent==95 && this.isOpenedListCSV) {
+                this.showModalCSV();
+              }else if (this.percent == 100) {
                 setTimeout(() => {
                   this.generateEvidenceService.setGenerate(
                     EstadosGeneracionEvidencia.FINALIZADA
@@ -125,6 +130,18 @@ export class LayoutComponent implements OnInit {
         localStorage.setItem('nuevo', 'false')
       );
     }
+  }
+
+  showModalCSV(){
+    const modalTitle = 'Descargar CSV';
+    const modalRef = this.modal.create({
+      nzTitle: modalTitle,
+      nzStyle: { top: '20px', width: '600px' },
+      nzMaskClosable: false,
+      nzClosable: true,
+      nzContent: CsvListComponent,
+      nzFooter: null,
+    });
   }
 
   changePassword() {
