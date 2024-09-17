@@ -22,7 +22,7 @@ interface FileNode extends NzTreeNodeOptions {
 })
 export class CsvListComponent implements OnInit {
   @Input() filters: EvidenceFilter = new EvidenceFilter();
-  @Input() objetivos: Array<Objetivo> = new Array<Objetivo>;
+  @Input() objetivos: Array<Objetivo> = new Array();
   
   nodes: FileNode[] = [];
   pageIndex = 1;
