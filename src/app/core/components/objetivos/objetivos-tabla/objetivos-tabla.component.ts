@@ -490,7 +490,11 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
         const filterData = result.data;
         const objetivosList = filterData.objetivos;
 
-        this.listOfObjetivosToEvidencia = objetivosList;
+        this._generateEvidenceService.setObjetivos(objetivosList);
+
+        // this.listOfObjetivosToEvidencia = objetivosList;
+        console.log("&&&&&&listOfObjetivosToEvidencia*********");
+        console.log(this.listOfObjetivosToEvidencia);
         const filtro = {
           tipoPrecision: filterData.posType,
           fechaInicio: filterData.startDate,
