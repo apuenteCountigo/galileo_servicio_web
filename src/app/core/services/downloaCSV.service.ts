@@ -32,11 +32,14 @@ export class FtpDownloadService {
         filename = matches[1].replace(/['"]/g, '');
       }
     }
-    const a = document.createElement('a');
-    const objectUrl = URL.createObjectURL(blob);
-    a.href = objectUrl;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(objectUrl);
+    
+    if (blob != undefined && blob != null) {
+        const a = document.createElement('a');
+        const objectUrl = URL.createObjectURL(blob);
+        a.href = objectUrl;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+    }
   }
 }
