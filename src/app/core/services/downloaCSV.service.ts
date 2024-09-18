@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -12,10 +12,13 @@ export class FtpDownloadService {
   private fileName="";
   constructor(private http: HttpClient) { }
 
-  downloadFile(fileName: string): Observable<HttpResponse<Blob>> {
+  downloadFile(path: string, fileName: string): Observable<HttpResponse<Blob>> {
     this.fileName=fileName;
     const url = `${this.apiUrl}/downloadCSV/${fileName}`;
+    const params = new HttpParams().set('path', path);
+
     return this.http.get(url, {
+      params: params, // Enviar el parámetro en la petición
       responseType: 'blob',
       observe: 'response'
     });

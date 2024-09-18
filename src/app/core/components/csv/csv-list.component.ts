@@ -78,8 +78,8 @@ export class CsvListComponent implements OnInit {
     );
   }
 
-  downloadFile(fileName: string): void {
-    this.ftpDownloadService.downloadFile(fileName).subscribe(
+  downloadFile(path: string, fileName: string): void {
+    this.ftpDownloadService.downloadFile(path, fileName).subscribe(
       response => {
         this.ftpDownloadService.saveFile(response);
       },
