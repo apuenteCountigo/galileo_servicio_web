@@ -49,7 +49,12 @@ export class CsvListComponent implements OnInit {
   }
 
   loadCSV(){
-    this.listCSVFiles.getCsvFiles(0).subscribe(
+    this.listCSVFiles.getCsvFiles(
+      this.operacion.unidades?.denominacion || "",
+      this.operacion.descripcion,
+      this.filters.fechaInicio || "",
+      "",
+    ).subscribe(
       response => {
         this.files = response;
         console.log(this.files);
@@ -66,6 +71,10 @@ export class CsvListComponent implements OnInit {
       },
       error => {
         console.error('Error fetching CSV files', error);
+        this.handleErrorMessage(
+          error,
+          'Fallo visualizando ficheros csv.'
+        );
       }
     );
   }

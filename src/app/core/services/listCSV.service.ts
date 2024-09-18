@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { PageableObjectResponse } from '../dto/PageableObject';
+import { EvidenceFilter } from '../dto/evidenceFilter';
 
 @Injectable({
     providedIn: 'root',
@@ -10,8 +11,12 @@ import { PageableObjectResponse } from '../dto/PageableObject';
   export class ListCSVFiles {
     constructor(private http: HttpClient) {}
 
-    getCsvFiles(page: number = 0, size: number = 10): Observable<PageableObjectResponse> {
+    getCsvFiles(unidadName: String, operacionName: String, fechaInicio: String, fechaFin: String, page: number = 0, size: number = 20): Observable<PageableObjectResponse> {
         let params = new HttpParams()
+          .set('unidadName', unidadName)
+          .set('operacionName', operacionName)
+          .set('fechaInicio', fechaInicio)
+          .set('fechaFin', fechaFin)
           .set('page', page.toString())
           .set('size', size.toString());
     
