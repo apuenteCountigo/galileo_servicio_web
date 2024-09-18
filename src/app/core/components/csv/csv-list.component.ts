@@ -2,19 +2,12 @@ import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { NzTreeNodeOptions } from 'ng-zorro-antd/tree';
 import { ListCSVFiles } from '../../services/listCSV.service';
 import { PageableObjectResponse } from '../../dto/PageableObject';
+import { FileNode } from '../../dto/FileNode';
 import { FtpDownloadService } from '../../services/downloaCSV.service';
 import { NotificationService } from '../../services/notification.service';
 import { EvidenceFilter } from '../../dto/evidenceFilter';
 import { Objetivo } from '../../models/objetivo.modal';
 import { Operacion } from '../../models/operacion.model';
-
-interface FileNode extends NzTreeNodeOptions {
-  key: string;
-  title: string;
-  isLeaf: boolean;
-  children?: FileNode[];
-  isExpanded?: boolean;
-}
 
 @Component({
   selector: 'app-csv-list',
@@ -59,12 +52,18 @@ export class CsvListComponent implements OnInit {
         this.files = response;
         console.log(this.files);
         this.nodes = [];
-        this.files?.content.forEach(el => {
+        this.files?.content.children?.forEach(el => {
+          let children: Array<FileNode> = [];
+          
+          if(el.children?.length! > 0)
+            children= el.children!;
+
           this.nodes.push({
-            key: el,
-            title: el,
+            key: el.key,
+            title: el.title,
             isLeaf: true,
             isExpanded: false,
+            children: children!,
           });
         });
         this.cdr.detectChanges(); // Forzar la detección de cambios

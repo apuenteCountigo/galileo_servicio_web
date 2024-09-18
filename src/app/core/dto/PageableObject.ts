@@ -1,8 +1,9 @@
+import { FileNode } from "./FileNode";
 import { Pageable } from "./Pageable";
 import { Sort } from "./sort";
 
 export interface PageableObjectResponse {
-    content: string[];
+    content: FileNode;
     pageable: Pageable;
     totalPages: number;
     totalElements: number;
