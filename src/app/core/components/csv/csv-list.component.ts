@@ -53,7 +53,7 @@ export class CsvListComponent implements OnInit {
       this.operacion.unidades?.denominacion || "",
       this.operacion.descripcion,
       this.filters.fechaInicio || "",
-      "",
+      this.filters.fechaFin || "",
     ).subscribe(
       response => {
         this.files = response;

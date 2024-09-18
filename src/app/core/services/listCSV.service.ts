@@ -11,7 +11,7 @@ import { EvidenceFilter } from '../dto/evidenceFilter';
   export class ListCSVFiles {
     constructor(private http: HttpClient) {}
 
-    getCsvFiles(unidadName: String, operacionName: String, fechaInicio: String, fechaFin: String, page: number = 0, size: number = 20): Observable<PageableObjectResponse> {
+    getCsvFiles(unidadName: string="", operacionName: string="", fechaInicio: string="", fechaFin: string="", page: number = 0, size: number = 20): Observable<PageableObjectResponse> {
         let params = new HttpParams()
           .set('unidadName', unidadName)
           .set('operacionName', operacionName)
