@@ -18,6 +18,7 @@ import { NotificationService } from '../../services/notification.service';
 import { CsvListComponent } from '../../components/csv/csv-list.component';
 import { Objetivo } from '../../models/objetivo.modal';
 import { EvidenceFilter } from '../../dto/evidenceFilter';
+import { Operacion } from '../../models/operacion.model';
 
 @Component({
   selector: 'app-layout',
@@ -33,6 +34,7 @@ export class LayoutComponent implements OnInit {
   public todayDate: Date = new Date();
   sizeSpacer = 30;
 
+  operacion: Operacion = new Operacion();
   objetivos: Objetivo[] = [];
   filters: EvidenceFilter = new EvidenceFilter();
   isGenerating: boolean = false;
@@ -118,6 +120,12 @@ export class LayoutComponent implements OnInit {
       }
     });
 
+    this.generateEvidenceService.operacion$.subscribe((result: Operacion) => {
+      if (this.isGenerating){
+        this.operacion=result;
+      }
+    });
+
     this.isCollapsed = true;
     /** Obtain logged user role */
     this.loggedUser = this.loggedUserService.getLoggedUser();
@@ -161,6 +169,7 @@ export class LayoutComponent implements OnInit {
       nzComponentParams: {
         filters: this.filters,
         objetivos: this.objetivos,
+        operacion: this.operacion,
       },
     });
   }

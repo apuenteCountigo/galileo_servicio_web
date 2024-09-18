@@ -56,6 +56,7 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
 
   listOfObjetivosToEvidencia: Array<Objetivo> = [];
   evidenceFilters: EvidenceFilter = new EvidenceFilter();
+  operacion$: Operacion = new Operacion();
 
   isGenerating!: boolean;
 
@@ -123,6 +124,9 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
     });
     this._generateEvidenceService.evidencefilter$.subscribe((result) => {
       this.evidenceFilters = result;
+    });
+    this._generateEvidenceService.operacion$.subscribe((result) => {
+      this.operacion$ = result;
     });
   }
   isNullBusqueda() {
@@ -519,6 +523,7 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
 
         this._generateEvidenceService.setFilters(this.evidenceFilters);
         this._generateEvidenceService.setObjetivos(objetivosList);
+        this._generateEvidenceService.setOperacion(this.selectedOper);
         
         setTimeout(() => {
           cont++;

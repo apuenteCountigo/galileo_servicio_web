@@ -6,6 +6,7 @@ import { FtpDownloadService } from '../../services/downloaCSV.service';
 import { NotificationService } from '../../services/notification.service';
 import { EvidenceFilter } from '../../dto/evidenceFilter';
 import { Objetivo } from '../../models/objetivo.modal';
+import { Operacion } from '../../models/operacion.model';
 
 interface FileNode extends NzTreeNodeOptions {
   key: string;
@@ -23,6 +24,7 @@ interface FileNode extends NzTreeNodeOptions {
 export class CsvListComponent implements OnInit {
   @Input() filters: EvidenceFilter = new EvidenceFilter();
   @Input() objetivos: Array<Objetivo> = new Array();
+  @Input() operacion: Operacion = new Operacion();
   
   nodes: FileNode[] = [];
   pageIndex = 1;
@@ -41,6 +43,7 @@ export class CsvListComponent implements OnInit {
   ngOnInit() {
     console.log(this.filters);
     console.log(this.objetivos);
+    console.log(this.operacion);
     
     this.loadCSV();
   }

@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { EstadosGeneracionEvidencia } from '../enums/estados.enum';
 import { Objetivo } from '../models/objetivo.modal';
 import { EvidenceFilter } from '../dto/evidenceFilter';
+import { Operacion } from '../models/operacion.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +15,14 @@ export class GenerateEvidenceService {
     EstadosGeneracionEvidencia.SIN_INICIAR
   );
 
+  private operacionBehavior$ = new BehaviorSubject<Operacion>(new Operacion());
   private objetivosList$ = new BehaviorSubject<Array<Objetivo>>(new Array());
-
   private evidenceFilter$ = new BehaviorSubject<EvidenceFilter>(new EvidenceFilter());
 
   isGenetaring$ = this.isGenetaringEvidence$.asObservable();
   objetivos$ = this.objetivosList$.asObservable();
   evidencefilter$ = this.evidenceFilter$.asObservable();
+  operacion$ = this.operacionBehavior$.asObservable();
 
   constructor() {}
 
@@ -34,5 +36,9 @@ export class GenerateEvidenceService {
 
   setFilters(filters: EvidenceFilter) {
     this.evidenceFilter$.next(filters);
+  }
+
+  setOperacion(operacion: Operacion) {
+    this.operacionBehavior$.next(operacion);
   }
 }
