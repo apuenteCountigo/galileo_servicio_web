@@ -37,8 +37,8 @@ export class CsvListComponent implements OnInit {
     console.log(this.filters);
     console.log(this.objetivos);
     console.log(this.operacion);
-    this.loadNodesForPage(1);
-    // this.loadCSV();
+    // this.loadNodesForPage(1);
+    this.loadCSV();
   }
 
   loadCSV(){
