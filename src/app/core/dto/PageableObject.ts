@@ -3,7 +3,7 @@ import { Pageable } from "./Pageable";
 import { Sort } from "./sort";
 
 export interface PageableObjectResponse {
-    content: FileNode;
+    content: FileNode[];
     pageable: Pageable;
     totalPages: number;
     totalElements: number;

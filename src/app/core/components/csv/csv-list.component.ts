@@ -51,21 +51,21 @@ export class CsvListComponent implements OnInit {
       response => {
         this.files = response;
         console.log(this.files);
-        this.nodes = [];
-        this.files?.content.children?.forEach(el => {
-          let children: Array<FileNode> = [];
+        this.nodes = this.files?.content || [];
+        // this.files?.content.children?.forEach(el => {
+        //   let children: Array<FileNode> = [];
           
-          if(el.children?.length! > 0)
-            children= el.children!;
+        //   if(el.children?.length! > 0)
+        //     children= el.children!;
 
-          this.nodes.push({
-            key: el.key,
-            title: el.title,
-            isLeaf: true,
-            isExpanded: false,
-            children: children!,
-          });
-        });
+        //   this.nodes.push({
+        //     key: el.key,
+        //     title: el.title,
+        //     isLeaf: true,
+        //     isExpanded: false,
+        //     children: children!,
+        //   });
+        // });
         this.cdr.detectChanges(); // Forzar la detección de cambios
       },
       error => {
