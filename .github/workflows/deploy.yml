@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - AntesModelosBalizasbebb29d
   workflow_dispatch:
 jobs:
   run_pull:
@@ -46,19 +46,27 @@ jobs:
             ssh -i ~/id_rsaalain mome@192.168.0.98 '
             cd galileo-newdev/${{ secrets.SERVICIO }}/galileo_servicio_web &&
             git fetch origin &&
+            git checkout main &&
             git reset --hard origin/main &&
             git pull &&
             cd ../../ &&
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
-            CN=$(docker ps -a --filter name="servicio-${{ secrets.SERVICIO }}" --format "{{.Names}}") &&
+            CN=$(docker ps -a --filter name="^servicio-${{ secrets.SERVICIO }}$" --format "{{.Names}}") &&
+            echo "Nombre del contenedor encontrado: $CN" &&
             if [[ -n "$CN" ]]; then
-              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME") &&
+              echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
+              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) || { echo "Error: No se pudo inspeccionar el contenedor $CONTAINER_NAME"; exit 1; }
               if [[ -n "$IMAGE_NAME" ]]; then
-                docker stop "$CONTAINER_NAME"  
-                docker rm "$CONTAINER_NAME"
-                docker rmi "$IMAGE_NAME"
-                echo "$IMAGE_NAME"
+                echo "Imagen encontrada: $IMAGE_NAME" &&
+                docker stop "$CONTAINER_NAME" &&
+                docker rm "$CONTAINER_NAME" &&
+                docker rmi "$IMAGE_NAME" &&
+                echo "Imagen $IMAGE_NAME eliminada correctamente."
+              else
+                echo "El contenedor $CONTAINER_NAME no existe o no tiene imagen asociada"
               fi
+            else
+              echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
             fi &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d &&
             yes | sudo docker builder prune'
