@@ -115,7 +115,7 @@ export class CsvListComponent implements OnInit {
         //   EstadosGeneracionEvidencia.FINALIZADA
         // );
         this.isBuildingPackage = false;
-        this.notificationService.notificationSuccess(
+        this._notificationService.notificationSuccess(
           'Confirmación',
           result.message
         );
