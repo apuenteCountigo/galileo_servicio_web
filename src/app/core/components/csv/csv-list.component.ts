@@ -9,6 +9,9 @@ import { EvidenceFilter } from '../../dto/evidenceFilter';
 import { Objetivo } from '../../models/objetivo.modal';
 import { Operacion } from '../../models/operacion.model';
 import { NzModalRef } from 'ng-zorro-antd/modal';
+import { EvidenceService } from '../../services/evidence.service';
+import { GenerateEvidenceService } from '../../services/generate-evidence.service';
+import { EstadosGeneracionEvidencia } from '../../enums/estados.enum';
 
 @Component({
   selector: 'app-csv-list',
@@ -24,6 +27,7 @@ export class CsvListComponent implements OnInit {
   pageIndex = 1;
   pageSize = 20;
   totalItems = 100; // This should be set to the total number of files
+  isBuildingPackage: boolean = false;
 
   files: PageableObjectResponse | null = null;
 
@@ -32,6 +36,8 @@ export class CsvListComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private _notificationService: NotificationService,
     private modalRef: NzModalRef,
+    private generateEvidenceService: GenerateEvidenceService,
+    private evidenceService: EvidenceService,
     private ftpDownloadService: FtpDownloadService
   ) {}
 
@@ -99,6 +105,32 @@ export class CsvListComponent implements OnInit {
     this.nodes = [];
     this.files = null;
     this.modalRef.close({ accion: 'CANCEL' });
+  }
+
+  toBuildingPackage(){
+    this.isBuildingPackage = false;
+    this.evidenceService.toBuildPackage().subscribe({
+      next: (result: any) => {
+        // this.generateEvidenceService.setGenerate(
+        //   EstadosGeneracionEvidencia.FINALIZADA
+        // );
+        this.isBuildingPackage = false;
+        this.notificationService.notificationSuccess(
+          'Confirmación',
+          result.message
+        );
+      },
+      error: (e) => {
+        this.handleErrorMessage(
+          e,
+          'Fallo generando paquete de evidencias'
+        );
+        // this.isGenerating = false;
+        // this.generateEvidenceService.setGenerate(
+        //   EstadosGeneracionEvidencia.FINALIZADA
+        // );
+      },
+    });
   }
 
   loadNodesForPage(page: number) {

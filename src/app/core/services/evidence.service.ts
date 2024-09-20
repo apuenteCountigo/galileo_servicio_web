@@ -122,7 +122,7 @@ export class EvidenceService extends HateoasResourceOperation<Position> {
     return this.http.get(this.API_URL_STOP_PROGRESO_EVIDENCIA);
   }
 
-  public toBuildPackage(idAuth: number) {
+  public toBuildPackage() {
     return this.http.get(this.API_URL_TOBUILDPACKAGE);
   }
 

@@ -43,7 +43,7 @@
   <button nz-button nzType="default" (click)="cancelForm()">
     <span>Cancelar</span>
   </button>
-  <button nz-button nzType="primary">
-    <span>Generar Evidencia</span>
+  <button nz-button nzType="primary" [disabled]="isBuildingPackage">
+    <span>Generar paquete de evidencia</span>
   </button>
 </div>
