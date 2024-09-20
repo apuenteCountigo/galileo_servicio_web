@@ -108,17 +108,17 @@ export class CsvListComponent implements OnInit {
   }
 
   toBuildingPackage(){
-    this.isBuildingPackage = false;
+    this.isBuildingPackage = true;
     this.evidenceService.toBuildPackage().subscribe({
       next: (result: any) => {
         // this.generateEvidenceService.setGenerate(
         //   EstadosGeneracionEvidencia.FINALIZADA
         // );
-        this.isBuildingPackage = false;
         this._notificationService.notificationSuccess(
           'Confirmación',
           result.message
         );
+        this.isBuildingPackage = false;
       },
       error: (e) => {
         this.handleErrorMessage(
