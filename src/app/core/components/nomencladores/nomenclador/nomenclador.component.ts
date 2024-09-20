@@ -156,8 +156,9 @@ export class NomencladorComponent extends TableBase implements OnInit {
                 next: () => {
                   this.notificationService.notificationSuccess(
                     'Información',
-                    'Se ha eliminado el juzgado correctamente.'
+                    'El registro ha sido eliminado satisfactoriamente.'
                   );
+                  this.loadDataFromLocal();
                 },
                 error: (err) => {
                   if (err.status == 409) {
@@ -182,8 +183,9 @@ export class NomencladorComponent extends TableBase implements OnInit {
               next: () => {
                 this.notificationService.notificationSuccess(
                   'Información',
-                  'Se ha eliminado el empleo correctamente.'
+                  'El registro ha sido eliminado satisfactoriamente.'
                 );
+                this.loadDataFromLocal();
               },
               error: (err) => {
                 if (err.status == 409) {
