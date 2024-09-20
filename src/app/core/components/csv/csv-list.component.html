@@ -1,3 +1,4 @@
+<nz-card  nzSize="default">
   <nz-tree
       [nzData]="nodes"
       [nzTreeTemplate]="nzTreeTemplate"
@@ -5,6 +6,7 @@
       [nzBlockNode]="true"
     >
   </nz-tree>
+</nz-card>
     <ng-template #nzTreeTemplate let-node let-origin="origin">
       <span class="custom-node">
         <span *ngIf="!node.isLeaf">
