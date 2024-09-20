@@ -8,6 +8,7 @@ import { NotificationService } from '../../services/notification.service';
 import { EvidenceFilter } from '../../dto/evidenceFilter';
 import { Objetivo } from '../../models/objetivo.modal';
 import { Operacion } from '../../models/operacion.model';
+import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-csv-list',
@@ -30,6 +31,7 @@ export class CsvListComponent implements OnInit {
     private listCSVFiles: ListCSVFiles,
     private cdr: ChangeDetectorRef,
     private _notificationService: NotificationService,
+    private modalRef: NzModalRef,
     private ftpDownloadService: FtpDownloadService
   ) {}
 
@@ -91,6 +93,12 @@ export class CsvListComponent implements OnInit {
         );
       }
     );
+  }
+
+  cancelForm() {
+    this.nodes = [];
+    this.files = null;
+    this.modalRef.close({ accion: 'CANCEL' });
   }
 
   loadNodesForPage(page: number) {

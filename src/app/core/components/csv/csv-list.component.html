@@ -1,9 +1,12 @@
-<nz-tree
+<div nz-row nzJustify="center">
+  <nz-tree
       [nzData]="nodes"
       [nzTreeTemplate]="nzTreeTemplate"
-      [nzVirtualHeight]="'300px'"
+      [nzVirtualHeight]="'400px'"
       [nzBlockNode]="true"
-    ></nz-tree>
+    >
+  </nz-tree>
+</div>
     <ng-template #nzTreeTemplate let-node let-origin="origin">
       <span class="custom-node">
         <span *ngIf="!node.isLeaf">
@@ -27,9 +30,20 @@
       </span>
     </ng-template>
 
-    <nz-pagination
-      [nzPageIndex]="pageIndex"
-      [nzTotal]="totalItems"
-      [nzPageSize]="pageSize"
-      (nzPageIndexChange)="pageIndexChange($event)"
-    ></nz-pagination>
+<div nz-row nzJustify="center">
+  <nz-pagination
+    [nzPageIndex]="pageIndex"
+    [nzTotal]="totalItems"
+    [nzPageSize]="pageSize"
+    (nzPageIndexChange)="pageIndexChange($event)"
+  ></nz-pagination>
+</div>
+
+<div class="steps-action" *nzModalFooter></div>
+  <button nz-button nzType="default" (click)="cancelForm()">
+    <span>Cancelar</span>
+  </button>
+  <button nz-button nzType="primary">
+    <span>Generar Evidencia</span>
+  </button>
+</div>
