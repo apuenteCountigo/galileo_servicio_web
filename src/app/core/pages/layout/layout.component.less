@@ -109,22 +109,20 @@
       height: 100%;
     }
   }
-}
 
-@media only screen and (max-width: 600px) {
-}
-
-:host ::ng-deep {
   .custom-modal-wrapper {
     .ant-modal {
-      margin-top: var(--topbar-height, 64px);
+      margin-top: 70px;
       
       .ant-modal-content {
-        max-height: calc(100vh - var(--topbar-height, 64px) - 48px);
+        max-height: calc(100vh - 70px - 48px);
         overflow-y: auto;
       }
     }
   }
+}
+
+@media only screen and (max-width: 600px) {
 }
 
 // nz-menu-item {
