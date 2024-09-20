@@ -28,6 +28,8 @@ export class EvidenceService extends HateoasResourceOperation<Position> {
   private resumenUrl = `${environment.API_URL_UNIDAD}/unidades/search/resumen`;
   private API_URL_GENERAR_KMLS = `${environment.API_URL_EVIDENCIAS}/generarKMLS`;
   private API_URL_PROGRESO_EVIDENCIA = `${environment.API_URL_EVIDENCIAS}/progreso`;
+  private API_URL_STOP_PROGRESO_EVIDENCIA = `${environment.API_URL_EVIDENCIAS}/stopProgress`;
+  private API_URL_TOBUILDPACKAGE = `${environment.API_URL_EVIDENCIAS}/toBuildPackage`;
   private API_URL_DESCARGA_ZIP = `${environment.API_URL_EVIDENCIAS}/zip`;
   private API_URL_DESCARGA_ZIP_PATH = `${environment.API_URL_EVIDENCIAS}/pathZip`;
 
@@ -114,6 +116,14 @@ export class EvidenceService extends HateoasResourceOperation<Position> {
 
   public getProgreso() {
     return this.http.get(this.API_URL_PROGRESO_EVIDENCIA);
+  }
+
+  public stopProgress() {
+    return this.http.get(this.API_URL_STOP_PROGRESO_EVIDENCIA);
+  }
+
+  public toBuildPackage(idAuth: number) {
+    return this.http.get(this.API_URL_TOBUILDPACKAGE);
   }
 
   public searchCriterio(

@@ -172,6 +172,33 @@ export class LayoutComponent implements OnInit {
         operacion: this.operacion,
       },
     });
+
+    modalRef.afterClose.subscribe((result) => {
+      if (result.accion === 'CANCEL') {
+        this.evidenceService.stopProgress().subscribe({
+          next: (result: any) => {
+            this.generateEvidenceService.setGenerate(
+              EstadosGeneracionEvidencia.FINALIZADA
+            );
+            this.isGenerating = false;
+            this.notificationService.notificationSuccess(
+              'Confirmación',
+              'Las evidencias han sido detenidas correctamente.'
+            );
+          },
+          error: (e) => {
+            this.handleErrorMessage(
+              e,
+              'Las evidencias no se han detenido correctamente'
+            );
+            this.isGenerating = false;
+            this.generateEvidenceService.setGenerate(
+              EstadosGeneracionEvidencia.FINALIZADA
+            );
+          },
+        });
+      }
+    });
   }
 
   changePassword() {
