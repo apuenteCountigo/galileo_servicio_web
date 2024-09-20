@@ -316,9 +316,14 @@ export class InstalacionComponent implements OnInit, OnChanges, OnDestroy {
         ? null
         : this.configWriteInstalacion[9].DisplayValue;
 
-    this.valueFechaFinAutorizacion = new Date(
-      this.configWriteInstalacion[8].Value
-    );
+    if (this.configWriteInstalacion[8] && this.isValidDate(this.configWriteInstalacion[8].Value)) {
+      this.valueFechaFinAutorizacion = new Date(this.configWriteInstalacion[8].Value);
+    } else {
+      this.valueFechaFinAutorizacion = null; // O asignar un valor por defecto
+    }
+    // this.valueFechaFinAutorizacion = new Date(
+    //   this.configWriteInstalacion[8].Value
+    // );
     this.valueFechaFinAutorizacionHora = this.valueFechaFinAutorizacion;
     this.nuevoValueFechaFinAutorizacion =
       this.configWriteInstalacion[8].DisplayValue == 'Not initialized'
