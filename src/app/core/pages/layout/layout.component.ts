@@ -166,6 +166,7 @@ export class LayoutComponent implements OnInit {
       nzClosable: true,
       nzContent: CsvListComponent,
       nzFooter: null,
+      nzWrapClassName: 'custom-modal-wrapper',//Estilo para que se muestre más abajo del Topbar
       nzComponentParams: {
         filters: this.filters,
         objetivos: this.objetivos,
