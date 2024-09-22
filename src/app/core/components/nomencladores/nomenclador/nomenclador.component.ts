@@ -234,6 +234,12 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     'Información',
                     `El registro ha sido ${msg} satisfactoriamente.`
                   );
+                  console.log("response");
+                  console.log(response);
+                  console.log("result.nomemcladorAux");
+                  console.log(result.nomemcladorAux);
+                  
+                  this.selectedNomenclador.descripcion=result.nomemcladorAux.descripcion;
                   this.loadDataFromLocal();
                 },
                 error: (err:any) => {
@@ -432,21 +438,25 @@ export class NomencladorComponent extends TableBase implements OnInit {
     //   },
     // });
   }
+
   resetForm(): void {
     this.searchCriteria.descripcion = '';
     this.loadDataFromLocal();
   }
+
   onExpandChangeNomenclador(nomenclador: any, checked: boolean): void {
     this.expandSet.clear();
     if (checked) {
       this.expandSet.add(nomenclador.id);
       this.selectedNomenclador = nomenclador;
-      console.log("this.selectedNomenclador");
-      console.log(this.selectedNomenclador);
-      
     } else {
       this.selectedNomenclador = null;
       this.expandSet.delete(nomenclador.id);
     }
+  }
+
+  onEditNomenclador(nomenclador: any): void {
+    this.selectedNomenclador = nomenclador;
+    this.showModal(true);
   }
 }
