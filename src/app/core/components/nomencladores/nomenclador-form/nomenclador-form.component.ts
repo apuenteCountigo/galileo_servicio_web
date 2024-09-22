@@ -68,13 +68,6 @@ export class NomencladorFormComponent implements OnInit {
           break;
       }
     }
-    console.log("this.nomencladdor");
-    console.log(this.nomencladdor);
-    console.log("nomemcladorAux");
-    console.log(nomemcladorAux);
-    console.log("this.formModalNomenclador.value.descripcion");
-    console.log(this.formModalNomenclador.value.descripcion);
-    
     nomemcladorAux.descripcion = this.formModalNomenclador.value.descripcion;
     this.modalRef.close({ nomemcladorAux, accion: this.button.label });
   }

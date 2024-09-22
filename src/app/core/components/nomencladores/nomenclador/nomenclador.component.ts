@@ -234,12 +234,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     'Información',
                     `El registro ha sido ${msg} satisfactoriamente.`
                   );
-                  console.log("response");
-                  console.log(response);
-                  console.log("result.nomemcladorAux");
-                  console.log(result.nomemcladorAux);
-                  
-                  this.selectedNomenclador.descripcion=result.nomemcladorAux.descripcion;
+                  this.selectedNomenclador.descripcion=response.descripcion;
                   this.loadDataFromLocal();
                 },
                 error: (err:any) => {
@@ -274,6 +269,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                     'Información',
                     `El registro ha sido ${msg} satisfactoriamente.`
                   );
+                  this.selectedNomenclador.descripcion=response.descripcion;
                   this.loadDataFromLocal();
                 },
                 error: (err:any) => {
@@ -306,6 +302,7 @@ export class NomencladorComponent extends TableBase implements OnInit {
                   'Información',
                   `El registro ha sido ${msg} satisfactoriamente.`
                 );
+                this.selectedNomenclador.descripcion=response.descripcion;
                 this.loadDataFromLocal();
               },
               error: (err:any) => {
@@ -453,10 +450,5 @@ export class NomencladorComponent extends TableBase implements OnInit {
       this.selectedNomenclador = null;
       this.expandSet.delete(nomenclador.id);
     }
-  }
-
-  onEditNomenclador(nomenclador: any): void {
-    this.selectedNomenclador = nomenclador;
-    this.showModal(true);
   }
 }
