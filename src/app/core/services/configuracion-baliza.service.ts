@@ -11,31 +11,31 @@ export class ConfiguracionBalizaService {
 
   submitEstadoConfig(body: any): Observable<any> {
     return this.http.post(
-      'http://192.168.0.195:8090/api/apis/servicio-apis/balizaConfiguracionLed',
+      environment.API_SERVICIO_URL_BALIZA_CONFIG_LED,
       body
     );
   }
   submitUmbralSonido(body: any): Observable<any> {
     return this.http.post(
-      'http://192.168.0.195:8090/api/apis/servicio-apis/balizaUmbralSonido',
+      environment.API_SERVICIO_URL_BALIZA_UMBRAL_SONIDO,
       body
     );
   }
   submitNuevoEstado(body: any): Observable<any> {
     return this.http.post(
-      'http://192.168.0.195:8090/api/apis/balizaNuevoEstadoConfiguracionLed',
+      environment.API_SERVICIO_URL_BALIZA_NUEVO_ESTADO_CONFIG_LED,
       body
     );
   }
   submitNuevoTemp(body: any): Observable<any> {
     return this.http.post(
-      'http://192.168.0.195:8090/api/apis/servicio-apis/balizaNuevoTemporizador',
+      environment.API_SERVICIO_URL_BALIZA_NUEVO_TEMPORIZADOR,
       body
     );
   }
   submitUmbralSensibilidad(body: any): Observable<any> {
     return this.http.post(
-      'http://192.168.0.195:8090/api/apis/servicio-apis/balizaUmbralSensibilidad',
+      environment.API_SERVICIO_URL_BALIZA_UMBRAL_SENSIBILIDAD,
       body
     );
   }

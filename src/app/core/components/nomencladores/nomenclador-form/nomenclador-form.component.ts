@@ -50,10 +50,8 @@ export class NomencladorFormComponent implements OnInit {
   submitForm() {
     let nomemcladorAux;
     if (this.nomencladdor) {
-      console.log("L53");
       nomemcladorAux = { ...this.nomencladdor };
     } else {
-      console.log("L56");
       switch (this.nombreNomenclador) {
         case 'Juzgado':
           nomemcladorAux = new Juzgado();

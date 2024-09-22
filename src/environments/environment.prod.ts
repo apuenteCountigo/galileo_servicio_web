@@ -5,6 +5,7 @@
 const BASE_WS = 'ws://'+location.host+'/ws';
 const BASE_API = 'http://'+location.host+'/api/';
 const BASE_API_APIS = BASE_API+'apis/'//'http://'+location.host+'/api/apis/';
+const BASE_API_APIS_SERVICIO = BASE_API_APIS+'servicio-apis/';
 
 export const environment = {
   production: true,
@@ -165,6 +166,13 @@ export const environment = {
     BASE_API_APIS + 'obtenerEstEnvPlanif',
   IS_BALIZA_ON: BASE_API_APIS + 'obtenerEstadoBaliza',
 
+  //*******************************APIS SERVICIO-APIS************************************//
+  API_SERVICIO_URL_BALIZA_CONFIG_LED: BASE_API_APIS_SERVICIO + 'balizaConfiguracionLed',
+  API_SERVICIO_URL_BALIZA_UMBRAL_SONIDO: BASE_API_APIS_SERVICIO + 'balizaUmbralSonido',
+  API_SERVICIO_URL_BALIZA_NUEVO_ESTADO_CONFIG_LED: BASE_API_APIS_SERVICIO + 'balizaNuevoEstadoConfiguracionLed',
+  API_SERVICIO_URL_BALIZA_NUEVO_TEMPORIZADOR: BASE_API_APIS_SERVICIO + 'balizaNuevoTemporizador',
+  API_SERVICIO_URL_BALIZA_UMBRAL_SENSIBILIDAD: BASE_API_APIS_SERVICIO + 'balizaUmbralSensibilidad',
+  
   OAUTH_ID: 'frontendapp',
   OAUTH_SECRET: '12345',
 };
