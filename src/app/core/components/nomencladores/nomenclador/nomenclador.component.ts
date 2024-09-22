@@ -441,6 +441,9 @@ export class NomencladorComponent extends TableBase implements OnInit {
     if (checked) {
       this.expandSet.add(nomenclador.id);
       this.selectedNomenclador = nomenclador;
+      console.log("this.selectedNomenclador");
+      console.log(this.selectedNomenclador);
+      
     } else {
       this.selectedNomenclador = null;
       this.expandSet.delete(nomenclador.id);
