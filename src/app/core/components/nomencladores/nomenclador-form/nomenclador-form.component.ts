@@ -50,8 +50,10 @@ export class NomencladorFormComponent implements OnInit {
   submitForm() {
     let nomemcladorAux;
     if (this.nomencladdor) {
+      console.log("L53");
       nomemcladorAux = { ...this.nomencladdor };
     } else {
+      console.log("L56");
       switch (this.nombreNomenclador) {
         case 'Juzgado':
           nomemcladorAux = new Juzgado();
@@ -66,6 +68,13 @@ export class NomencladorFormComponent implements OnInit {
           break;
       }
     }
+    console.log("this.nomencladdor");
+    console.log(this.nomencladdor);
+    console.log("nomemcladorAux");
+    console.log(nomemcladorAux);
+    console.log("this.formModalNomenclador.value.descripcion");
+    console.log(this.formModalNomenclador.value.descripcion);
+    
     nomemcladorAux.descripcion = this.formModalNomenclador.value.descripcion;
     this.modalRef.close({ nomemcladorAux, accion: this.button.label });
   }
