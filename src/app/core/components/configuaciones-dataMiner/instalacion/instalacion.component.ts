@@ -290,6 +290,11 @@ export class InstalacionComponent implements OnInit, OnChanges, OnDestroy {
     // );
   }
 
+  isValidDate(dateString: string): boolean {
+    const date = new Date(dateString);
+    return !isNaN(date.getTime());
+  }
+
   cargarDatosApi() {
     this.valueEstado =
       this.configWriteInstalacion[1].Value == 'EMPTY'
@@ -297,18 +302,22 @@ export class InstalacionComponent implements OnInit, OnChanges, OnDestroy {
         : this.configWriteInstalacion[1].Value;
     this.nuevoValueEstado = this.configWriteInstalacion[1].DisplayValue;
 
-    this.valueFechaInicioInstalacion = new Date(
-      this.configWriteInstalacion[9].Value
-    );
+    if (this.configWriteInstalacion[9] && this.isValidDate(this.configWriteInstalacion[9].Value)) {
+      this.valueFechaInicioInstalacion = new Date(this.configWriteInstalacion[9].Value);
+    } else {
+      this.valueFechaInicioInstalacion = null; // O asignar un valor por defecto
+    }
     this.valueFechaInicioInstalacionHora = this.valueFechaInicioInstalacion;
     this.nuevoValueFechaInicioInstalacion =
       this.configWriteInstalacion[9].DisplayValue == 'Not initialized'
         ? null
         : this.configWriteInstalacion[9].DisplayValue;
 
-    this.valueFechaFinAutorizacion = new Date(
-      this.configWriteInstalacion[8].Value
-    );
+    if (this.configWriteInstalacion[8] && this.isValidDate(this.configWriteInstalacion[8].Value)) {
+      this.valueFechaInicioInstalacion = new Date(this.configWriteInstalacion[8].Value);
+    } else {
+      this.valueFechaInicioInstalacion = null; // O asignar un valor por defecto
+    }
     this.valueFechaFinAutorizacionHora = this.valueFechaFinAutorizacion;
     this.nuevoValueFechaFinAutorizacion =
       this.configWriteInstalacion[8].DisplayValue == 'Not initialized'
