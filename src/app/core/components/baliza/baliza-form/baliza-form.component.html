@@ -204,7 +204,7 @@
       <nz-form-control>
         <div *nzModalFooter>
           <button nz-button nzType="default" (click)="closeForm()">Cancelar</button>
-          <button type="submit" nz-button nzType="primary" [disabled]="checkForm() || buttonSending" [nzLoading]="buttonSending">
+          <button type="submit" nz-button nzType="primary" [disabled]="checkForm() || buttonSending" [nzLoading]="buttonSending"  (click)="submitForm()">
             <i nz-icon [nzType]="button.icon" nzTheme="outline"></i>
             <span>{{ button.label }}</span>
           </button>
