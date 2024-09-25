@@ -25,8 +25,8 @@ export class CsvListComponent implements OnInit {
   
   nodes: FileNode[] = [];
   pageIndex = 1;
-  pageSize = 20;
-  totalItems = 100; // This should be set to the total number of files
+  pageSize = 2;
+  totalItems = 0; // This should be set to the total number of files
   isBuildingPackage: boolean = false;
 
   files: PageableObjectResponse | null = null;
@@ -42,24 +42,23 @@ export class CsvListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.filters);
-    console.log(this.objetivos);
-    console.log(this.operacion);
-    // this.loadNodesForPage(1);
-    this.loadCSV();
+    this.loadCSV(this.pageIndex);
   }
 
-  loadCSV(){
+  loadCSV(pageIndex: number){
     this.listCSVFiles.getCsvFiles(
       this.operacion.unidades?.denominacion || "",
       this.operacion.descripcion,
       this.filters.fechaInicio || "",
       this.filters.fechaFin || "",
+      pageIndex - 1, // El backend usa índice base 0
+      this.pageSize
     ).subscribe(
       response => {
         this.files = response;
-        console.log(this.files);
         this.nodes = this.files?.content || [];
+        this.totalItems = this.files?.totalElements || 0;
+        this.cdr.detectChanges(); // Forzar la detección de cambios
         // this.files?.content.children?.forEach(el => {
         //   let children: Array<FileNode> = [];
           
@@ -74,7 +73,6 @@ export class CsvListComponent implements OnInit {
         //     children: children!,
         //   });
         // });
-        this.cdr.detectChanges(); // Forzar la detección de cambios
       },
       error => {
         console.error('Error fetching CSV files', error);
@@ -183,7 +181,7 @@ export class CsvListComponent implements OnInit {
 
   pageIndexChange(newPageIndex: number): void {
     this.pageIndex = newPageIndex;
-    this.loadNodesForPage(newPageIndex);
+    this.loadCSV(newPageIndex);
   }
 
   handleErrorMessage(error: any, defaultMsg: string): void {
