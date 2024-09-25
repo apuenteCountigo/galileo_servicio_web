@@ -35,7 +35,7 @@ export class CsvListComponent implements OnInit {
     private listCSVFiles: ListCSVFiles,
     private cdr: ChangeDetectorRef,
     private _notificationService: NotificationService,
-    private modalRef: NzModalRef,
+    private modalCSV: NzModalRef,
     private generateEvidenceService: GenerateEvidenceService,
     private evidenceService: EvidenceService,
     private ftpDownloadService: FtpDownloadService
@@ -102,7 +102,7 @@ export class CsvListComponent implements OnInit {
   cancelForm() {
     this.nodes = [];
     this.files = null;
-    this.modalRef.close({ accion: 'CANCEL' });
+    this.modalCSV.close({ accion: 'CANCEL' });
   }
 
   toBuildingPackage(){
