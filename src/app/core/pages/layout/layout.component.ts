@@ -43,6 +43,7 @@ export class LayoutComponent implements OnInit {
   percent: number = 0;
 
   isOpenedListCSV: boolean = false;
+  modalCSV: any;
 
   /** User logged */
   loggedUser!: LoggedUser;
@@ -82,6 +83,7 @@ export class LayoutComponent implements OnInit {
                     EstadosGeneracionEvidencia.FINALIZADA
                   );
                   this.isGenerating = false;
+                  this.modalCSV.close();
                   this.notificationService.notificationSuccess(
                     'Confirmación',
                     'Las evidencias han sido generadas correctamente.'
@@ -159,7 +161,7 @@ export class LayoutComponent implements OnInit {
 
   showModalCSV(){
     const modalTitle = 'Descargar CSV';
-    const modalRef = this.modal.create({
+    this.modalCSV = this.modal.create({
       nzTitle: modalTitle,
       nzStyle: { top: '20px', width: '600px' },
       nzMaskClosable: false,
@@ -174,7 +176,7 @@ export class LayoutComponent implements OnInit {
       },
     });
 
-    modalRef.afterClose.subscribe((result) => {
+    this.modalCSV.afterClose.subscribe((result) => {
       if (result.accion === 'CANCEL') {
         this.evidenceService.stopProgress().subscribe({
           next: (result: any) => {
