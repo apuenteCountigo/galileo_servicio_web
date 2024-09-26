@@ -25,7 +25,8 @@ export class DataMinerFormComponent implements OnInit {
 
   tipoServidor = TipoServidor;
 
-  tipoServicio = ['TRACCAR', 'DATAMINER', 'BASE DE DATOS', 'FTP', 'OTROS'];
+  // tipoServicio = ['TRACCAR', 'DATAMINER', 'BASE DE DATOS', 'FTP', 'OTROS'];
+  tipoServicio = ['TRACCAR', 'DATAMINER', 'FTP'];
 
   constructor(
     private fb: FormBuilder,
@@ -79,10 +80,13 @@ export class DataMinerFormComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.listOfServer){
-      let listOfServer: Server[];
-      listOfServer=this.listOfServer;
+      let listOfServers: Server[];
+      listOfServers=this.listOfServer;
+      // this.tipoServicio = this.tipoServicio.filter(tipo => 
+      //   !listOfServer.some(server => server.servicio === tipo)
+      // );
       this.tipoServicio = this.tipoServicio.filter(tipo => 
-        !listOfServer.some(server => server.servicio === tipo)
+        tipo === 'DATAMINER' || !listOfServers.some(server => server.servicio === tipo)
       );
     }
   }
