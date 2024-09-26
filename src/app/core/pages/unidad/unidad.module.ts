@@ -31,6 +31,7 @@ import { InformeTablaComponent } from '../../components/objetivos/informe-tabla/
 import { SelectOficialSaComponent } from '../../components/unit/select-oficial-sa/select-oficial-sa.component';
 import { SelectBalizasComponent } from '../../components/unit/select-balizas/select-balizas.component';
 import { CsvListComponent } from '../../components/csv/csv-list.component';
+import { ZipListComponent } from '../../components/zip/zip-list.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { CsvListComponent } from '../../components/csv/csv-list.component';
     SelectOficialSaComponent,
     SelectBalizasComponent,
     CsvListComponent,
+    ZipListComponent,
   ],
   imports: [
     CommonModule,
