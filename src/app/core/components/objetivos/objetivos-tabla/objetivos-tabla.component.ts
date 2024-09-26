@@ -33,6 +33,7 @@ import { Estado } from './../../../models/estado.model';
 import { Operacion } from './../../../models/operacion.model';
 import { CsvListComponent } from '../../csv/csv-list.component';
 import { EvidenceFilter } from 'src/app/core/dto/evidenceFilter';
+import { ZipListComponent } from '../../zip/zip-list.component';
 
 interface BusquedaObjetivo {
   descripcion: string | null;
@@ -455,22 +456,17 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
   }
 
   showModalCSV(){
-    const modalTitle = 'Descargar CSV';
+    const modalTitle = 'Descargar ficheros ZIP';
     const modalRef = this.modalService.create({
       nzTitle: modalTitle,
       nzStyle: { top: '20px', width: '600px' },
       nzMaskClosable: false,
       nzClosable: true,
-      nzContent: CsvListComponent,
+      nzContent: ZipListComponent,
       nzFooter: null,
-      // nzComponentParams: {
-      //   listUsuarios: this.listUsuarios,
-      //   perfil: userLogeado.perfil.id,
-      //   unidad: this.selectedOper.unidades,
-      //   idUsuario: userLogeado.id,
-      //   idoperacion: this.selectedOper!.id,
-      //   diligencias: this.selectedOper!.diligencias,
-      // },
+      nzComponentParams: {
+        operacion: this.selectedOper,
+      },
     });
   }
 
