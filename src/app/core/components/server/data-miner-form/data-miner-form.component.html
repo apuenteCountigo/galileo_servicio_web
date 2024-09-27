@@ -13,11 +13,9 @@
   <nz-form-item>
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="ipServicio">IP</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="serverIpErrorTpl">
-      <input type="text" nz-input formControlName="ipServicio" placeholder="IP"
-        pattern="^((25[0-5]|(2[0-4]|1[0-9]|[1-9]|)[0-9])(\.(?!$)|$)){4}$" />
+      <input type="text" nz-input formControlName="ipServicio" placeholder="Servidor" />
       <ng-template #serverIpErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('pattern')">El campo IP no es válido</ng-container>
-        <ng-container *ngIf="control.hasError('required')">Introduzca el ip</ng-container>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el servidor</ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -25,9 +23,6 @@
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="puerto">Puerto</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="puertoErrorTpl">
       <input type="number" nz-input formControlName="puerto" placeholder="Puerto" />
-      <ng-template #puertoErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">Introduzca el puerto</ng-container>
-      </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

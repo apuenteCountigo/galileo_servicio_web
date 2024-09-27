@@ -33,8 +33,8 @@ export class DataMinerFormComponent implements OnInit {
   ) {
     this.formModalServer = this.fb.group({
       servicio: ['', [Validators.required]],
-      ipServicio: ['', [Validators.required, Validators.pattern]],
-      puerto: ['', [Validators.required, Validators.pattern]],
+      ipServicio: ['', [Validators.required]],
+      puerto: ['', []],
       usuario: ['', [Validators.pattern]],
       password: ['', [Validators.required]],
       dmaID: ['', []],
