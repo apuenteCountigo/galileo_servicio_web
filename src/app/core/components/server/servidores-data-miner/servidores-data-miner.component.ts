@@ -150,9 +150,22 @@ export class ServidoresDataMinerComponent
       nzContent: `Está seguro de eliminar el servidor?`,
       nzOnOk: () => {
         this.suscriptions.push(
-          this._serverServices.detele(this.selectedServer).subscribe(() => {
-            this.uncheckAction();
-            this.loadData();
+          this._serverServices.detele(this.selectedServer).subscribe({
+            next: () => {
+              this._notificationService.notificationSuccess(
+                'Información',
+                'Se ha eliminado el registro correctamente'
+              );
+              this.uncheckAction();
+              this.loadData();
+            },
+            error: (error) => {
+              this.uncheckAction();
+              this.handleErrorMessage(
+                error,
+                'Ocurrió un error al eliminar el registro'
+              );
+            },
           })
         );
       },
@@ -206,5 +219,33 @@ export class ServidoresDataMinerComponent
     this.searchCriteria.ipServicio = '';
     this.searchCriteria.servicio = '';
     this.loadData();
+  }
+
+  handleErrorMessage(error: any, defaultMsg: string): void {
+    if (error.status == 400) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 409) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 500) {
+      if (
+        error.error.message &&
+        error.error.message.toLowerCase().includes('fallo')
+      ) {
+        this._notificationService.notificationError(
+          'Error',
+          error.error.message
+        );
+      } else {
+        this._notificationService.notificationError('Error', defaultMsg);
+      }
+    } else {
+      this._notificationService.notificationError('Error', defaultMsg);
+    }
   }
 }

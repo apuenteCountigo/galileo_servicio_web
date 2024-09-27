@@ -107,10 +107,10 @@ export class WelcomeComponent extends TableBase implements OnInit, OnDestroy {
       .getMapa(localStorage.getItem('auth_token') as string)
       .subscribe((result: string) => {
         // Si el cliente accidentalmente escribió "http://https://", reemplazar por "https://"
-        result = result.replace('http://https://', 'https://');
+        // result = result.replace('http://https://', 'https://');
         // Solo reemplazar ":/" después del dominio/IP, sin tocar el "http://" o "https://"
-        result = result.replace(/(https?:\/\/[^\/]+):\//, '$1/');
-        console.warn("result: "+result);
+        // result = result.replace(/(https?:\/\/[^\/]+):\//, '$1/');
+        // console.warn("result: "+result);
         
         result = result.slice(1, result.length - 1);
         const cad2 = `${result.split('=')[0]}=${
