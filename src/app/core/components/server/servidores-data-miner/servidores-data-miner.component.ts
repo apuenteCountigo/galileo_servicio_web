@@ -230,7 +230,7 @@ export class ServidoresDataMinerComponent
     } else if (error.status == 409) {
       this._notificationService.notificationError(
         'Error',
-        error.error.message.toLowerCase()
+        'El registro está relacionado, elimine primero sus dependencias.'
       );
     } else if (error.status == 500) {
       if (
