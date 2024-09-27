@@ -208,4 +208,32 @@ export class ServidoresDataMinerComponent
     this.searchCriteria.servicio = '';
     this.loadData();
   }
+
+  handleErrorMessage(error: any, defaultMsg: string): void {
+    if (error.status == 400) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 409) {
+      this._notificationService.notificationError(
+        'Error',
+        'El registro está relacionado, elimine primero sus dependencias.'
+      );
+    } else if (error.status == 500) {
+      if (
+        error.error.message &&
+        error.error.message.toLowerCase().includes('fallo')
+      ) {
+        this._notificationService.notificationError(
+          'Error',
+          error.error.message
+        );
+      } else {
+        this._notificationService.notificationError('Error', defaultMsg);
+      }
+    } else {
+      this._notificationService.notificationError('Error', defaultMsg);
+    }
+  }
 }
