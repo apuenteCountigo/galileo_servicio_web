@@ -106,7 +106,7 @@ export class WelcomeComponent extends TableBase implements OnInit, OnDestroy {
     this.traccarService
       .getMapa(localStorage.getItem('auth_token') as string)
       .subscribe((result: string) => {
-        result = result.replace(':/', '');
+        // result = result.replace(':/', '');
         result = result.slice(1, result.length - 1);
         const cad2 = `${result.split('=')[0]}=${
           this._loggedUser.getLoggedUser().traccar
