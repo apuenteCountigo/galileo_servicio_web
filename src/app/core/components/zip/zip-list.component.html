@@ -14,7 +14,7 @@
           <span class="folder-name">{{ node.title }}</span>
         </span>
         <span *ngIf="node.isLeaf" class="file-node">
-          <i nz-icon nzType="file-zip" nzTheme="fill" [nzTwotoneColor]="'#52c41a'"></i>
+          <i nz-icon nzType="file-zip" nzTheme="fill" [class]="icon-class"></i>
           <span class="file-name">{{ node.title }}</span>
           <button 
             nz-button 
