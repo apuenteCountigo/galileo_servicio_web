@@ -177,6 +177,7 @@ export class LayoutComponent implements OnInit {
     });
 
     this.modalCSV.afterClose.subscribe((result: any) => {
+      this.isOpenedListCSV=false;
       if (result.accion === 'CANCEL') {
         this.evidenceService.stopProgress().subscribe({
           next: (result: any) => {
