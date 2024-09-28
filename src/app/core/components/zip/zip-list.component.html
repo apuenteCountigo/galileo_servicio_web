@@ -1,4 +1,4 @@
-<nz-card  nzSize="default">
+<nz-card  nzSize="default" [nzTitle]="extraTemplateSearch">
   <nz-tree
       [nzData]="nodes"
       [nzTreeTemplate]="nzTreeTemplate"
@@ -44,3 +44,35 @@
     <span>Cancelar</span>
   </button>
 </div>
+
+<ng-template #extraTemplateSearch>
+  <form [formGroup]="searchZIPForm">
+    <nz-row nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col class="gutter-row" [nzSpan]="10">
+        <div class="inner-box">
+          <nz-form-item>
+            <nz-form-control>
+              <input nz-input placeHolder="Nombre" formControlName="descripcion" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="2">
+        <div class="inner-box">
+          <button nz-button nzType="text" nzSize="large" (click)="onSearch()" [disabled]="checkForm()" nz-tooltip
+            nzTooltipTitle="Buscar">
+            <em nz-icon nzType="search" nzTheme="outline" [class]="setStyleClassBusqueda()"></em>
+          </button>
+        </div>
+      </div>
+      <div nz-col class="gutter-row" [nzSpan]="2">
+        <div class="inner-box">
+          <button nz-button nzType="text" nzSize="large" (click)="resetForm()" [disabled]="checkForm()"
+            nz-tooltip nzTooltipTitle="Limpiar">
+            <em nz-icon nzType="clear" nzTheme="outline" [class]="setStyleClassBusqueda()"></em>
+          </button>
+        </div>
+      </div>
+    </nz-row>
+  </form>
+</ng-template>

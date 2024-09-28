@@ -12,6 +12,7 @@ import { EvidenceService } from '../../services/evidence.service';
 import { GenerateEvidenceService } from '../../services/generate-evidence.service';
 import { EstadosGeneracionEvidencia } from '../../enums/estados.enum';
 import { ListZIPFiles } from '../../services/listZIP.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-zip-list',
@@ -29,6 +30,8 @@ export class ZipListComponent implements OnInit {
 
   files: PageableObjectResponse | null = null;
 
+  searchZIPForm: FormGroup;
+
   constructor(
     private listZIPFiles: ListZIPFiles,
     private cdr: ChangeDetectorRef,
@@ -36,11 +39,28 @@ export class ZipListComponent implements OnInit {
     private modalZIP: NzModalRef,
     private generateEvidenceService: GenerateEvidenceService,
     private evidenceService: EvidenceService,
-    private ftpDownloadService: FtpDownloadService
-  ) {}
+    private ftpDownloadService: FtpDownloadService,
+    private fb: FormBuilder
+  ) {
+    this.searchZIPForm = this.fb.group({
+      descripcion: ['', [Validators.required]],
+    });
+  }
 
   ngOnInit() {
     this.loadZIP(this.pageIndex);
+  }
+
+  checkForm() {
+    return this.searchZIPForm.invalid ? true : false;
+  }
+
+  setStyleClassBusqueda() {
+    return !this.checkForm() ? 'icon-class' : 'icon-disabled';
+  }
+
+  resetForm(): void {
+    this.searchZIPForm.reset();
   }
 
   loadZIP(pageIndex: number){
