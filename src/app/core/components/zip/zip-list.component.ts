@@ -63,6 +63,10 @@ export class ZipListComponent implements OnInit {
     this.searchZIPForm.reset();
   }
 
+  onSearch(): void{
+    alert('onSearch');
+  }
+
   loadZIP(pageIndex: number){
     this.listZIPFiles.getFiles(
       this.operacion.unidades?.denominacion || "",
