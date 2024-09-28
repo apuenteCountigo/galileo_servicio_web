@@ -151,9 +151,22 @@ export class ServidoresDataMinerComponent
       nzContent: `Está seguro de eliminar el servidor?`,
       nzOnOk: () => {
         this.suscriptions.push(
-          this._serverServices.detele(this.selectedServer).subscribe(() => {
-            this.uncheckAction();
-            this.loadData();
+          this._serverServices.detele(this.selectedServer).subscribe({
+            next: () => {
+              this._notificationService.notificationSuccess(
+                'Información',
+                'Se ha eliminado el registro correctamente'
+              );
+              this.uncheckAction();
+              this.loadData();
+            },
+            error: (error) => {
+              this.uncheckAction();
+              this.handleErrorMessage(
+                error,
+                'Ocurrió un error al eliminar el registro'
+              );
+            },
           })
         );
       },
