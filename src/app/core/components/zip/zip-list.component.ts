@@ -23,6 +23,7 @@ export class ZipListComponent implements OnInit {
   @Input() operacion: Operacion = new Operacion();
   
   nodes: FileNode[] = [];
+  filterName = "";
   pageIndex = 1;
   pageSize = 2;
   totalItems = 0; // This should be set to the total number of files
@@ -64,7 +65,7 @@ export class ZipListComponent implements OnInit {
   }
 
   onSearch(): void{
-    alert('onSearch');
+    this.loadZIP(this.pageIndex);
   }
 
   loadZIP(pageIndex: number){
@@ -72,7 +73,8 @@ export class ZipListComponent implements OnInit {
       this.operacion.unidades?.denominacion || "",
       this.operacion.descripcion,
       pageIndex - 1, // El backend usa índice base 0
-      this.pageSize
+      this.pageSize,
+      this.searchZIPForm.value.descripcion
     ).subscribe(
       response => {
         this.files = response;

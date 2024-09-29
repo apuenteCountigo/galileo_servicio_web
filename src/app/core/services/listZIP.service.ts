@@ -10,10 +10,11 @@ import { PageableObjectResponse } from '../dto/PageableObject';
   export class ListZIPFiles {
     constructor(private http: HttpClient) {}
 
-    getFiles(unidadName: string="", operacionName: string="", page: number = 0, size: number = 20): Observable<PageableObjectResponse> {
+    getFiles(unidadName: string="", operacionName: string="", page: number = 0, size: number = 20, filterName: string="",): Observable<PageableObjectResponse> {
         let params = new HttpParams()
           .set('unidadName', unidadName)
           .set('operacionName', operacionName)
+          .set('filterName', filterName)
           .set('page', page.toString())
           .set('size', size.toString());
     
