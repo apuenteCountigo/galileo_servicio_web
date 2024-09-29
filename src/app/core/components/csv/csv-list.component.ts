@@ -12,6 +12,7 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { EvidenceService } from '../../services/evidence.service';
 import { GenerateEvidenceService } from '../../services/generate-evidence.service';
 import { EstadosGeneracionEvidencia } from '../../enums/estados.enum';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-csv-list',
@@ -31,6 +32,8 @@ export class CsvListComponent implements OnInit {
 
   files: PageableObjectResponse | null = null;
 
+  searchCSVForm: FormGroup;
+
   constructor(
     private listCSVFiles: ListCSVFiles,
     private cdr: ChangeDetectorRef,
@@ -38,10 +41,36 @@ export class CsvListComponent implements OnInit {
     private modalCSV: NzModalRef,
     private generateEvidenceService: GenerateEvidenceService,
     private evidenceService: EvidenceService,
-    private ftpDownloadService: FtpDownloadService
-  ) {}
+    private ftpDownloadService: FtpDownloadService,
+    private fb: FormBuilder
+  ) {
+    this.searchCSVForm = this.fb.group({
+      descripcion: ['', [Validators.required]],
+    });
+  }
 
   ngOnInit() {
+    this.loadCSV(this.pageIndex);
+  }
+
+  checkForm() {
+    return this.searchCSVForm.invalid ? true : false;
+  }
+
+  setStyleClassBusqueda() {
+    return !this.checkForm() ? 'icon-class' : 'icon-disabled';
+  }
+
+  resetForm(): void {
+    this.searchCSVForm.reset();
+    this.pageIndex=1;
+    this.cdr.detectChanges();
+    this.loadCSV(this.pageIndex);
+  }
+
+  onSearch(): void{
+    this.pageIndex=1;
+    this.cdr.detectChanges();
     this.loadCSV(this.pageIndex);
   }
 
@@ -52,7 +81,8 @@ export class CsvListComponent implements OnInit {
       this.filters.fechaInicio || "",
       this.filters.fechaFin || "",
       pageIndex - 1, // El backend usa índice base 0
-      this.pageSize
+      this.pageSize,
+      this.searchCSVForm.value.descripcion
     ).subscribe(
       response => {
         this.files = response;

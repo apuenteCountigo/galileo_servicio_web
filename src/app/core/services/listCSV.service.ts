@@ -11,10 +11,11 @@ import { EvidenceFilter } from '../dto/evidenceFilter';
   export class ListCSVFiles {
     constructor(private http: HttpClient) {}
 
-    getCsvFiles(unidadName: string="", operacionName: string="", fechaInicio: string="", fechaFin: string="", page: number = 0, size: number = 20): Observable<PageableObjectResponse> {
+    getCsvFiles(unidadName: string="", operacionName: string="", fechaInicio: string="", fechaFin: string="", page: number = 0, size: number = 20, filterName: string=""): Observable<PageableObjectResponse> {
         let params = new HttpParams()
           .set('unidadName', unidadName)
           .set('operacionName', operacionName)
+          .set('filterName', filterName)
           .set('fechaInicio', fechaInicio)
           .set('fechaFin', fechaFin)
           .set('page', page.toString())
