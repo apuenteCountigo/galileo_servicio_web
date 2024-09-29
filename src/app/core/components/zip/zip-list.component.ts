@@ -62,9 +62,14 @@ export class ZipListComponent implements OnInit {
 
   resetForm(): void {
     this.searchZIPForm.reset();
+    this.pageIndex=0;
+    this.cdr.detectChanges();
+    this.loadZIP(this.pageIndex);
   }
 
   onSearch(): void{
+    this.pageIndex=0;
+    this.cdr.detectChanges();
     this.loadZIP(this.pageIndex);
   }
 
