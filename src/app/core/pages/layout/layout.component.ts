@@ -74,7 +74,7 @@ export class LayoutComponent implements OnInit {
           this.evidenceService.getProgreso().subscribe({
             next: (result: any) => {
               this.percent = result.valor ? result.valor : 0;
-              if (this.percent==95 && !this.isOpenedListCSV) {
+              if (this.percent==94 && !this.isOpenedListCSV) {
                 this.showModalCSV();
                 this.isOpenedListCSV=true;
               }else if (this.percent == 100) {
