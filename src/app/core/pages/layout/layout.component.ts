@@ -41,6 +41,7 @@ export class LayoutComponent implements OnInit {
   isGenerating$: any;
   interval: any;
   percent: number = 0;
+  isWaiting: boolean = false;
 
   isOpenedListCSV: boolean = false;
   modalCSV: any;
@@ -71,39 +72,44 @@ export class LayoutComponent implements OnInit {
       if (this.isGenerating) {
         this.percent = 0;
         this.interval = setInterval(() => {
-          this.evidenceService.getProgreso().subscribe({
-            next: (result: any) => {
-              this.percent = result.valor ? result.valor : 0;
-              if (this.percent==95 && !this.isOpenedListCSV) {
-                this.showModalCSV();
-                this.isOpenedListCSV=true;
-              }else if (this.percent == 100) {
-                setTimeout(() => {
-                  this.generateEvidenceService.setGenerate(
-                    EstadosGeneracionEvidencia.FINALIZADA
-                  );
-                  this.isGenerating = false;
-                  this.modalCSV.close();
-                  this.notificationService.notificationSuccess(
-                    'Confirmación',
-                    'Las evidencias han sido generadas correctamente.'
-                  );
-                }, 3000);
+          if(!this.isWaiting){
+            this.isWaiting=true;
+            this.evidenceService.getProgreso().subscribe({
+              next: (result: any) => {
+                this.percent = result.valor ? result.valor : 0;
+                if (this.percent==95 && !this.isOpenedListCSV) {
+                  this.showModalCSV();
+                  this.isOpenedListCSV=true;
+                }else if (this.percent == 100) {
+                  setTimeout(() => {
+                    this.generateEvidenceService.setGenerate(
+                      EstadosGeneracionEvidencia.FINALIZADA
+                    );
+                    this.isGenerating = false;
+                    this.modalCSV.close();
+                    this.notificationService.notificationSuccess(
+                      'Confirmación',
+                      'Las evidencias han sido generadas correctamente.'
+                    );
+                  }, 3000);
+                  clearInterval(this.interval);
+                }
+                this.isWaiting=false;
+              },
+              error: (e) => {
+                this.handleErrorMessage(
+                  e,
+                  'Las evidencias no se han generado correctamente'
+                );
                 clearInterval(this.interval);
-              }
-            },
-            error: (e) => {
-              this.handleErrorMessage(
-                e,
-                'Las evidencias no se han generado correctamente'
-              );
-              clearInterval(this.interval);
-              this.isGenerating = false;
-              this.generateEvidenceService.setGenerate(
-                EstadosGeneracionEvidencia.FINALIZADA
-              );
-            },
-          });
+                this.isWaiting=false;
+                this.isGenerating = false;
+                this.generateEvidenceService.setGenerate(
+                  EstadosGeneracionEvidencia.FINALIZADA
+                );
+              },
+            });
+          }
         }, 10000);
       } else {
         clearInterval(this.interval);
