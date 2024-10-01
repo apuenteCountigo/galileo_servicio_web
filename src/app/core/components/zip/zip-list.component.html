@@ -1,12 +1,18 @@
 <nz-card  nzSize="default" [nzTitle]="extraTemplateSearch">
-  <nz-tree
+  <ng-container *ngIf="nodes && nodes.length > 0; else noDataTemplate">
+    <nz-tree
       [nzData]="nodes"
       [nzTreeTemplate]="nzTreeTemplate"
       [nzVirtualHeight]="'400px'"
       [nzBlockNode]="true"
-      [nzNoResult]="'No existen datos para mostrar'"
     >
-  </nz-tree>
+    </nz-tree>
+  </ng-container>
+  <ng-template #noDataTemplate></ng-template>
+    <div style="text-align: center; padding: 20px;">
+      No existen datos para mostrar
+    </div>
+  </ng-template>
 </nz-card>
     <ng-template #nzTreeTemplate let-node let-origin="origin">
       <span class="custom-node">
