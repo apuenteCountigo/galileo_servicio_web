@@ -49,6 +49,7 @@ export class ZipListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pageIndex=1;
     this.loadZIP(this.pageIndex);
   }
 
