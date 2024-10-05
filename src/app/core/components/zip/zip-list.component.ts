@@ -23,6 +23,7 @@ export class ZipListComponent implements OnInit {
   @Input() operacion: Operacion = new Operacion();
   
   nodes: FileNode[] = [];
+  selectedFiles: any[] = [];
   filterName = "";
   pageIndex = 1;
   pageSize = 2;
@@ -128,6 +129,20 @@ export class ZipListComponent implements OnInit {
   pageIndexChange(newPageIndex: number): void {
     this.pageIndex = newPageIndex;
     this.loadZIP(newPageIndex);
+  }
+
+  // Función para gestionar la selección de un archivo
+  onFileSelect(node: any) {
+    if (node.checked) {
+      this.selectedFiles.push(node);
+    } else {
+      this.selectedFiles = this.selectedFiles.filter(file => file.key !== node.key);
+    }
+  }
+
+  // Verificar si hay archivos seleccionados
+  hasSelectedFiles(): boolean {
+    return this.selectedFiles.length > 0;
   }
 
   handleErrorMessage(error: any, defaultMsg: string): void {
