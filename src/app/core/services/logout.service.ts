@@ -23,7 +23,7 @@ export class LogoutService {
     this.generateEvidenceService.setGenerate(
       EstadosGeneracionEvidencia.SIN_INICIAR
     );
-    this.router.navigate(['/login']); // Ruta de login
+    this.router.navigate(['/']); // Ruta de login
   }
 
   setIntervalProgress(interval: any) {

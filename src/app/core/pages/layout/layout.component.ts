@@ -261,7 +261,7 @@ export class LayoutComponent implements OnInit {
     // this.generateEvidenceService.setGenerate(
     //   EstadosGeneracionEvidencia.SIN_INICIAR
     // );
-    // this.isGenerating = false;
+    this.isGenerating = false;
     // this.router.navigate([this.routes.LOGIN]);
     this.logoutService.logout();
   }
