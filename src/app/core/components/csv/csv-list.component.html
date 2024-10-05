@@ -21,7 +21,7 @@
           <span class="folder-name">{{ node.title }}</span>
         </span>
         <span *ngIf="node.isLeaf" class="file-node">
-          <nz-checkbox [(ngModel)]="node.checked" (ngModelChange)="onFileSelect(node)"></nz-checkbox>
+          <nz-checkbox [(ngModel)]="true" (ngModelChange)="onFileSelect(node)" style="border: 1px solid red;"></nz-checkbox>
           <i nz-icon nzType="file-excel" nzTheme="twotone" [nzTwotoneColor]="'#52c41a'"></i>
           <span class="file-name">{{ node.title }}</span>
           <button 

@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { IconsProviderModule } from 'src/app/icons-provider.module';
 import { NgZorroAntdModule } from 'src/app/ng-zorro-antd-module.module';
 import { UnitTreeComponent } from '../../components/unit-tree/unit-tree.component';
@@ -25,8 +26,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     NzLayoutModule,
     NzMenuModule,
     NzTableModule,
-    FormsModule,
-    ReactiveFormsModule,
+    NzCheckboxModule,
     NgZorroAntdModule,
     LayoutRoutingModule,
     NgxPermissionsModule.forChild(),
