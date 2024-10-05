@@ -173,6 +173,14 @@ export class UnidadComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.userEstados = [...result.resources];
           },
+          error: (err) => {
+            this.userEstados = [];
+            this.isLoadingData = false;
+            this.handleErrorMessage(
+              err,
+              'Ha ocurrido un error al cargar los estados.'
+            );
+          },
         })
     );
 
@@ -201,8 +209,8 @@ export class UnidadComponent implements OnInit, OnDestroy {
         error: (err) => {
           this.provList = [];
           this.isLoadingData = false;
-          this.notificationService.notificationError(
-            'Error',
+          this.handleErrorMessage(
+            err,
             'Ha ocurrido un error al cargar las provincias.'
           );
         },
