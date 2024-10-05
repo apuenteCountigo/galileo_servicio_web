@@ -145,6 +145,13 @@ export class ZipListComponent implements OnInit {
     return this.selectedFiles.length > 0;
   }
 
+  // Descargar los archivos seleccionados
+  downloadSelectedFiles() {
+    this.selectedFiles.forEach(file => {
+      this.downloadFile(file.key, file.title);
+    });
+  }
+
   handleErrorMessage(error: any, defaultMsg: string): void {
     if (error.status == 400) {
       this._notificationService.notificationError(
