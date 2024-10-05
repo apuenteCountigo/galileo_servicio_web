@@ -135,7 +135,9 @@ export class ZipListComponent implements OnInit {
   onFileSelect(node: any) {
     if (node.checked) {
       this.selectedFiles.push(node);
+      console.log(this.selectedFiles);
     } else {
+      console.log(this.selectedFiles);
       this.selectedFiles = this.selectedFiles.filter(file => file.key !== node.key);
     }
   }
