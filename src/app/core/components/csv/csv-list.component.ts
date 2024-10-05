@@ -25,6 +25,7 @@ export class CsvListComponent implements OnInit {
   @Input() operacion: Operacion = new Operacion();
   
   nodes: FileNode[] = [];
+  selectedFiles: any[] = [];
   pageIndex = 1;
   pageSize = 2;
   totalItems = 0; // This should be set to the total number of files
@@ -212,6 +213,27 @@ export class CsvListComponent implements OnInit {
   pageIndexChange(newPageIndex: number): void {
     this.pageIndex = newPageIndex;
     this.loadCSV(newPageIndex);
+  }
+
+  // Función para gestionar la selección de un archivo
+  onFileSelect(node: any) {
+    if (node.checked) {
+      this.selectedFiles.push(node);
+    } else {
+      this.selectedFiles = this.selectedFiles.filter(file => file.key !== node.key);
+    }
+  }
+
+  // Verificar si hay archivos seleccionados
+  hasSelectedFiles(): boolean {
+    return this.selectedFiles.length > 0;
+  }
+
+  // Descargar los archivos seleccionados
+  downloadSelectedFiles() {
+    this.selectedFiles.forEach(file => {
+      this.downloadFile(file.key, file.title);
+    });
   }
 
   handleErrorMessage(error: any, defaultMsg: string): void {
