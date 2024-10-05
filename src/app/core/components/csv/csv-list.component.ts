@@ -13,6 +13,7 @@ import { EvidenceService } from '../../services/evidence.service';
 import { GenerateEvidenceService } from '../../services/generate-evidence.service';
 import { EstadosGeneracionEvidencia } from '../../enums/estados.enum';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LogoutService } from '../../services/logout.service';
 
 @Component({
   selector: 'app-csv-list',
@@ -43,7 +44,8 @@ export class CsvListComponent implements OnInit {
     private generateEvidenceService: GenerateEvidenceService,
     private evidenceService: EvidenceService,
     private ftpDownloadService: FtpDownloadService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private logoutService: LogoutService
   ) {
     this.searchCSVForm = this.fb.group({
       descripcion: ['', [Validators.required]],
@@ -258,9 +260,17 @@ export class CsvListComponent implements OnInit {
         );
       } else {
         this._notificationService.notificationError('Error', defaultMsg);
+        if (error.error && error.error.message && error.error.message.toLowerCase().includes('jwt expired')) {
+          // Desloguea al usuario
+          this.logoutService.logout(); // Asegúrate de que `logout()` limpie los datos del usuario
+        }
       }
     } else {
       this._notificationService.notificationError('Error', defaultMsg);
+      if (error.error && error.error.message && error.error.message.toLowerCase().includes('jwt expired')) {
+        // Desloguea al usuario
+        this.logoutService.logout(); // Asegúrate de que `logout()` limpie los datos del usuario
+      }
     }
   }
 }

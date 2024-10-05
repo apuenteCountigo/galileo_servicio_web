@@ -20,6 +20,7 @@ import { Objetivo } from '../../models/objetivo.modal';
 import { EvidenceFilter } from '../../dto/evidenceFilter';
 import { Operacion } from '../../models/operacion.model';
 import { takeWhile } from 'rxjs/operators';
+import { LogoutService } from '../../services/logout.service';
 
 @Component({
   selector: 'app-layout',
@@ -65,7 +66,8 @@ export class LayoutComponent implements OnInit {
     private permissionsService: NgxPermissionsService,
     private loggedUserService: LoggedUserService,
     private evidenceService: EvidenceService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private logoutService: LogoutService
   ) {}
 
   ngOnInit(): void {
@@ -117,6 +119,8 @@ export class LayoutComponent implements OnInit {
               });
           }
         }, 10000);
+
+        this.logoutService.setIntervalProgress(this.interval);
       } else {
         clearInterval(this.interval);
       }
@@ -252,13 +256,14 @@ export class LayoutComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear();
-    clearInterval(this.interval);
-    this.generateEvidenceService.setGenerate(
-      EstadosGeneracionEvidencia.SIN_INICIAR
-    );
-    this.isGenerating = false;
-    this.router.navigate([this.routes.LOGIN]);
+    // localStorage.clear();
+    // clearInterval(this.interval);
+    // this.generateEvidenceService.setGenerate(
+    //   EstadosGeneracionEvidencia.SIN_INICIAR
+    // );
+    // this.isGenerating = false;
+    // this.router.navigate([this.routes.LOGIN]);
+    this.logoutService.logout();
   }
 
   showChangePassword(): void {

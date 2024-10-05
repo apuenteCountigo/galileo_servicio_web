@@ -36,6 +36,7 @@ import { Objetivo } from './../../models/objetivo.modal';
 import { Operacion } from './../../models/operacion.model';
 import { formatISO } from 'date-fns';
 import { SelectOficialSaComponent } from '../../components/unit/select-oficial-sa/select-oficial-sa.component';
+import { LogoutService } from '../../services/logout.service';
 
 @Component({
   selector: 'app-unidad',
@@ -151,7 +152,8 @@ export class UnidadComponent implements OnInit, OnDestroy {
     private operacionService: OperacionService,
     private _breadcrumbService: BreadCrumbService,
     private _loggedUserService: LoggedUserService,
-    private _estadoService: EstadoService
+    private _estadoService: EstadoService,
+    private logoutService: LogoutService
   ) {}
 
   ngOnInit(): void {
@@ -813,7 +815,11 @@ export class UnidadComponent implements OnInit, OnDestroy {
   }
 
   handleErrorMessage(error: any, defaultMsg: string): void {
-    if (error.status == 400) {
+    if (error.error && error.error.message && error.error.message.toLowerCase().includes('jwt expired')) {
+      // Desloguea al usuario
+      this.logoutService.logout(); // Asegúrate de que `logout()` limpie los datos del usuario
+      return;
+    }else if (error.status == 400) {
       this.notificationService.notificationError(
         'Error',
         error.error.message.toLowerCase()
