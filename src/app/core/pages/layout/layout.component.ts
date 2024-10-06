@@ -284,7 +284,11 @@ export class LayoutComponent implements OnInit {
   }
 
   handleErrorMessage(error: any, defaultMsg: string): void {
-    if (error.status == 400) {
+    if (error.error && error.error.message && error.error.message.toLowerCase().includes('jwt expired')) {
+      // Desloguea al usuario
+      this.logoutService.logout(); // Asegúrate de que `logout()` limpie los datos del usuario
+      return;
+    }else if (error.status == 400) {
       this.notificationService.notificationError(
         'Error',
         error.error.message.toLowerCase()
