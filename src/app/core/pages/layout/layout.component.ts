@@ -86,8 +86,8 @@ export class LayoutComponent implements OnInit {
                 next: (result: any) => {
                   this.percent = result.valor ? result.valor : 0;
                   if (this.percent == 95 && !this.isOpenedListCSV) {
-                    this.showModalCSV();
                     this.isOpenedListCSV = true;
+                    this.showModalCSV();
                   } else if (this.percent == 100) {
                     setTimeout(() => {
                       this.generateEvidenceService.setGenerate(
@@ -179,7 +179,7 @@ export class LayoutComponent implements OnInit {
     const modalTitle = 'Descargar CSV';
     this.modalCSV = this.modal.create({
       nzTitle: modalTitle,
-      nzStyle: { top: '20px', width: '600px' },
+      nzStyle: { top: '200px', width: '600px' },
       nzMaskClosable: false,
       nzClosable: true,
       nzContent: CsvListComponent,
@@ -193,31 +193,30 @@ export class LayoutComponent implements OnInit {
     });
 
     this.modalCSV.afterClose.subscribe((result: any) => {
-      this.isOpenedListCSV=false;
-      if (result.accion === 'CANCEL') {
-        this.evidenceService.stopProgress().subscribe({
-          next: (result: any) => {
-            this.generateEvidenceService.setGenerate(
-              EstadosGeneracionEvidencia.FINALIZADA
-            );
-            this.isGenerating = false;
-            this.notificationService.notificationSuccess(
-              'Confirmación',
-              'Las evidencias han sido detenidas correctamente.'
-            );
-          },
-          error: (e) => {
-            this.handleErrorMessage(
-              e,
-              'Las evidencias no se han detenido correctamente'
-            );
-            this.isGenerating = false;
-            this.generateEvidenceService.setGenerate(
-              EstadosGeneracionEvidencia.FINALIZADA
-            );
-          },
-        });
-      }
+      this.evidenceService.stopProgress().subscribe({
+        next: (result: any) => {
+          this.generateEvidenceService.setGenerate(
+            EstadosGeneracionEvidencia.FINALIZADA
+          );
+          this.isGenerating = false;
+          this.notificationService.notificationSuccess(
+            'Confirmación',
+            'Las evidencias han sido detenidas correctamente.'
+          );
+          this.isOpenedListCSV=false;
+        },
+        error: (e) => {
+          this.handleErrorMessage(
+            e,
+            'Las evidencias no se han detenido correctamente'
+          );
+          this.isGenerating = false;
+          this.generateEvidenceService.setGenerate(
+            EstadosGeneracionEvidencia.FINALIZADA
+          );
+          this.isOpenedListCSV=false;
+        },
+      });
     });
   }
 
