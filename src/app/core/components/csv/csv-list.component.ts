@@ -80,6 +80,7 @@ export class CsvListComponent implements OnInit {
 
   resetSelected(): void {
     this.selectedFiles=[];
+    this.nodes = [];
     this.nodes = this.nodes.map(nd => {
       if (nd.checked) {
         return { ...nd, checked: false };
@@ -87,6 +88,8 @@ export class CsvListComponent implements OnInit {
       return nd;
     });
     this.cdr.detectChanges();
+    console.log("resetSelected: ",this.nodes);
+    
   }
 
   onSearch(): void{
