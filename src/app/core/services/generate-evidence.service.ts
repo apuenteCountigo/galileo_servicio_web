@@ -18,11 +18,13 @@ export class GenerateEvidenceService {
   private operacionBehavior$ = new BehaviorSubject<Operacion>(new Operacion());
   private objetivosList$ = new BehaviorSubject<Array<Objetivo>>(new Array());
   private evidenceFilter$ = new BehaviorSubject<EvidenceFilter>(new EvidenceFilter());
+  private IsBuildingPackaged$ = new BehaviorSubject<boolean>(false);
 
   isGenetaring$ = this.isGenetaringEvidence$.asObservable();
   objetivos$ = this.objetivosList$.asObservable();
   evidencefilter$ = this.evidenceFilter$.asObservable();
   operacion$ = this.operacionBehavior$.asObservable();
+  isBuildingPackaged$ = this.IsBuildingPackaged$.asObservable();
 
   constructor() {}
 
@@ -40,5 +42,9 @@ export class GenerateEvidenceService {
 
   setOperacion(operacion: Operacion) {
     this.operacionBehavior$.next(operacion);
+  }
+
+  setIsBuildingPackaged(isBP: boolean) {
+    this.IsBuildingPackaged$.next(isBP);
   }
 }

@@ -31,6 +31,7 @@ export class CsvListComponent implements OnInit {
   pageSize = 2;
   totalItems = 0; // This should be set to the total number of files
   isBuildingPackage: boolean = false;
+  isGenerating: boolean = false;
 
   files: PageableObjectResponse | null = null;
 
@@ -53,6 +54,16 @@ export class CsvListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.generateEvidenceService.isGenetaring$.subscribe((result: string) => {
+      this.isGenerating= result == EstadosGeneracionEvidencia.INICIADA;
+    });
+
+    this.generateEvidenceService.isBuildingPackaged$.subscribe((result: boolean) => {
+      if (this.isGenerating){
+        this.isBuildingPackage=result;
+      }
+    });
+
     this.loadCSV(this.pageIndex);
   }
 
@@ -97,9 +108,9 @@ export class CsvListComponent implements OnInit {
     return nodes.map(node => {
       const newNode: FileNode = { ...node, checked: false };
   
-      if (node.children && node.children.length > 0) {
-        newNode.children = this.deepCopyAndResetChecked(node.children);
-      }
+      // if (node.children && node.children.length > 0) {
+      //   newNode.children = this.deepCopyAndResetChecked(node.children);
+      // }
   
       return newNode;
     });
@@ -159,16 +170,17 @@ export class CsvListComponent implements OnInit {
   }
 
   toBuildingPackage(){
-    this.isBuildingPackage = true;
+    this.generateEvidenceService.setIsBuildingPackaged(true);
     this.evidenceService.toBuildPackage().subscribe({
       next: (result: any) => {
         this._notificationService.notificationSuccess(
           'Confirmación',
           result.message
         );
-        this.isBuildingPackage = false;
+        // this.isBuildingPackage = false;
       },
       error: (e) => {
+        this.generateEvidenceService.setIsBuildingPackaged(false);
         this.handleErrorMessage(
           e,
           'Fallo generando paquete de evidencias'

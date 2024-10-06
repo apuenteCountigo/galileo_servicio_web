@@ -58,7 +58,7 @@
   <button nz-button nzType="primary" [disabled]="!hasSelectedFiles()" (click)="downloadSelectedFiles()">
     <span>Descargar</span>
   </button>
-  <button nz-button nzType="primary" [disabled]="isBuildingPackage" (click)="toBuildingPackage()">
+  <button nz-button nzType="primary" [disabled]="isBuildingPackage" (click)="toBuildingPackage()" [nzLoading]="isBuildingPackage">
     <span>Generar paquete de evidencia</span>
   </button>
 </div>
