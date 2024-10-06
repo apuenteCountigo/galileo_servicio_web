@@ -165,8 +165,10 @@ export class CsvListComponent implements OnInit {
   onFileSelect(node: any) {
     if (node.checked) {
       this.selectedFiles.push(node);
+      console.log(this.nodes);
     } else {
       this.selectedFiles = this.selectedFiles.filter(file => file.key+file._title !== node.key+node._title);
+      console.log(this.nodes);
     }
   }
 
