@@ -58,8 +58,8 @@ export class CsvListComponent implements OnInit {
 
   checkForm() {
     let isFilter: boolean = this.searchCSVForm.invalid ? true : false;
-    let isSelected: boolean = this.selectedFiles && this.selectedFiles.length > 0 ? true : false;
-    let checkResult: boolean = isFilter || isSelected ? true : false;
+    let isSelected: boolean = this.selectedFiles && this.selectedFiles.length == 0 ? true : false;
+    let checkResult: boolean = !isFilter || !isSelected ? false : true;
     console.log(checkResult);
     
     return checkResult;
