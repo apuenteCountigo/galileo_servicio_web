@@ -140,6 +140,7 @@ export class ZipListComponent implements OnInit {
       this.selectedFiles = this.selectedFiles.filter(file => file.key+file._title !== node.key+node._title);
       console.log(this.selectedFiles);
     }
+    this.cdr.detectChanges();
   }
 
   // Verificar si hay archivos seleccionados
