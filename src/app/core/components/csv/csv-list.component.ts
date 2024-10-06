@@ -74,6 +74,7 @@ export class CsvListComponent implements OnInit {
 
   resetSelected(): void {
     this.selectedFiles=[];
+    this.nodes.forEach(node => node.checked = false);
     this.cdr.detectChanges();
   }
 
