@@ -26,10 +26,10 @@ export class CsvListComponent implements OnInit {
   @Input() operacion: Operacion = new Operacion();
   
   nodes: FileNode[] = [];
-  selectedFiles: any[] = [];
+  selectedFiles: FileNode[] = [];
   pageIndex = 1;
   pageSize = 2;
-  totalItems = 0; // This should be set to the total number of files
+  totalItems = 0;
   isBuildingPackage: boolean = false;
 
   files: PageableObjectResponse | null = null;
@@ -57,7 +57,7 @@ export class CsvListComponent implements OnInit {
   }
 
   checkForm() {
-    return this.searchCSVForm.invalid ? true : false;
+    return this.searchCSVForm.invalid;
   }
 
   setStyleClassBusqueda() {
@@ -66,31 +66,38 @@ export class CsvListComponent implements OnInit {
 
   resetForm(): void {
     this.searchCSVForm.reset();
-    this.pageIndex=1;
-    this.selectedFiles=[];
-    this.cdr.detectChanges();
+    this.pageIndex = 1;
+    this.resetSelected();
     this.loadCSV(this.pageIndex);
   }
 
   resetSelected(): void {
-    this.selectedFiles=[];
-    this.nodes.forEach(node => node.checked = false);
+    this.selectedFiles = [];
+    this.updateNodeCheckStatus(this.nodes, false);
     this.cdr.detectChanges();
   }
 
-  onSearch(): void{
-    this.pageIndex=1;
-    this.cdr.detectChanges();
+  updateNodeCheckStatus(nodes: FileNode[], checked: boolean) {
+    nodes.forEach(node => {
+      node.checked = checked;
+      if (node.children && node.children.length > 0) {
+        this.updateNodeCheckStatus(node.children, checked);
+      }
+    });
+  }
+
+  onSearch(): void {
+    this.pageIndex = 1;
     this.loadCSV(this.pageIndex);
   }
 
-  loadCSV(pageIndex: number){
+  loadCSV(pageIndex: number) {
     this.listCSVFiles.getCsvFiles(
       this.operacion.unidades?.denominacion || "",
       this.operacion.descripcion,
       this.filters.fechaInicio || "",
       this.filters.fechaFin || "",
-      pageIndex - 1, // El backend usa índice base 0
+      pageIndex - 1,
       this.pageSize,
       this.searchCSVForm.value.descripcion
     ).subscribe(
@@ -98,16 +105,33 @@ export class CsvListComponent implements OnInit {
         this.files = response;
         this.nodes = this.files?.content || [];
         this.totalItems = this.files?.totalElements || 0;
-        this.cdr.detectChanges(); // Forzar la detección de cambios
+        this.cdr.detectChanges();
       },
       error => {
         console.error('Error fetching CSV files', error);
-        this.handleErrorMessage(
-          error,
-          'Fallo visualizando ficheros csv.'
-        );
+        this.handleErrorMessage(error, 'Fallo visualizando ficheros csv.');
       }
     );
+  }
+
+  onFileSelect(node: FileNode) {
+    node.checked = !node.checked;
+    if (node.checked) {
+      this.selectedFiles.push(node);
+    } else {
+      this.selectedFiles = this.selectedFiles.filter(file => file.key !== node.key);
+    }
+    this.cdr.detectChanges();
+  }
+
+  hasSelectedFiles(): boolean {
+    return this.selectedFiles.length > 0;
+  }
+
+  downloadSelectedFiles() {
+    this.selectedFiles.forEach(file => {
+      this.downloadFile(file.key, file.title);
+    });
   }
 
   downloadFile(path: string, fileName: string): void {
@@ -117,10 +141,7 @@ export class CsvListComponent implements OnInit {
       },
       error => {
         console.error('Error al descargar el archivo', error);
-        this.handleErrorMessage(
-          error,
-          'Ocurrió un error al descargar el fichero.'
-        );
+        this.handleErrorMessage(error, 'Ocurrió un error al descargar el fichero.');
       }
     );
   }
@@ -131,21 +152,15 @@ export class CsvListComponent implements OnInit {
     this.modalCSV.close({ accion: 'CANCEL' });
   }
 
-  toBuildingPackage(){
+  toBuildingPackage() {
     this.isBuildingPackage = true;
     this.evidenceService.toBuildPackage().subscribe({
       next: (result: any) => {
-        this._notificationService.notificationSuccess(
-          'Confirmación',
-          result.message
-        );
+        this._notificationService.notificationSuccess('Confirmación', result.message);
         this.isBuildingPackage = false;
       },
       error: (e) => {
-        this.handleErrorMessage(
-          e,
-          'Fallo generando paquete de evidencias'
-        );
+        this.handleErrorMessage(e, 'Fallo generando paquete de evidencias');
       },
     });
   }
@@ -161,62 +176,25 @@ export class CsvListComponent implements OnInit {
     this.loadCSV(newPageIndex);
   }
 
-  // Función para gestionar la selección de un archivo
-  onFileSelect(node: any) {
-    if (node.checked) {
-      this.selectedFiles.push(node);
-      console.log(this.nodes);
-    } else {
-      this.selectedFiles = this.selectedFiles.filter(file => file.key+file._title !== node.key+node._title);
-      console.log(this.nodes);
-    }
-  }
-
-  // Verificar si hay archivos seleccionados
-  hasSelectedFiles(): boolean {
-    return this.selectedFiles.length > 0;
-  }
-
-  // Descargar los archivos seleccionados
-  downloadSelectedFiles() {
-    this.selectedFiles.forEach(file => {
-      this.downloadFile(file.key, file.title);
-    });
-  }
-
   handleErrorMessage(error: any, defaultMsg: string): void {
-    if (error.status == 400) {
-      this._notificationService.notificationError(
-        'Error',
-        error.error.message.toLowerCase()
-      );
-    } else if (error.status == 409) {
-      this._notificationService.notificationError(
-        'Error',
-        error.error.message.toLowerCase()
-      );
+    if (error.status == 400 || error.status == 409) {
+      this._notificationService.notificationError('Error', error.error.message.toLowerCase());
     } else if (error.status == 500) {
-      if (
-        error.error.message &&
-        (error.error.message.toLowerCase().includes('fallo') || error.error.message.toLowerCase().includes('falló'))
-      ) {
-        this._notificationService.notificationError(
-          'Error',
-          error.error.message
-        );
+      if (error.error.message && (error.error.message.toLowerCase().includes('fallo') || error.error.message.toLowerCase().includes('falló'))) {
+        this._notificationService.notificationError('Error', error.error.message);
       } else {
         this._notificationService.notificationError('Error', defaultMsg);
-        if (error.error && error.error.message && error.error.message.toLowerCase().includes('jwt expired')) {
-          // Desloguea al usuario
-          this.logoutService.logout(); // Asegúrate de que `logout()` limpie los datos del usuario
-        }
+        this.checkJwtExpired(error);
       }
     } else {
       this._notificationService.notificationError('Error', defaultMsg);
-      if (error.error && error.error.message && error.error.message.toLowerCase().includes('jwt expired')) {
-        // Desloguea al usuario
-        this.logoutService.logout(); // Asegúrate de que `logout()` limpie los datos del usuario
-      }
+      this.checkJwtExpired(error);
+    }
+  }
+
+  private checkJwtExpired(error: any) {
+    if (error.error && error.error.message && error.error.message.toLowerCase().includes('jwt expired')) {
+      this.logoutService.logout();
     }
   }
 }
