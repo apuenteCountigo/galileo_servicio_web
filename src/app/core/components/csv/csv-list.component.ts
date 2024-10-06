@@ -86,6 +86,7 @@ export class CsvListComponent implements OnInit {
       }
       return nd;
     });
+    this.nodes = [];
     this.nodes = nds;
     this.cdr.detectChanges();
     console.log("resetSelected: ",this.nodes);
