@@ -99,20 +99,6 @@ export class CsvListComponent implements OnInit {
         this.nodes = this.files?.content || [];
         this.totalItems = this.files?.totalElements || 0;
         this.cdr.detectChanges(); // Forzar la detección de cambios
-        // this.files?.content.children?.forEach(el => {
-        //   let children: Array<FileNode> = [];
-          
-        //   if(el.children?.length! > 0)
-        //     children= el.children!;
-
-        //   this.nodes.push({
-        //     key: el.key,
-        //     title: el.title,
-        //     isLeaf: true,
-        //     isExpanded: false,
-        //     children: children!,
-        //   });
-        // });
       },
       error => {
         console.error('Error fetching CSV files', error);
@@ -149,9 +135,6 @@ export class CsvListComponent implements OnInit {
     this.isBuildingPackage = true;
     this.evidenceService.toBuildPackage().subscribe({
       next: (result: any) => {
-        // this.generateEvidenceService.setGenerate(
-        //   EstadosGeneracionEvidencia.FINALIZADA
-        // );
         this._notificationService.notificationSuccess(
           'Confirmación',
           result.message
@@ -163,54 +146,8 @@ export class CsvListComponent implements OnInit {
           e,
           'Fallo generando paquete de evidencias'
         );
-        // this.isGenerating = false;
-        // this.generateEvidenceService.setGenerate(
-        //   EstadosGeneracionEvidencia.FINALIZADA
-        // );
       },
     });
-  }
-
-  loadNodesForPage(page: number) {
-    // This is where you would typically load data from a service
-    // For this example, we'll generate some dummy data
-    this.nodes = [];
-    const startIndex = (page - 1) * this.pageSize;
-    for (let i = startIndex; i < startIndex + this.pageSize && i < this.totalItems; i++) {
-      if (i % 5 === 0) {
-        // Create a folder every 5 items
-        this.nodes.push({
-          key: `folder-${i}`,
-          title: `Folder ${i / 5 + 1}`,
-          isLeaf: false,
-          isExpanded: false,
-          children: [
-            {
-              key: `file-${i + 1}`,
-              title: `data${i + 1}.csv`,
-              isLeaf: true,
-              isExpanded: false,
-            },
-            {
-              key: `file-${i + 2}`,
-              title: `data${i + 2}.csv`,
-              isLeaf: true,
-              isExpanded: false,
-            }
-          ]
-        });
-      } else if (i % 5 !== 1 && i % 5 !== 2) {
-        // Add individual files for the rest
-        this.nodes.push({
-          key: `file-${i}`,
-          title: `data${i}.csv`,
-          isLeaf: true,
-          isExpanded: false,
-        });
-      }
-    }
-    console.log(this.nodes);
-    
   }
 
   openFolder(node: FileNode): void {
