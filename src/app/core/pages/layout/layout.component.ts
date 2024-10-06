@@ -179,12 +179,11 @@ export class LayoutComponent implements OnInit {
     const modalTitle = 'Descargar CSV';
     this.modalCSV = this.modal.create({
       nzTitle: modalTitle,
-      nzStyle: { top: '200px', width: '600px' },
+      nzStyle: { top: '50px', width: '600px' },
       nzMaskClosable: false,
       nzClosable: true,
       nzContent: CsvListComponent,
       nzFooter: null,
-      nzWrapClassName: 'custom-modal-wrapper',//Estilo para que se muestre más abajo del Topbar
       nzComponentParams: {
         filters: this.filters,
         objetivos: this.objetivos,
