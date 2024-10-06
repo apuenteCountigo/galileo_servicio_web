@@ -163,7 +163,6 @@ export class CsvListComponent implements OnInit {
 
   // Función para gestionar la selección de un archivo
   onFileSelect(node: FileNode) {
-    node.checked = !node.checked;
     if (node.checked) {
       this.selectedFiles.push(node);
       this.nodes = this.nodes.map(nd => {
@@ -172,7 +171,6 @@ export class CsvListComponent implements OnInit {
         }
         return nd;
       });      
-      console.log(this.nodes);
     } else {
       this.selectedFiles = this.selectedFiles.filter(file => file.key + file.title !== node.key + node.title);
       this.nodes = this.nodes.map(nd => {
@@ -181,9 +179,9 @@ export class CsvListComponent implements OnInit {
         }
         return nd;
       });
-      console.log(this.nodes);
     }
     this.cdr.detectChanges();
+    console.log(this.selectedFiles,this.nodes);
   }
 
   // Verificar si hay archivos seleccionados

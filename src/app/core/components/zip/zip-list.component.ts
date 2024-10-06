@@ -132,15 +132,26 @@ export class ZipListComponent implements OnInit {
   }
 
   // Función para gestionar la selección de un archivo
-  onFileSelect(node: any) {
+  onFileSelect(node: FileNode) {
     if (node.checked) {
       this.selectedFiles.push(node);
+      this.nodes = this.nodes.map(nd => {
+        if (nd.key + nd.title === node.key + node.title) {
+          return { ...nd, checked: true };
+        }
+        return nd;
+      });
     } else {
-      console.log(this.selectedFiles);
-      this.selectedFiles = this.selectedFiles.filter(file => file.key+file._title !== node.key+node._title);
-      console.log(this.selectedFiles);
+      this.selectedFiles = this.selectedFiles.filter(file => file.key + file.title !== node.key + node.title);
+      this.nodes = this.nodes.map(nd => {
+        if (nd.key + nd.title === node.key + node.title) {
+          return { ...nd, checked: false };
+        }
+        return nd;
+      });
     }
     this.cdr.detectChanges();
+    console.log(this.selectedFiles,this.nodes);
   }
 
   // Verificar si hay archivos seleccionados
