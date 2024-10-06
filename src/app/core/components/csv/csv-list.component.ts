@@ -222,7 +222,7 @@ export class CsvListComponent implements OnInit {
     if (node.checked) {
       this.selectedFiles.push(node);
     } else {
-      this.selectedFiles = this.selectedFiles.filter(file => file.key !== node.key);
+      this.selectedFiles = this.selectedFiles.filter(file => file.key+file._title !== node.key+node._title);
     }
   }
 
