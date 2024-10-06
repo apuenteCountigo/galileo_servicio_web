@@ -52,6 +52,9 @@
   <button nz-button nzType="default" (click)="cancelForm()">
     <span>Cancelar</span>
   </button>
+  <button nz-button nzType="primary" [disabled]="!hasSelectedFiles()" (click)="resetSelected()">
+    <span>Limpiar</span>
+  </button>
   <button nz-button nzType="primary" [disabled]="!hasSelectedFiles()" (click)="downloadSelectedFiles()">
     <span>Descargar archivos</span>
   </button>
