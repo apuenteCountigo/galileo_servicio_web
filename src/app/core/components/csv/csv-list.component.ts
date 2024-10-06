@@ -68,13 +68,24 @@ export class CsvListComponent implements OnInit {
     this.searchCSVForm.reset();
     this.pageIndex=1;
     this.selectedFiles=[];
+    this.nodes = this.nodes.map(nd => {
+      if (nd.checked) {
+        return { ...nd, checked: false };
+      }
+      return nd;
+    });
     this.cdr.detectChanges();
     this.loadCSV(this.pageIndex);
   }
 
   resetSelected(): void {
     this.selectedFiles=[];
-    this.nodes.forEach(node => node.checked = false);
+    this.nodes = this.nodes.map(nd => {
+      if (nd.checked) {
+        return { ...nd, checked: false };
+      }
+      return nd;
+    });
     this.cdr.detectChanges();
   }
 
