@@ -60,7 +60,7 @@ export class CsvListComponent implements OnInit {
     let isFilter: boolean = this.searchCSVForm.invalid ? true : false;
     let isSelected: boolean = this.selectedFiles && this.selectedFiles.length > 0 ? true : false;
 
-    return isFilter || isSelected;
+    return isFilter || isSelected ? true : false;
   }
 
   setStyleClassBusqueda() {
