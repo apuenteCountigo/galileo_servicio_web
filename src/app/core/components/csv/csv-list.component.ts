@@ -80,19 +80,26 @@ export class CsvListComponent implements OnInit {
 
   resetSelected(): void {
     this.selectedFiles=[];
-    let nds = [] = this.nodes.map(nd => {
-      if (nd.checked) {
-        return { ...nd, checked: false };
-      }
-      return nd;
-    });
-    this.nodes = [];
+    this.nodes = this.nodes.map(nd => this.resetNodeChecked(nd));
     this.cdr.detectChanges();
-    setTimeout(()=>{
-      this.nodes = nds;
-      this.cdr.detectChanges();
-      console.log("resetSelected: ",this.nodes);
-    },3000);
+    // let nds = [] = this.nodes.map(nd => {
+    //   if (nd.checked) {
+    //     return { ...nd, checked: false };
+    //   }
+    //   return nd;
+    // });
+    // this.nodes = [];
+    // this.cdr.detectChanges();
+    // setTimeout(()=>{
+    //   this.nodes = nds;
+    //   this.cdr.detectChanges();
+    //   console.log("resetSelected: ",this.nodes);
+    // },3000);
+  }
+
+  resetNodeChecked(node: FileNode): FileNode {
+    const newNode = { ...node, checked: false };
+    return newNode;
   }
 
   onSearch(): void{
