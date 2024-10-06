@@ -79,27 +79,30 @@ export class CsvListComponent implements OnInit {
   }
 
   resetSelected(): void {
-    this.selectedFiles=[];
-    this.nodes = this.nodes.map(nd => this.resetNodeChecked(nd));
-    this.cdr.detectChanges();
-    // let nds = [] = this.nodes.map(nd => {
-    //   if (nd.checked) {
-    //     return { ...nd, checked: false };
-    //   }
-    //   return nd;
-    // });
-    // this.nodes = [];
-    // this.cdr.detectChanges();
-    // setTimeout(()=>{
-    //   this.nodes = nds;
-    //   this.cdr.detectChanges();
-    //   console.log("resetSelected: ",this.nodes);
-    // },3000);
+    this.selectedFiles = [];
+  
+    // Crear una copia profunda de los nodos y resetear 'checked' en todos los nodos
+    const newNodes = this.deepCopyAndResetChecked(this.nodes);
+  
+    // Asignar una nueva referencia a 'this.nodes'
+    this.nodes = [];
+    this.cdr.detectChanges(); // Forzar la detección de cambios
+  
+    // Reasignar los nuevos nodos
+    this.nodes = newNodes;
+    this.cdr.detectChanges(); // Forzar la detección de cambios nuevamente
   }
-
-  resetNodeChecked(node: FileNode): FileNode {
-    const newNode = { ...node, checked: false };
-    return newNode;
+  
+  deepCopyAndResetChecked(nodes: FileNode[]): FileNode[] {
+    return nodes.map(node => {
+      const newNode: FileNode = { ...node, checked: false };
+  
+      if (node.children && node.children.length > 0) {
+        newNode.children = this.deepCopyAndResetChecked(node.children);
+      }
+  
+      return newNode;
+    });
   }
 
   onSearch(): void{
