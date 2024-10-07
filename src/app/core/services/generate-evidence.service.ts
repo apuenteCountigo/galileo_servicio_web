@@ -30,17 +30,23 @@ export class GenerateEvidenceService {
 
   setGenerate(isGenetaring: EstadosGeneracionEvidencia) {
     this.isGenetaringEvidence$.next(isGenetaring);
+    if(this.isGenetaring$ === EstadosGeneracionEvidencia.FINALIZADA){
+      this.setObjetivos([]);
+      this.setOperacion(undefined);
+      this.setFilters(undefined);
+      this.setIsBuildingPackaged(false);
+    }
   }
 
   setObjetivos(objetivos: Array<Objetivo>) {
     this.objetivosList$.next(objetivos);
   }
 
-  setFilters(filters: EvidenceFilter) {
+  setFilters(filters: EvidenceFilter | null | undefined) {
     this.evidenceFilter$.next(filters);
   }
 
-  setOperacion(operacion: Operacion) {
+  setOperacion(operacion: Operacion | null | undefined) {
     this.operacionBehavior$.next(operacion);
   }
 
