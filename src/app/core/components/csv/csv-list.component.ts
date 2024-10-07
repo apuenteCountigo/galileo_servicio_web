@@ -220,7 +220,6 @@ export class CsvListComponent implements OnInit {
       });
     }
     this.cdr.detectChanges();
-    console.log(this.selectedFiles,this.nodes);
   }
 
   // Verificar si hay archivos seleccionados

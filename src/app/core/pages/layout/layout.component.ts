@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NgxPermissionsService } from 'ngx-permissions';
@@ -59,6 +59,7 @@ export class LayoutComponent implements OnInit {
 
   constructor(
     private themeService: ThemeService,
+    private cdr: ChangeDetectorRef,
     private modal: NzModalService,
     private selectedItemService: ItemSelectedService,
     private generateEvidenceService: GenerateEvidenceService,
@@ -86,7 +87,6 @@ export class LayoutComponent implements OnInit {
                 next: (result: any) => {
                   this.percent = result.valor ? result.valor : 0;
                   if (this.percent == 95 && !this.isOpenedListCSV) {
-                    this.isOpenedListCSV = true;
                     this.showModalCSV();
                   } else if (this.percent == 100) {
                     setTimeout(() => {
@@ -176,6 +176,12 @@ export class LayoutComponent implements OnInit {
   }
 
   showModalCSV(){
+    if(this.isOpenedListCSV)
+      return;
+
+    this.isOpenedListCSV = true;
+    this.cdr.detectChanges();
+
     const modalTitle = 'Descargar CSV';
     this.modalCSV = this.modal.create({
       nzTitle: modalTitle,
@@ -192,6 +198,9 @@ export class LayoutComponent implements OnInit {
     });
 
     this.modalCSV.afterClose.subscribe((result: any) => {
+      this.isOpenedListCSV=false;
+      this.cdr.detectChanges();
+      
       this.evidenceService.stopProgress().subscribe({
         next: (result: any) => {
           this.generateEvidenceService.setGenerate(
@@ -202,7 +211,6 @@ export class LayoutComponent implements OnInit {
             'Confirmación',
             'Las evidencias han sido detenidas correctamente.'
           );
-          this.isOpenedListCSV=false;
         },
         error: (e) => {
           this.handleErrorMessage(
@@ -213,7 +221,6 @@ export class LayoutComponent implements OnInit {
           this.generateEvidenceService.setGenerate(
             EstadosGeneracionEvidencia.FINALIZADA
           );
-          this.isOpenedListCSV=false;
         },
       });
     });
