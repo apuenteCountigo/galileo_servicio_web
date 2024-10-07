@@ -33,6 +33,8 @@ export class CsvListComponent implements OnInit {
   isBuildingPackage: boolean = false;
   isGenerating: boolean = false;
 
+  isLoading: boolean = false;
+
   files: PageableObjectResponse | null = null;
 
   searchCSVForm: FormGroup;
@@ -123,6 +125,7 @@ export class CsvListComponent implements OnInit {
   }
 
   loadCSV(pageIndex: number){
+    this.isLoading=true;
     this.listCSVFiles.getCsvFiles(
       this.operacion.unidades?.denominacion || "",
       this.operacion.descripcion,
@@ -139,13 +142,13 @@ export class CsvListComponent implements OnInit {
         this.cdr.detectChanges(); // Forzar la detección de cambios
       },
       error => {
-        console.error('Error fetching CSV files', error);
         this.handleErrorMessage(
           error,
           'Fallo visualizando ficheros csv.'
         );
       }
     );
+    this.isLoading=false;
   }
 
   downloadFile(path: string, fileName: string): void {
@@ -170,6 +173,7 @@ export class CsvListComponent implements OnInit {
   }
 
   toBuildingPackage(){
+    this.isLoading=true;
     this.generateEvidenceService.setIsBuildingPackaged(true);
     this.evidenceService.toBuildPackage().subscribe({
       next: (result: any) => {
@@ -187,6 +191,7 @@ export class CsvListComponent implements OnInit {
         );
       },
     });
+    this.isLoading=false;
   }
 
   openFolder(node: FileNode): void {

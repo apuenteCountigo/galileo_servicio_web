@@ -1,18 +1,20 @@
 <nz-card  nzSize="default" [nzTitle]="extraTemplateSearch">
-  <ng-container *ngIf="nodes && nodes.length > 0; else noDataTemplate">
-    <nz-tree
-        [nzData]="nodes"
-        [nzTreeTemplate]="nzTreeTemplate"
-        [nzVirtualHeight]="'400px'"
-        [nzBlockNode]="true"
-      >
-    </nz-tree>
-  </ng-container>
-  <ng-template #noDataTemplate>
-    <div style="text-align: center; padding: 20px;">
-      No existen datos para mostrar
-    </div>
-  </ng-template>
+  <nz-spin [nzSpinning]="isLoading" nzTip="Cargando ficheros...">
+    <ng-container *ngIf="nodes && nodes.length > 0; else noDataTemplate">
+      <nz-tree
+          [nzData]="nodes"
+          [nzTreeTemplate]="nzTreeTemplate"
+          [nzVirtualHeight]="'400px'"
+          [nzBlockNode]="true"
+        >
+      </nz-tree>
+    </ng-container>
+    <ng-template #noDataTemplate>
+      <div style="text-align: center; padding: 20px;">
+        No existen datos para mostrar
+      </div>
+    </ng-template>
+  </nz-spin>
 </nz-card>
     <ng-template #nzTreeTemplate let-node let-origin="origin">
       <span class="custom-node">
