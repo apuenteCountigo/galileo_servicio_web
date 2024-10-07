@@ -30,7 +30,7 @@ export class GenerateEvidenceService {
 
   setGenerate(isGenetaring: EstadosGeneracionEvidencia) {
     this.isGenetaringEvidence$.next(isGenetaring);
-    if(this.isGenetaring$ == EstadosGeneracionEvidencia.FINALIZADA){
+    if(this.isGenetaringEvidence$.getValue() === EstadosGeneracionEvidencia.FINALIZADA){
       this.setObjetivos([]);
       this.setOperacion(new Operacion());
       this.setFilters(new EvidenceFilter());
