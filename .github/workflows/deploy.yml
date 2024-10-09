@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - AntesModelosBalizasbebb29d
+      - version-1.1
   workflow_dispatch:
 jobs:
   run_pull:
@@ -46,8 +46,8 @@ jobs:
             ssh -i ~/id_rsaalain mome@192.168.0.98 '
             cd galileo-newdev/${{ secrets.SERVICIO }}/galileo_servicio_web &&
             git fetch origin &&
-            git checkout AntesModelosBalizasbebb29d &&
-            git reset --hard origin/AntesModelosBalizasbebb29d &&
+            git checkout version-1.1 &&
+            git reset --hard origin/version-1.1 &&
             git pull &&
             cd ../../ &&
             CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
