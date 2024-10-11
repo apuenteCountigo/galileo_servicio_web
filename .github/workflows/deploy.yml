@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - version-1.1
+      - testCompilation
   workflow_dispatch:
 jobs:
   run_pull:
@@ -51,8 +51,8 @@ jobs:
             fi
             cd galileo_servicio_web
             git fetch origin &&
-            git checkout version-1.1 &&
-            git reset --hard origin/version-1.1 &&
+            git checkout testCompilation &&
+            git reset --hard origin/testCompilation &&
             git pull &&
             cd ../../ &&
             CONTAINER_NAME="webapp" &&
