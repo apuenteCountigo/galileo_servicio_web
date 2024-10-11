@@ -43,15 +43,20 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            ssh -i ~/id_rsaalain mome@192.168.0.98 '
-            cd galileo-newdev/${{ secrets.SERVICIO }}/galileo_servicio_web &&
+            ssh -i ~/id_rsaalain mome@192.168.0.212 '
+            cd galileo-dev-v1.1/${{ secrets.SERVICIO }} &&
+            if [ ! -d "galileo_servicio_web" ]; then
+              echo "validada galileo-dev-v1.1/${{ secrets.SERVICIO }}/galileo_servicio_web" &&
+              git clone https://github.com/apuenteCountigo/galileo_servicio_web.git
+            fi
+            cd galileo_servicio_web
             git fetch origin &&
             git checkout version-1.1 &&
             git reset --hard origin/version-1.1 &&
             git pull &&
             cd ../../ &&
-            CONTAINER_NAME="servicio-${{ secrets.SERVICIO }}" &&
-            CN=$(docker ps -a --filter name="^servicio-${{ secrets.SERVICIO }}$" --format "{{.Names}}") &&
+            CONTAINER_NAME="webapp" &&
+            CN=$(docker ps -a --filter name="^webapp$" --format "{{.Names}}") &&
             echo "Nombre del contenedor encontrado: $CN" &&
             if [[ -n "$CN" ]]; then
               echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
