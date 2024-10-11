@@ -114,7 +114,7 @@ export class UsersComponent extends TableBase implements OnInit {
 
   onTabChange(event: NzTabChangeEvent): void {
     if (event.index === 0) {
-      this.userTableCmp.refreshUsers();
+      // this.userTableCmp.refreshUsers();
     }
   }
 }
