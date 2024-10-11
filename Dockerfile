@@ -1,17 +1,23 @@
 # Etapa 1: Construir la aplicación Angular
-FROM node:14 AS build
+FROM node:18 AS build
 
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar los archivos package.json y package-lock.json
+# Definir un tiempo de espera extendido para npm
+ENV NPM_CONFIG_FETCH_TIMEOUT=60000
+
+# Copiar solo los archivos necesarios para instalar dependencias
 COPY package*.json ./
+
+# Instalar las dependencias
+RUN npm install --no-optional
 
 # Copiar el resto del código fuente
 COPY . .
 
-# Instalar las dependencias y Construir la aplicación Angular
-RUN npm install && npm run build --prod && cd /app/dist/galileo-frontend && ls
+# Construir la aplicación Angular
+RUN npm run build --prod && cd /app/dist/galileo-frontend && ls
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
