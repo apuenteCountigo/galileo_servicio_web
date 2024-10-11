@@ -8,16 +8,16 @@ WORKDIR /app
 ENV NPM_CONFIG_FETCH_TIMEOUT=60000
 
 # Copiar solo los archivos necesarios para instalar dependencias
-COPY package*.json ./
-
-# Instalar las dependencias
-RUN npm install --no-optional
+#COPY package*.json ./
 
 # Copiar el resto del código fuente
 COPY . .
 
+# Instalar las dependencias
+RUN npm cache clean --force && npm install && npm install core-js@latest && npm run build --prod
+
 # Construir la aplicación Angular
-RUN npm run build --prod && npm cache clean --force
+RUN npm cache clean --force
 #cd /app/dist/galileo-frontend && ls
 
 # Etapa 2: Servir la aplicación con Nginx
