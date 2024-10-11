@@ -102,7 +102,9 @@ export class AsignedTableComponent
     super();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadUnidades();
+  }
 
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
