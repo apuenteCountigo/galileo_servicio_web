@@ -17,9 +17,8 @@ RUN npm install --no-optional
 COPY . .
 
 # Construir la aplicación Angular
-RUN npm run build --prod && cd /app/dist/galileo-frontend && ls
-
-RUN npm cache clean --force
+RUN npm run build --prod && npm cache clean --force
+#cd /app/dist/galileo-frontend && ls
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
