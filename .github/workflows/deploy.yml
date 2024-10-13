@@ -57,6 +57,8 @@ jobs:
             if [ ! -d "node_modules" ]; then
               echo "No existe node_modules, será creada...." &&
               mkdir node_modules
+            else
+              echo "node_modules Existe"
             fi
             cd ../../ &&
             CONTAINER_NAME="webapp" &&
