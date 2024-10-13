@@ -73,6 +73,7 @@ jobs:
             else
               echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
             fi &&
+            docker compose up web-build -d &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d &&
             yes | sudo docker builder prune'
             exit
