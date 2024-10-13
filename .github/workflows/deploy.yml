@@ -54,6 +54,10 @@ jobs:
             git checkout testCompilation &&
             git reset --hard origin/testCompilation &&
             git pull &&
+            if [ ! -d "node_modules" ]; then
+              echo "No existe node_modules, será creada...." &&
+              mkdir node_modules
+            fi
             cd ../../ &&
             CONTAINER_NAME="webapp" &&
             CN=$(docker ps -a --filter name="^webapp$" --format "{{.Names}}") &&
