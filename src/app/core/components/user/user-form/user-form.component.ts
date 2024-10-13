@@ -228,7 +228,12 @@ export class UserFormComponent implements OnInit, AfterViewInit, OnDestroy {
         })
         .catch((error) => {
           this.buttonSending = false;
-          if (error.status == 400) {
+          if(error.error.message.includes("Fallo")){
+            this._notificationService.notificationError(
+              'Error',
+              error.error.message
+            );
+          }else if (error.status == 400) {
             this._notificationService.notificationError(
               'Error',
               error.error.message
