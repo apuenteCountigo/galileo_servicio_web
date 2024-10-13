@@ -44,6 +44,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             ssh -i ~/id_rsaalain mome@192.168.0.212 '
+            set -e &&
             cd galileo-dev-v1.1/${{ secrets.SERVICIO }} &&
             if [ ! -d "galileo_servicio_web" ]; then
               echo "validada galileo-dev-v1.1/${{ secrets.SERVICIO }}/galileo_servicio_web" &&
@@ -54,12 +55,6 @@ jobs:
             git checkout testCompilation &&
             git reset --hard origin/testCompilation &&
             git pull &&
-            if [ ! -d "node_modules" ]; then
-              echo "No existe node_modules, será creada...." &&
-              mkdir node_modules
-            else
-              echo "node_modules Existe"
-            fi
             cd ../../ &&
             CONTAINER_NAME="webapp" &&
             CN=$(docker ps -a --filter name="^webapp$" --format "{{.Names}}") &&
