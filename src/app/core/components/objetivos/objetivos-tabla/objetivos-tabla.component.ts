@@ -165,10 +165,10 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
     modalRef.afterClose.subscribe((result) => {
       if (result != undefined) {
         if (result.accion != FrmActions.CANCELAR) {
-          if (result.accion != FrmActions.AGREGAR) {
-            this.loading = true;
+          if (result.accion == FrmActions.AGREGAR) {
             this.createdObjetivo.emit('crear');
           }
+          this.loading = true;
           this.onSearchUnitOfObjetivos();
           this.clearSelectedObject();
         }
