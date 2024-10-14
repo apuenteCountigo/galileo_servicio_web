@@ -24,7 +24,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { ObjetivosService } from 'src/app/core/services/objetivos.service';
 import { BalizaService } from 'src/app/core/services/baliza.service';
 import { Estados } from 'src/app/core/enums/estados.enum';
-import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
+import { PagedResourceCollection } from '@lagoshny/ngx-hateoas-client';
 
 @Component({
   selector: 'app-objetivos-form',
