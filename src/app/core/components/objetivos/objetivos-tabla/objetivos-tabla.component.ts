@@ -214,6 +214,14 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
       this.selectObjetivo.emit(null);
     }
   }
+
+  clearSelectedObject(): void {
+    this.expandSet.delete(this.selectedObjetivo.id);
+    this.selectedObjetivo = null;
+    this.updateBreadCrumb('obje');
+    this.selectObjetivo.emit(null);
+  }
+
   onQueryParamsChangeUnitObjetivos(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort } = params;
     this.sort = {} as Sort;
@@ -332,6 +340,7 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
                 );
               }
               this.onSearchUnitOfObjetivos();
+              this.clearSelectedObject();
             }, 1000);
           },
           error: (error) => {
