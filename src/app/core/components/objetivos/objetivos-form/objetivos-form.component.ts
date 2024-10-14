@@ -22,6 +22,9 @@ import { Baliza } from 'src/app/core/models/baliza.model';
 import { Estado } from 'src/app/core/models/estado.model';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { ObjetivosService } from 'src/app/core/services/objetivos.service';
+import { BalizaService } from 'src/app/core/services/baliza.service';
+import { Estados } from 'src/app/core/enums/estados.enum';
+import { PagedResourceCollection, Sort } from '@lagoshny/ngx-hateoas-client';
 
 @Component({
   selector: 'app-objetivos-form',
@@ -33,7 +36,7 @@ export class ObjetivosFormComponent
 {
   @Input() objetivoToEdit!: Objetivo;
   @Input() selectedOperacion!: Operacion;
-  @Input() listBalizaz!: any[];
+  @Input() idUnidad?: number;
   @Input() listJuzgados!: any[];
   @Input() listUsuarios!: any[];
 
@@ -62,6 +65,13 @@ export class ObjetivosFormComponent
   };
 
   loadingJusgados: boolean = true;
+  loadingBalizas: boolean = true;
+  listBalizaz: any[] = [];
+  sortObjetivo!: Sort;
+  paramsObjetivo: PageParam = {
+    page: this.pageIndexOfic - 1,
+    size: this.pageSizeOfic,
+  };
 
   juzgadoSelected: number = 0;
   balizaSelected?: Baliza;
@@ -103,6 +113,7 @@ export class ObjetivosFormComponent
     private modalRef: NzModalRef,
     private _objetivoService: ObjetivosService,
     private _notificationService: NotificationService,
+    private _balizasService: BalizaService,
     private detectorChangeRef: ChangeDetectorRef
   ) {
     this.formModalOObjetivo = this.fb.group({
@@ -217,6 +228,43 @@ export class ObjetivosFormComponent
 
   closeForm() {
     this.modalRef.close({ accion: 'CANCELAR' });
+  }
+
+  loadBalizasOfUnidad(): void {
+    this.loadingBalizas = true;
+    this.suscriptions.push(
+      this._balizasService
+        .searchFiltrar(
+          {
+            unidad: this.idUnidad,
+            idEstadoBaliza: Estados.DISPONIBLE,
+          },
+          this.paramsObjetivo,
+          this.sortObjetivo
+        )
+        .subscribe({
+          next: (balizas: PagedResourceCollection<any>) => {
+            this.loadingBalizas = false;
+            this.listBalizaz = [...balizas.resources];
+            
+            if (this.objetivoToEdit!.balizas) {
+              this.listBalizaz.push(this.objetivoToEdit!.balizas);
+              this.formModalOObjetivo.controls['balizas'].setValue(
+                this.objetivoToEdit!.balizas
+              );
+              this.detectorChangeRef.detectChanges();
+            }
+          },
+          error: (err) => {
+            this.loadingBalizas = false;
+            this.listBalizaz = [];
+            this._notificationService.notificationError(
+              'Error',
+              'Error al cargar las balizas disponibles de la unidad.'
+            );
+          },
+        })
+    );
   }
 
   handleErrorMessage(error: any, defaultMsg: string): void {

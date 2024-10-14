@@ -157,7 +157,7 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
       nzComponentParams: {
         objetivoToEdit: isEdit ? this.selectedObj : null,
         selectedOperacion: this.selectedOper,
-        listBalizaz: this.listBalizaz,
+        idUnidad: this.selectedOper.unidades?.id,
         listJuzgados: this.listJuzgados,
         listUsuarios: this.listUsuarios,
       },

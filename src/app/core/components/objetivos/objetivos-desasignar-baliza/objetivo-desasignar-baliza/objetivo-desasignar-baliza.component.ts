@@ -103,7 +103,7 @@ export class ObjetivoDesasignarBalizaComponent implements OnInit, OnDestroy {
             // }
           },
           error: (err) => {
-            this.loadingBalizas = true;
+            this.loadingBalizas = false;
             this.listBalizaz = [];
             this._notificationService.notificationError(
               'Error',

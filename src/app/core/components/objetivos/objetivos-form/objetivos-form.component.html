@@ -45,7 +45,7 @@
   <nz-form-item>
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="balizas">Balizas</nz-form-label>
     <nz-form-control [nzSpan]="12">
-      <nz-select nzShowSearch nzAllowClear [ngModel]="balizaSelected" formControlName="balizas"
+      <nz-select nzShowSearch [nzLoading]="loadingBalizas" nzAllowClear [ngModel]="balizaSelected" formControlName="balizas"
         nzPlaceHolder="Seleccionar baliza">
         <nz-option *ngFor="let item of listBalizaz" [nzValue]="item" [nzLabel]="item.clave"></nz-option>
       </nz-select>
