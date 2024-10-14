@@ -170,6 +170,7 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
             this.createdObjetivo.emit('crear');
           }
           this.onSearchUnitOfObjetivos();
+          this.clearSelectedObject();
         }
       }
     });
