@@ -126,7 +126,9 @@ export class ObjetivosFormComponent
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadBalizasOfUnidad();
+  }
 
   ngOnDestroy(): void {
     this.suscriptions.forEach((s) => s.unsubscribe());
