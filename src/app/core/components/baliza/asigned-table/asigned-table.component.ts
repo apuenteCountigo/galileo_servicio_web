@@ -67,7 +67,7 @@ export class AsignedTableComponent
     clave: '',
     marca: '',
     modelo: '',
-    numSeries: '',
+    numSerie: '',
     compania: '',
     fechaInicio: '',
     fechaFin: '',

@@ -19,6 +19,7 @@ export class BalizaService extends HateoasResourceOperation<Baliza> {
   searchQuery = 'buscarBalizas';
   searchFiltrarQuery = 'filtro';
   sarchObjetivo = 'filtrarObjetivo';
+  findByFilters = 'findByFilters';
 
   constructor(
     public resourceService: HateoasResourceService,

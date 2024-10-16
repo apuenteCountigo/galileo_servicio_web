@@ -41,7 +41,7 @@ export interface SearchData {
   clave: string;
   marca: string;
   modelo: string;
-  numSeries: string;
+  numSerie: string;
   compania: string;
   objetivo?: string;
   unidad?: number;
