@@ -158,7 +158,7 @@ export class UserFormComponent implements OnInit, AfterViewInit, OnDestroy {
     newUser.nombre = this.formModalUser.value.nombre;
     newUser.apellidos = this.formModalUser.value.apellidos;
     newUser.contacto = this.formModalUser.value.contacto;
-    newUser.email = this.formModalUser.value.email;
+    newUser.email = this.formModalUser.value.email.toLowerCase();
     newUser.perfil = new Rol();
     newUser.perfil.id = this.formModalUser.value.perfil.id;
     newUser.empleos = new Empleo();
