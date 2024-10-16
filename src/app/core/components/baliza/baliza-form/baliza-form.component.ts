@@ -50,7 +50,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
     clave: '',
     marca: '',
     modelo: '',
-    numSeries: '',
+    numSerie: '',
     compania: '',
     fechaInicio: '',
     fechaFin: '',
