@@ -280,6 +280,8 @@ export class AsignedTableComponent
   }
 
   checkCriteria(value: any){
+    console.log(this.searchCriteria.unidad);
+    
     alert(value);
     if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
       if(this.isNullBusqueda())
