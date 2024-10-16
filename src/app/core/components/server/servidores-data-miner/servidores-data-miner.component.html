@@ -51,7 +51,7 @@
     <div nz-col class="gutter-row" [nzSpan]="5">
       <button nz-button nzType="text" nzSize="large" (click)="showModal(false)" nz-tooltip
         nzTooltipTitle="Crear servidor">
-        <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
+        <em nz-icon nzType="plus" nzTheme="outline" [class]="disableServerActions?'icon-class':'icon-disabled'"></em>
       </button>
     </div>
     <div nz-col class="gutter-row" [nzSpan]="5">
