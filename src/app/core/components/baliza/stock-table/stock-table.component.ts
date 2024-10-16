@@ -533,6 +533,10 @@ export class StockTableComponent
     if (event.length == 0) {
       this.searchCriteria.fechaInicio = '';
       this.searchCriteria.fechaFin = '';
+
+      if(this.isNullBusqueda())
+        this.loadData();
+
       return;
     }
     
