@@ -363,10 +363,12 @@ export class StockTableComponent
     return this.expandSet.has(id) && this.expandSet.size == 1 ? true : false;
   }
 
+  beforeNullSearch: boolean = true;
   isNullBusqueda() {
     return Object.values(this.searchCriteria).every((value) => {
       if (value === '' || value == 0 || value == -2) {
-        alert(this.setStyleClass());
+        if(!this.beforeNullSearch)
+          this.loadData();
         return true;
       }
       return false;
