@@ -279,6 +279,13 @@ export class AsignedTableComponent
     });
   }
 
+  checkCriteria(value: any){
+    if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
+      if(this.isNullBusqueda())
+        this.loadData();
+    }
+  }
+
   onSearch() {
     if (this.isNullBusqueda()) {
       this.loadData();
@@ -438,6 +445,10 @@ export class AsignedTableComponent
     if (event.length == 0) {
       this.searchCriteria.fechaInicio = '';
       this.searchCriteria.fechaFin = '';
+
+      if(this.isNullBusqueda())
+        this.loadData();
+
       return;
     }
 

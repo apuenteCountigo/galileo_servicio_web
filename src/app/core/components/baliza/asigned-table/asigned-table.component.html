@@ -2,27 +2,27 @@
   [nzExtra]="extraTemplateSearch" nzSize="default">
   <div nz-row [nzGutter]="['8', '8']">
     <div nz-col>
-      <input [disabled]="isCheckedObject" nz-input placeHolder="Clave" [(ngModel)]="searchCriteria.clave" />
+      <input [disabled]="isCheckedObject" nz-input placeHolder="Clave" [(ngModel)]="searchCriteria.clave" (ngModelChange)="checkCriteria($event)" />
     </div>
     <div nz-col>
-      <input [disabled]="isCheckedObject" nz-input placeHolder="Marca" [(ngModel)]="searchCriteria.marca" />
+      <input [disabled]="isCheckedObject" nz-input placeHolder="Marca" [(ngModel)]="searchCriteria.marca" (ngModelChange)="checkCriteria($event)" />
     </div>
     <div nz-col>
-      <input [disabled]="isCheckedObject" nz-input placeHolder="Modelo" [(ngModel)]="searchCriteria.modelo" />
+      <input [disabled]="isCheckedObject" nz-input placeHolder="Modelo" [(ngModel)]="searchCriteria.modelo" (ngModelChange)="checkCriteria($event)" />
     </div>
     <div nz-col>
-      <input [disabled]="isCheckedObject" nz-input placeHolder="Serie" [(ngModel)]="searchCriteria.numSerie" />
+      <input [disabled]="isCheckedObject" nz-input placeHolder="Serie" [(ngModel)]="searchCriteria.numSerie" (ngModelChange)="checkCriteria($event)" />
     </div>
 
     <div nz-col>
       <nz-select [disabled]="isCheckedObject" [(ngModel)]="searchCriteria.unidad" style="width: 180px;"
-        [nzLoading]="loadingUnidades" nzAllowClear nzPlaceHolder="Unidad">
+        [nzLoading]="loadingUnidades" nzAllowClear nzPlaceHolder="Unidad" (ngModelChange)="checkCriteria($event)">
         <nz-option *ngFor="let unidad of listOfUnidades" [nzValue]="unidad.id" [nzLabel]="unidad.denominacion!">
         </nz-option>
       </nz-select>
     </div>
     <div nz-col>
-      <nz-select [(ngModel)]="searchCriteria.idEstadoBaliza" nzPlaceHolder="Estado" style="width: 180px">
+      <nz-select [(ngModel)]="searchCriteria.idEstadoBaliza" nzPlaceHolder="Estado" style="width: 180px" (ngModelChange)="checkCriteria($event)">
         <nz-option *ngFor="let estado of estadoBalizaList" [nzValue]="estado.id" [nzLabel]="estado.descripcion!">
         </nz-option>
       </nz-select>
