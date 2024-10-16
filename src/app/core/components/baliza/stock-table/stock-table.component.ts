@@ -99,6 +99,7 @@ export class StockTableComponent
     modelo: '',
     numSerie: '',
     compania: '',
+    objetivo: '',
     fechaInicio: '',
     fechaFin: '',
     unidad: 0,
@@ -436,6 +437,7 @@ export class StockTableComponent
     this.searchCriteria.modelo = '';
     this.searchCriteria.numSerie = '';
     this.searchCriteria.compania = '';
+    this.searchCriteria.objetivo = '';
     this.searchCriteria.fechaFin = '';
     this.searchCriteria.fechaInicio = '';
     this.searchCriteria.idEstadoBaliza = 0;
