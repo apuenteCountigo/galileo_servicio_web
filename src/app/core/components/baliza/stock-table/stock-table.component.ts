@@ -109,6 +109,8 @@ export class StockTableComponent
   fi_ff?: Array<Date> = [];
   dateFormat = 'dd/MM/yyyy';
 
+  beforeNullSearch: boolean = true;
+
   estadoDisponible?: Estado;
 
   isCheckedObject: boolean = false;
@@ -363,7 +365,6 @@ export class StockTableComponent
     return this.expandSet.has(id) && this.expandSet.size == 1 ? true : false;
   }
 
-  beforeNullSearch: boolean = true;
   isNullBusqueda() {
     return Object.values(this.searchCriteria).every((value) => {
       if (value === '' || value == 0 || value == -2) {
@@ -373,6 +374,8 @@ export class StockTableComponent
         }
         return true;
       }
+
+      this.beforeNullSearch=false;
       return false;
     });
   }
