@@ -280,19 +280,18 @@ export class AsignedTableComponent
   }
 
   checkCriteria(value: any){
-    console.log(this.searchCriteria.unidad);
-    
-    alert(value);
     if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
       if(this.isNullBusqueda())
         this.loadData();
     }
   }
 
-  onClearSelect(value: String){
-    alert(value);
-    if(value == 'unidad')
+  onClearUnidad(value: any){
+    if(value === null || value === undefined){
       this.searchCriteria.unidad = 0;
+      if(this.isNullBusqueda())
+        this.loadData();
+    }
   }
 
   onSearch() {
