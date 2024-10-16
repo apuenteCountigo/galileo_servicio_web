@@ -78,6 +78,10 @@ export class DataMinerFormComponent implements OnInit {
     return this.formModalServer.invalid ? true : false;
   }
 
+  checkFormEdit(){
+    return this.serverToEdit ? true : false;
+  }
+
   submitForm() {
     const newServer = { ...this.serverToEdit };
     newServer.servicio = this.formModalServer.value.servicio;

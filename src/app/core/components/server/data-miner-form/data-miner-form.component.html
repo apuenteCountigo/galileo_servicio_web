@@ -2,7 +2,7 @@
   <nz-form-item>
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="servicio">Servicio</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="servicioErrorTpl">
-      <nz-select formControlName="servicio" nzPlaceHolder="Servicio" (ngModelChange)="updateValidators()">
+      <nz-select formControlName="servicio" nzPlaceHolder="Servicio" [nzDisabled]="checkFormEdit()" (ngModelChange)="updateValidators()">
         <nz-option *ngFor="let servidor of tipoServicio" [nzValue]="servidor" [nzLabel]="servidor"></nz-option>
       </nz-select>
       <ng-template #servicioErrorTpl let-control>
