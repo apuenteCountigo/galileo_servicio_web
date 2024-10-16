@@ -343,6 +343,7 @@ export class AsignedTableComponent
     this.searchCriteria.modelo = '';
     this.searchCriteria.numSerie = '';
     this.searchCriteria.compania = '';
+    this.searchCriteria.objetivo = '';
     this.searchCriteria.fechaFin = '';
     this.searchCriteria.fechaInicio = '';
     this.searchCriteria.idEstadoBaliza = 0;
