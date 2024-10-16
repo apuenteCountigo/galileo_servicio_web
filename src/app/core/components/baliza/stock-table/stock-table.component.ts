@@ -366,6 +366,7 @@ export class StockTableComponent
   isNullBusqueda() {
     return Object.values(this.searchCriteria).every((value) => {
       if (value === '' || value == 0 || value == -2) {
+        alert(this.setStyleClass());
         return true;
       }
       return false;
