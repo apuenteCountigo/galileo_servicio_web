@@ -145,7 +145,6 @@ export class ConfiguracionAvanzadaComponent implements OnInit, OnChanges, OnDest
             this.configWrite = value.filter(
               (config: { Type: string }) => config.Type == 'Write'
             );          
-            console.log(this.configRead);  
             this.cargarDatosApi();
             emitir ? this.loadingGeneral.emit(false) : null;
           },
@@ -742,8 +741,6 @@ export class ConfiguracionAvanzadaComponent implements OnInit, OnChanges, OnDest
         .subscribe({
           next: (result) => {
             if (result.d.Value == 4) {
-              console.log(result.d);
-              
               //si el envio esta pendiente dejamos activo el boton              
               this.estadoEnviarUmbralUPSVoltajeApagado = false;
               this.estadoEnviarUmbralUPSVoltajeEncendido = false;

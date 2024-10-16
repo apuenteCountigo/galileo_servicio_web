@@ -127,7 +127,6 @@ export class AsignedTableComponent
 
   loadUnidades() {
     this.loadingUnidades = true;
-    console.log('CARGAR UNIDADES');
     this.suscriptions.push(
       this._unidadService
         .getAll({ page: 0, size: 1000 })
@@ -135,13 +134,9 @@ export class AsignedTableComponent
             next: (result) => {
             this.listOfUnidades = [...result.resources];
             this.loadingUnidades = false;
-            console.log('Las unidades se cargaron');
-            
           },
           error: (err) => {
             this.loadingUnidades = false;
-            console.log('Error cargando unidades');
-            
           }
         }
       )

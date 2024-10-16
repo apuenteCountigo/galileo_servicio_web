@@ -157,18 +157,6 @@ export class WizardPositionsComponent
 
   onStartDateChange(event: any) {
     this.startValue = event;
-
-    // let dd = this.startValue?.toUTCString();
-    // console.log(dd);
-    // console.log(this.startValue?.toISOString());
-    // console.log(formatISO(this.startValue!));
-
-    // console.log(
-    //   formatISO(this.startValue!).slice(
-    //     0,
-    //     formatISO(this.startValue!).length - 6
-    //   )
-    // );
   }
 
   onEndDateChange(event: Date) {

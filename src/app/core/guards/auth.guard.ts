@@ -30,10 +30,7 @@ export class AuthGuard implements CanActivate {
     const token = localStorage.getItem('auth_token');
     if (token) {
       let tkn = this.jwtHelper.decodeToken(token);  // Usar la instancia creada para decodificar el token
-      console.log("***tkn***");
-      console.log(tkn);
       if(route && route.data && route.data['expectedRole']){
-        console.log(route.data);
         let expectedRoles = route.data['expectedRole'];
         if(!expectedRoles.includes(tkn.Perfil.descripcion))
           return false;
