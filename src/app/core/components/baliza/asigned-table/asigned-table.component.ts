@@ -56,6 +56,7 @@ export class AsignedTableComponent
   setOfCheckedId = new Set<number>();
   loadingUnidades = false;
   fechaAlta?: Date;
+  fi_ff?: Array<Date> = [];
   dateFormat = 'dd/MM/yyyy';
 
   estadoDisponible?: Estado;
@@ -347,6 +348,7 @@ export class AsignedTableComponent
     this.searchCriteria.fechaFin = '';
     this.searchCriteria.fechaInicio = '';
     this.searchCriteria.idEstadoBaliza = 0;
+    this.fi_ff=[];
     this.loadData();
   }
 
@@ -438,15 +440,21 @@ export class AsignedTableComponent
       this.searchCriteria.fechaFin = '';
       return;
     }
-    event[0].setHours(0, 0, 0, 0);
-    event[1].setHours(23, 59, 59);
-    const startDate: Date = event[0];
-    const endDate: Date = event[1];
-    this.searchCriteria.fechaInicio = startDate ? formatISO(startDate) : '';
-    this.searchCriteria.fechaFin = endDate ? formatISO(endDate) : '';
-    if (event.length == 0 && this.isNullBusqueda()) {
-      this.loadData();
+
+    if (event && event[0] && event[1]) {
+      const startDate: Date = event[0];
+      const endDate: Date = event[1];
+
+      startDate.setHours(0, 0, 0, 0);
+      endDate.setHours(23, 59, 59);
+
+      this.searchCriteria.fechaInicio = startDate ? formatISO(startDate) : '';
+      this.searchCriteria.fechaFin = endDate ? formatISO(endDate) : '';
     }
+    
+    // if (event.length == 0 && this.isNullBusqueda()) {
+    //   this.loadData();
+    // }
   }
 
   setStyleClass() {
