@@ -14,7 +14,7 @@ export interface SearchData {
   clave: string;
   marca: string;
   modelo: string;
-  numSeries: string;
+  numSerie: string;
   compania: string;
   objetivo?: string;
   unidad?: number;
@@ -37,8 +37,9 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
     clave: '',
     marca: '',
     modelo: '',
-    numSeries: '',
+    numSerie: '',
     compania: '',
+    objetivo: '',
     unidad: 0,
     idEstadoBaliza: 0,
   };
@@ -79,8 +80,9 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
     this.searchCriteria.clave = '';
     this.searchCriteria.marca = '';
     this.searchCriteria.modelo = '';
-    this.searchCriteria.numSeries = '';
+    this.searchCriteria.numSerie = '';
     this.searchCriteria.compania = '';
+    this.searchCriteria.objetivo = '';
     (this.searchCriteria.unidad = 0),
       (this.searchCriteria.idEstadoBaliza = 0),
       this.onSearchUnitOfBalizas();
