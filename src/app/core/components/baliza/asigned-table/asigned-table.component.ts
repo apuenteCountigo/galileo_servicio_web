@@ -286,6 +286,11 @@ export class AsignedTableComponent
     }
   }
 
+  onClearSelect(value: String){
+    if(value == 'unidad')
+      this.searchCriteria.unidad = 0;
+  }
+
   onSearch() {
     if (this.isNullBusqueda()) {
       this.loadData();
@@ -355,6 +360,7 @@ export class AsignedTableComponent
     this.searchCriteria.fechaFin = '';
     this.searchCriteria.fechaInicio = '';
     this.searchCriteria.idEstadoBaliza = 0;
+    this.searchCriteria.unidad = 0;
     this.fi_ff=[];
     this.loadData();
   }
