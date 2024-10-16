@@ -16,7 +16,7 @@
 
     <div nz-col>
       <nz-select [disabled]="isCheckedObject" [(ngModel)]="searchCriteria.unidad" style="width: 180px;"
-        [nzLoading]="loadingUnidades" nzAllowClear nzPlaceHolder="Unidad" (ngModelChange)="checkCriteria($event)" (nzClear)="onClearSelect('unidad')">
+        [nzLoading]="loadingUnidades" nzAllowClear nzPlaceHolder="Unidad" (nzClear)="onClearSelect('unidad')">
         <nz-option *ngFor="let unidad of listOfUnidades" [nzValue]="unidad.id" [nzLabel]="unidad.denominacion!">
         </nz-option>
       </nz-select>

@@ -287,6 +287,7 @@ export class AsignedTableComponent
   }
 
   onClearSelect(value: String){
+    alert(value);
     if(value == 'unidad')
       this.searchCriteria.unidad = 0;
   }
