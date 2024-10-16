@@ -73,7 +73,7 @@ export class BalizaService extends HateoasResourceOperation<Baliza> {
   ): Observable<PagedResourceCollection<Baliza>> {
     this.changeUrl();
     return this.resourceService
-      .searchPage(Baliza, this.searchQuery, {
+      .searchPage(Baliza, this.findByFilters, {
         params: filter,
         pageParams: params,
         sort,
