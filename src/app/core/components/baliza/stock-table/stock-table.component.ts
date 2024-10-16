@@ -373,7 +373,7 @@ export class StockTableComponent
   }
 
   set setCriteria(value: any){
-    console.log("Value: {}",value);
+    console.log("Value:", value);
     
     // this.searchCriteria = value;
     // const currentIsNullBusqueda = this.isNullBusqueda;
