@@ -51,7 +51,7 @@
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired>Correo electrónico</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="emailErrorTpl">
       <input nz-input formControlName="email" placeholder="Correo electrónico" type="email"
-        pattern="^[_a-zA-Z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,6})$" />
+        pattern="^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,6})$" />
       <ng-template #emailErrorTpl let-control>
         <ng-container *ngIf="control.hasError('pattern')">Introduzca una dirección de correo válida</ng-container>
         <ng-container *ngIf="control.hasError('required')">Introduzca el correo</ng-container>
