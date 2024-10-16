@@ -11,7 +11,7 @@
       <input nz-input placeHolder="Modelo" [(ngModel)]="searchCriteria.modelo" />
     </div>
     <div nz-col>
-      <input nz-input placeHolder="Serie" [(ngModel)]="setCriteria.numSerie" />
+      <input nz-input placeHolder="Serie" [(ngModel)]="setCriteria.numSerie" (ngModelChange)="checkCriteria($event)"/>
     </div>
     <div nz-col>
       <nz-select [(ngModel)]="searchCriteria.idEstadoBaliza" nzPlaceHolder="Estado" style="width: 180px">
