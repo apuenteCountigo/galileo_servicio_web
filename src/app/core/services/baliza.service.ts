@@ -19,7 +19,6 @@ export class BalizaService extends HateoasResourceOperation<Baliza> {
   searchQuery = 'buscarBalizas';
   searchFiltrarQuery = 'filtro';
   sarchObjetivo = 'filtrarObjetivo';
-  findByFilters = 'findByFilters';
 
   constructor(
     public resourceService: HateoasResourceService,
@@ -73,7 +72,7 @@ export class BalizaService extends HateoasResourceOperation<Baliza> {
   ): Observable<PagedResourceCollection<Baliza>> {
     this.changeUrl();
     return this.resourceService
-      .searchPage(Baliza, this.findByFilters, {
+      .searchPage(Baliza, this.searchQuery, {
         params: filter,
         pageParams: params,
         sort,
