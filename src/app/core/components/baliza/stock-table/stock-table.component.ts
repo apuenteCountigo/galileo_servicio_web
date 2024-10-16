@@ -374,12 +374,10 @@ export class StockTableComponent
 
   checkCriteria(value: any){
     console.log("Value:", value);
-    if ((value === '' || value == 0 || value == -2)) {
+    if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
       if(this.isNullBusqueda())
         this.loadData();
     }
-    // this.searchCriteria = value;
-    // const currentIsNullBusqueda = this.isNullBusqueda;
   }
 
   onSearch() {
