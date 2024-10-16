@@ -17,6 +17,7 @@ import { Baliza, DataminerElements } from '../models/baliza.model';
 })
 export class BalizaService extends HateoasResourceOperation<Baliza> {
   searchQuery = 'buscarBalizas';
+  searchQueryStock = 'buscarBalizasStock';
   searchFiltrarQuery = 'filtro';
   sarchObjetivo = 'filtrarObjetivo';
 
@@ -73,6 +74,21 @@ export class BalizaService extends HateoasResourceOperation<Baliza> {
     this.changeUrl();
     return this.resourceService
       .searchPage(Baliza, this.searchQuery, {
+        params: filter,
+        pageParams: params,
+        sort,
+      })
+      .pipe(shareReplay());
+  }
+
+  public searchStock(
+    filter: any,
+    params?: PageParam,
+    sort?: Sort
+  ): Observable<PagedResourceCollection<Baliza>> {
+    this.changeUrl();
+    return this.resourceService
+      .searchPage(Baliza, this.searchQueryStock, {
         params: filter,
         pageParams: params,
         sort,

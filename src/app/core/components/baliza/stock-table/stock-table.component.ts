@@ -212,7 +212,7 @@ export class StockTableComponent
     this.resetSelection();
     this.suscriptions.push(
       this._balizaService
-        .search(this.searchCriteria, this.params, this.sort)
+        .searchStock(this.searchCriteria, this.params, this.sort)
         .subscribe({
           next: (result) => {
             this.listOfBalizaStock = result.resources;
@@ -412,7 +412,7 @@ export class StockTableComponent
     this.params.page = 0;
     this.resetSelection();
     this._balizaService
-      .search(this.searchCriteria, this.params, this.sort)
+      .searchStock(this.searchCriteria, this.params, this.sort)
       .subscribe({
         next: (balizas: PagedResourceCollection<Baliza>) => {
           this.loading = false;
