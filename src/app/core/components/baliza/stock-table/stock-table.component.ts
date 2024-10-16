@@ -97,7 +97,7 @@ export class StockTableComponent
     clave: '',
     marca: '',
     modelo: '',
-    numSeries: '',
+    numSerie: '',
     compania: '',
     fechaInicio: '',
     fechaFin: '',
@@ -426,7 +426,7 @@ export class StockTableComponent
     this.searchCriteria.clave = '';
     this.searchCriteria.marca = '';
     this.searchCriteria.modelo = '';
-    this.searchCriteria.numSeries = '';
+    this.searchCriteria.numSerie = '';
     this.searchCriteria.compania = '';
     this.searchCriteria.fechaFin = '';
     this.searchCriteria.fechaInicio = '';

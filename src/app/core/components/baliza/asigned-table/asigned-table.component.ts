@@ -341,7 +341,7 @@ export class AsignedTableComponent
     this.searchCriteria.clave = '';
     this.searchCriteria.marca = '';
     this.searchCriteria.modelo = '';
-    this.searchCriteria.numSeries = '';
+    this.searchCriteria.numSerie = '';
     this.searchCriteria.compania = '';
     this.searchCriteria.fechaFin = '';
     this.searchCriteria.fechaInicio = '';
