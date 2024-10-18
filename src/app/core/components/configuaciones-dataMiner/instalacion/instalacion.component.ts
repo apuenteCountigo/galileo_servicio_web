@@ -57,8 +57,6 @@ export class InstalacionComponent implements OnInit, OnChanges, OnDestroy {
   valueFechaFinAutorizacion!: any | null;
   nuevoValueFechaFinAutorizacion!: any | null;
 
-  autoUpdate!: any | 0;
-
   myInterval: any;
   suscriptions: Array<any> = [];
 
@@ -319,17 +317,17 @@ export class InstalacionComponent implements OnInit, OnChanges, OnDestroy {
         : this.configWriteInstalacion[9].DisplayValue;
 
     if (this.configWriteInstalacion[8] && this.isValidDate(this.configWriteInstalacion[8].Value)) {
-      this.autoUpdate = this.configWriteInstalacion[8].Value;
+      this.valueFechaFinAutorizacion = new Date(this.configWriteInstalacion[8].Value);
     } else {
-      this.autoUpdate = 0; // O asignar un valor por defecto
+      this.valueFechaFinAutorizacion = null; // O asignar un valor por defecto
     }
     // this.valueFechaFinAutorizacion = new Date(
     //   this.configWriteInstalacion[8].Value
     // );
     this.valueFechaFinAutorizacionHora = this.valueFechaFinAutorizacion;
-    this.autoUpdate =
+    this.nuevoValueFechaFinAutorizacion =
       this.configWriteInstalacion[8].DisplayValue == 'Not initialized'
-        ? 0
+        ? null
         : this.configWriteInstalacion[8].DisplayValue;
 
     this.valueCargaBateriaInstalada =

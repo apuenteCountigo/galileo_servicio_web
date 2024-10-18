@@ -142,16 +142,12 @@
       <nz-collapse-panel [nzHeader]="configWriteInstalacion.length ? configWriteInstalacion[8].ParameterName : ''"
         [nzExtra]="extraFechaFinAutorizacion">
         <div [hidden]="allowEdit" nz-row>
-          <div nz-col nzSpan="14">
-            <nz-select nzSpan="24" [(ngModel)]="autoUpdate" nzAllowClear nzPlaceHolder="seleccionar auto Update"
-              nzSize="small">
-              <nz-option nzCustomContent nzLabel="Si" nzValue="1">
-                Si
-              </nz-option>
-              <nz-option nzCustomContent nzLabel="No" nzValue="0">
-                No
-              </nz-option>
-            </nz-select>
+          <div nz-col nzSpan="8">
+            <nz-date-picker [(ngModel)]="valueFechaFinAutorizacion" nzSize="small"></nz-date-picker>
+          </div>
+          <div nz-col nzSpan="6">
+            <nz-time-picker [(ngModel)]="valueFechaFinAutorizacionHora" nzFormat="HH:mm:ss" nzSize="small">
+            </nz-time-picker>
           </div>
           <div nz-col nzSpan="2">
           </div>
