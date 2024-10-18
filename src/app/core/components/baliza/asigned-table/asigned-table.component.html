@@ -32,8 +32,7 @@
       </nz-range-picker>
     </div>
     <div nz-col>
-      <input nz-input placeHolder="Objetivo" (ngModelChange)="checkCriteria($event)"
-        [(ngModel)]="searchCriteria.objetivo" />
+      <input nz-input placeHolder="Objetivo" [(ngModel)]="searchCriteria.objetivo" (ngModelChange)="checkCriteria($event)" />
     </div>
   </div>
 </nz-card>
