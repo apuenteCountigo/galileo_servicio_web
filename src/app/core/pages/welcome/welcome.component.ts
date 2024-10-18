@@ -110,7 +110,6 @@ export class WelcomeComponent extends TableBase implements OnInit, OnDestroy {
         // result = result.replace('http://https://', 'https://');
         // Solo reemplazar ":/" después del dominio/IP, sin tocar el "http://" o "https://"
         // result = result.replace(/(https?:\/\/[^\/]+):\//, '$1/');
-        // console.warn("result: "+result);
         
         result = result.slice(1, result.length - 1);
         const cad2 = `${result.split('=')[0]}=${
