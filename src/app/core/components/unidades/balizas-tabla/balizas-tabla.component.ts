@@ -10,7 +10,6 @@ import { LoggedUserService } from 'src/app/core/services/logged-user.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { TableBase } from 'src/app/core/utils/table.base';
 import { Baliza } from './../../../models/baliza.model';
-import { SearchData } from '../../baliza/stock-table/stock-table.component';
 export interface SearchData {
   clave: string;
   marca: string;
