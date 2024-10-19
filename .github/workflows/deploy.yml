@@ -76,6 +76,10 @@ jobs:
             fi &&
             docker compose up web-build -d &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d &&
+            while ! docker ps | grep "webapp:1.1.0"; do
+              echo "Esperando a que el contenedor esté listo..."
+              sleep 5
+            done
             docker save -o /home/mome/galileo-images-v1.1.0/webapp_1.1.0.tar galileo/webapp:1.1.0 &&
             yes | sudo docker builder prune'
             exit
