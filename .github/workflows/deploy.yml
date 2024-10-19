@@ -76,7 +76,7 @@ jobs:
             fi &&
             docker compose up web-build -d &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d &&
-            while ! docker ps | grep "webapp:1.1.0"; do
+            while ! docker ps | grep "webapp"; do
               echo "Esperando a que el contenedor esté listo..."
               sleep 5
             done
