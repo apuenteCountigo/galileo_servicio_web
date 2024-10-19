@@ -77,8 +77,6 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
   }
 
   checkCriteria(value: any){
-    console.log("this.searchCriteria::",this.searchCriteria);
-    
     if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
       if(this.isNullBusqueda())
         this.onSearchUnitOfBalizas();
