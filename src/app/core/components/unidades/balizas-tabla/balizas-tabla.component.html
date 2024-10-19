@@ -2,16 +2,16 @@
   [nzExtra]="extraTemplateSearch" nzSize="default">
   <div nz-row [nzGutter]="['8', '8']">
     <div nz-col>
-      <input nz-input placeHolder="Clave" [(ngModel)]="searchCriteria.clave" />
+      <input nz-input placeHolder="Clave" [(ngModel)]="searchCriteria.clave" (ngModelChange)="checkCriteria($event)" />
     </div>
     <div nz-col>
-      <input nz-input placeHolder="Marca" [(ngModel)]="searchCriteria.marca" />
+      <input nz-input placeHolder="Marca" [(ngModel)]="searchCriteria.marca" (ngModelChange)="checkCriteria($event)" />
     </div>
     <div nz-col>
-      <input nz-input placeHolder="Modelo" [(ngModel)]="searchCriteria.modelo" />
+      <input nz-input placeHolder="Modelo" [(ngModel)]="searchCriteria.modelo" (ngModelChange)="checkCriteria($event)" />
     </div>
     <div nz-col>
-      <input nz-input placeHolder="Serie" [(ngModel)]="searchCriteria.numSerie" />
+      <input nz-input placeHolder="Serie" [(ngModel)]="searchCriteria.numSerie" (ngModelChange)="checkCriteria($event)" />
     </div>
     <!-- <p style="margin-top: 10px; margin-left: 5px;">
       <label nz-checkbox [(ngModel)]="isCheckedObject">
