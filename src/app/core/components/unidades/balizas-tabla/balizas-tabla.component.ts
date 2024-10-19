@@ -70,7 +70,7 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
 
   isNullBusqueda() {
     return Object.values(this.searchCriteria).every((value) => {
-      if (value === null || value === '' || value === 0) {
+      if (value === null || value === undefined || value === '' || value === 0 || value == -2) {
         return true;
       }
       return false;
@@ -78,6 +78,8 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
   }
 
   checkCriteria(value: any){
+    console.log("this.searchCriteria::",this.searchCriteria);
+    
     if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
       if(this.isNullBusqueda())
         this.onSearchUnitOfBalizas();
