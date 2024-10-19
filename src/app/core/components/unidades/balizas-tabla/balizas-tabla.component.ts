@@ -10,6 +10,7 @@ import { LoggedUserService } from 'src/app/core/services/logged-user.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { TableBase } from 'src/app/core/utils/table.base';
 import { Baliza } from './../../../models/baliza.model';
+import { SearchData } from '../../baliza/stock-table/stock-table.component';
 export interface SearchData {
   clave: string;
   marca: string;
@@ -33,14 +34,13 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
   @Input() selectedUnit!: Unit;
   @Output() removeBalizaToStock = new EventEmitter();
 
-  searchCriteria: SearchData = {
+  searchCriteria: any = {
     clave: '',
     marca: '',
     modelo: '',
     numSerie: '',
     compania: '',
     objetivo: '',
-    unidad: 0,
     idEstadoBaliza: 0,
   };
 
@@ -93,9 +93,8 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
     this.searchCriteria.numSerie = '';
     this.searchCriteria.compania = '';
     this.searchCriteria.objetivo = '';
-    (this.searchCriteria.unidad = 0),
-      (this.searchCriteria.idEstadoBaliza = 0),
-      this.onSearchUnitOfBalizas();
+    this.searchCriteria.idEstadoBaliza = 0;
+    this.onSearchUnitOfBalizas();
   }
   closeSearchForm() {
     this.showSearchForm = !this.showSearchForm;
@@ -120,13 +119,22 @@ export class BalizasTablaComponent extends TableBase implements OnInit {
     this.onSearchUnitOfBalizas();
   }
   onSearchUnitOfBalizas(): void {
-    this.searchCriteria.unidad = this.selectedUnit.id;
+    let criteria = {
+      clave: this.searchCriteria.clave,
+      marca: this.searchCriteria.marca,
+      modelo: this.searchCriteria.modelo,
+      numSerie: this.searchCriteria.numSerie,
+      compania: this.searchCriteria.compania,
+      objetivo: this.searchCriteria.objetivo,
+      unidad: this.selectedUnit.id,
+      idEstadoBaliza: 0,
+    };
 
     const userLogeado = this._loggedUserService.getLoggedUser();
     this.loading = true;
     this.sort = { ...this.sort, fechaCreacion: 'DESC' };
     this._balizaService
-      .search(this.searchCriteria, this.params, this.sort)
+      .search(criteria, this.params, this.sort)
       .subscribe({
         next: (relations: PagedResourceCollection<any>) => {
           this.loading = false;
