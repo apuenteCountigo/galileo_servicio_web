@@ -125,7 +125,7 @@ export class UserMainTableComponent
             this.userPerfiles.splice(indexGuest, 1);
           }
           this._loggedUserService.getUnit().then((result) => {
-            this.loggedUserUnit = result && result.resources.length > 0 && result.resources[0].unidad ? result.resources[0].unidad : null;
+            this.loggedUserUnit = result && result.resources.length > 0 && result.resources[0].unidad ? result.resources[0].unidad : undefined;
           });
 
           this.isLoadingData = false;
