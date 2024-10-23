@@ -100,6 +100,8 @@ export class UsersComponent extends TableBase implements OnInit {
         : seleccionado,
     });
 
+    this.userTableCmp.loadData();
+
     // this.userTableCmp.refreshUsers();
   }
 
