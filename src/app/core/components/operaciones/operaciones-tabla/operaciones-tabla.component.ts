@@ -81,7 +81,7 @@ export class OperacionesTablaComponent
   }
 
   ngOnInit(): void {
-    console.log("this.userRoles=",this.userRoles);
+    console.log("this._loggedUserService.getLoggedUser():=",this._loggedUserService.getLoggedUser());
     
     this.loading = false;
     const searchEstados = {
