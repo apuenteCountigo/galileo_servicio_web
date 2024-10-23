@@ -99,6 +99,8 @@ export class UsersComponent extends TableBase implements OnInit {
         ? this.selectedUser?.nombre
         : seleccionado,
     });
+
+    this.userTableCmp.refreshUsers();
   }
 
   onSelectUser(user: User) {
