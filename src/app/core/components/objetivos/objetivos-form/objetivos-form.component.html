@@ -53,13 +53,13 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="observaciones">Observaciones</nz-form-label>
-    <nz-form-control [nzSpan]="12" [nzErrorTip]="observacionErrorTpl">
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzFor="observaciones">Observaciones</nz-form-label>
+    <nz-form-control [nzSpan]="12" >
       <textarea nz-input formControlName="observaciones" [nzAutosize]="{ minRows: 5, maxRows: 5 }"></textarea>
     </nz-form-control>
-    <ng-template #observacionErrorTpl let-control>
+    <!-- <ng-template #observacionErrorTpl let-control>
       <ng-container *ngIf="control.hasError('required')">Introduzca el nombre</ng-container>
-    </ng-template>
+    </ng-template> -->
   </nz-form-item>
 
   <nz-form-item>
