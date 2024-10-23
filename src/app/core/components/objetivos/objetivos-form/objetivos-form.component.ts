@@ -121,7 +121,7 @@ export class ObjetivosFormComponent
       urgencia: ['', [Validators.required]],
       finalAuto: ['', [Validators.required]],
       emailIncidenciaJud: ['', [Validators.required, Validators.pattern]],
-      observaciones: ['', [Validators.required]],
+      observaciones: ['', []],
       balizas: ['', []],
     });
   }
