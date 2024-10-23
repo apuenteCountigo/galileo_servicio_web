@@ -81,6 +81,8 @@ export class OperacionesTablaComponent
   }
 
   ngOnInit(): void {
+    console.log("this.userRoles=",this.userRoles);
+    
     this.loading = false;
     const searchEstados = {
       id: 0,
