@@ -66,7 +66,8 @@ export class UsersComponent extends TableBase implements OnInit {
   };
   loggedUser!: LoggedUser;
 
-  @ViewChild('userTable') userTableCmp!: UserMainTableComponent;
+  // @ViewChild('userTable') userTableCmp!: UserMainTableComponent;
+  @ViewChild('userTable', { static: false }) userTableCmp!: UserMainTableComponent;
 
   constructor(
     private modalUploadService: NzModalService,
@@ -100,9 +101,10 @@ export class UsersComponent extends TableBase implements OnInit {
         : seleccionado,
     });
 
-    this.userTableCmp.loadData();
-
-    // this.userTableCmp.refreshUsers();
+    // Verifica si userTableCmp ya está inicializado antes de llamar a loadData
+    // if (this.userTableCmp) {
+    //   this.userTableCmp.loadData();
+    // }
   }
 
   onSelectUser(user: User) {
@@ -117,8 +119,9 @@ export class UsersComponent extends TableBase implements OnInit {
   }
 
   onTabChange(event: NzTabChangeEvent): void {
-    if (event.index === 0) {
-      // this.userTableCmp.refreshUsers();
+    if (event.index === 0 && this.userTableCmp) {
+      // Refresca el componente app-user-main-table
+      this.userTableCmp.refreshUsers();
     }
   }
 }
