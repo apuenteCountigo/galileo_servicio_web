@@ -348,7 +348,7 @@ export class OperacionesTablaComponent
         .subscribe({
           next: (result: User) => {
             console.log("USer:=",result);
-            
+            this.user=result;
           },
           error: (error) => {
             this.handleErrorMessage(
