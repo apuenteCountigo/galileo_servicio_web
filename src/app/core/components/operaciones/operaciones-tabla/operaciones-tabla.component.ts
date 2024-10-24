@@ -25,6 +25,9 @@ import { OperacionService } from 'src/app/core/services/operacion.service';
 import { TableBase } from 'src/app/core/utils/table.base';
 import { OperacionesFormComponent } from '../operaciones-form/operaciones-form.component';
 import { Unit } from './../../../models/unit.model';
+import { UserService } from 'src/app/core/services/user.service';
+import { LoggedUser } from 'src/app/core/models/interfaces';
+import { User } from 'src/app/core/models/users.model';
 
 @Component({
   selector: 'app-operaciones-tabla',
@@ -44,6 +47,9 @@ export class OperacionesTablaComponent
   listOfOperaciones: Operacion[] = [];
   selectedOperacion: any = null;
   balizasEstados!: Array<Estado>;
+
+  usuarioAutenticado!: LoggedUser;
+  user: User | undefined;
 
   selectedIndex = 0;
   pageSizeOfic = 10;
@@ -74,6 +80,7 @@ export class OperacionesTablaComponent
     private notificationService: NotificationService,
     private _breadrumbService: BreadCrumbService,
     private _loggedUserService: LoggedUserService,
+    private _userService: UserService,
     private _estadoService: EstadoService,
     private _juzgadoService: JuzgadoService
   ) {
@@ -82,7 +89,8 @@ export class OperacionesTablaComponent
 
   ngOnInit(): void {
     console.log("this._loggedUserService.getLoggedUser():=",this._loggedUserService.getLoggedUser());
-    
+    this.usuarioAutenticado = this._loggedUserService.getLoggedUser();
+    this.buscarTip(this.usuarioAutenticado.tip);
     this.loading = false;
     const searchEstados = {
       id: 0,
@@ -315,6 +323,29 @@ export class OperacionesTablaComponent
           );
         },
       })
+    );
+  }
+
+  buscarTip(tip: String){
+    this.suscriptions.push(
+      this._userService
+        .searchBy("buscarTip", {
+          tip: tip,
+          projection: '',
+        })
+        .subscribe({
+          next: (result: User) => {
+            console.log("USer:=",result);
+            
+          },
+          error: (error) => {
+            this.handleErrorMessage(
+              error,
+              'Ha ocurrido un error obteniendo los datos del usuario autenticado.'
+            );
+          }
+        }
+      )
     );
   }
 
