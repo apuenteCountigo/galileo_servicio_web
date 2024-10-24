@@ -13,7 +13,7 @@ export class TraccarService {
     let params = new HttpParams().set('token', token);
     const headers = new HttpHeaders({
       'Content-Type': 'text/plain',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*',
       Authorization: 'Bearer ' + localStorage.getItem('auth_token'),
     });
 
