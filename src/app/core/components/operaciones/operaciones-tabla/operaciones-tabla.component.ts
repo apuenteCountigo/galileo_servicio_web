@@ -118,6 +118,14 @@ export class OperacionesTablaComponent
       return false;
     });
   }
+
+  isNotAllowModify() {
+    if (this.user?.unidad?.id != this.selectedUnit.id && this.user?.perfil.id==2) {
+      return true;
+    }
+    return false;
+  }
+
   resetForm(): void {
     this.searchCriteria.descripcion = '';
     this.searchCriteria.idOperacion = 0;

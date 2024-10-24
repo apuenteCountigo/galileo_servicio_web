@@ -65,13 +65,13 @@
   <div nz-row [nzGutter]="24" nzJustify="end">
     <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
       <button nz-button nzType="text" nzSize="large" (click)="showModal(false)" nz-tooltip
-        nzTooltipTitle="Crear operación">
+        nzTooltipTitle="Crear operación" [disabled]="isNotAllowModify()">
         <em nz-icon nzType="plus" nzTheme="outline" [class]="'icon-class'"></em>
       </button>
     </div>
     <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
       <button nz-button nzType="text" nzSize="large" (click)="showModal(true)" nz-tooltip
-        nzTooltipTitle="Editar operación" [disabled]="selectedOper == null">
+        nzTooltipTitle="Editar operación" [disabled]="selectedOper == null || isNotAllowModify()">
         <em nz-icon nzType="edit" nzTheme="outline" [class]="selectedOper?'icon-class':'icon-disabled'"></em>
       </button>
     </div>
