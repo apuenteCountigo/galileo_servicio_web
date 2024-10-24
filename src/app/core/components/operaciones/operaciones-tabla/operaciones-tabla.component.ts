@@ -120,10 +120,11 @@ export class OperacionesTablaComponent
   }
 
   isNotAllowModify() {
-    console.log(this.user?.unidad?.id,", ",this.selectedUnit.id,", ",this.user?.perfil.id);
-    
+    if (!this.user || !this.selectedUnit) {
+      return true;
+    }
+
     if (this.user?.unidad?.id != this.selectedUnit.id && this.user?.perfil.id==2) {
-      console.log(true);
       return true;
     }
     console.log(false);
