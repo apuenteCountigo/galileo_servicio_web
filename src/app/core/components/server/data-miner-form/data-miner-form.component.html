@@ -43,6 +43,15 @@
       </ng-template>
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item *ngIf="formModalServer.value.servicio == tipoServidor.TRACCAR">
+    <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="mapAddress">Mapa</nz-form-label>
+    <nz-form-control [nzSpan]="12" [nzErrorTip]="mapAddressErrorTpl">
+      <input type="text" nz-input formControlName="mapAddress" placeholder="Vínculo al mapa" />
+      <ng-template #mapAddressErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">Introduzca el vínculo al mapa</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
   <nz-form-item *ngIf="formModalServer.value.servicio == tipoServidor.DATAMINER">
     <nz-form-label nzNoColon="true" [nzSpan]="7" nzRequired nzFor="dmaID">dmaID</nz-form-label>
     <nz-form-control [nzSpan]="12" [nzErrorTip]="dmaIDErrorTpl">
