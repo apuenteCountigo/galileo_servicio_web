@@ -73,6 +73,8 @@ export class DataMinerFormComponent implements OnInit {
           this.serverToEdit!.viewIDs
         );
       });
+
+      this.updateValidators();
     }
   }
 
