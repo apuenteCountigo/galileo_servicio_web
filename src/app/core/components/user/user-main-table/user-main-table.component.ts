@@ -30,6 +30,7 @@ import { BreadCrumbService } from './../../../services/bread-crumb.service';
 
 import { formatISO } from 'date-fns';
 import { LoggedUserRole } from 'src/app/core/enums/user-role.enum';
+import { LoggedUser } from 'src/app/core/models/interfaces';
 
 @Component({
   selector: 'app-user-main-table',
@@ -76,6 +77,8 @@ export class UserMainTableComponent
   disableAddAdmin = false;
 
   loggedUserUnit?: Unit;
+  usuarioAutenticado!: LoggedUser;
+  userAuthFull: User | undefined;
 
   suscriptions: Array<any> = [];
 
@@ -97,6 +100,8 @@ export class UserMainTableComponent
   /** NgOnInit */
   ngOnInit(): void {
     this.isLoadingData = true;
+    this.usuarioAutenticado = this._loggedUserService.getLoggedUser();
+    this.buscarTip(this.usuarioAutenticado.tip);
     this.suscriptions.push(
       forkJoin([
         this._empleoService.getAll(),
@@ -510,5 +515,67 @@ export class UserMainTableComponent
     return !this.isDisabled(action) && !this.isInvitado()
       ? 'icon-class'
       : 'icon-disabled';
+  }
+
+  // isNotAllowModify() {
+  //   if (!this.userAuthFull || !this.selectedUnit) {
+  //     return true;
+  //   }
+
+  //   if (this.userAuthFull?.unidad?.id != this.selectedUnit.id && this.userAuthFull?.perfil.id==2) {
+  //     return true;
+  //   }
+  //   console.log(false);
+  //   return false;
+  // }
+
+  buscarTip(tip: String){
+    this.suscriptions.push(
+      this._userService
+        .searchBy("buscarTip", {
+          tip: tip,
+          projection: '',
+        })
+        .subscribe({
+          next: (result: User) => {
+            this.userAuthFull=result;
+          },
+          error: (error) => {
+            this.handleErrorMessage(
+              error,
+              'Ha ocurrido un error obteniendo los datos del usuario autenticado.'
+            );
+          }
+        }
+      )
+    );
+  }
+
+  handleErrorMessage(error: any, defaultMsg: string): void {
+    if (error.status == 400) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 409) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 500) {
+      if (
+        error.error.message &&
+        error.error.message.toLowerCase().includes('fallo')
+      ) {
+        this._notificationService.notificationError(
+          'Error',
+          error.error.message
+        );
+      } else {
+        this._notificationService.notificationError('Error', defaultMsg);
+      }
+    } else {
+      this._notificationService.notificationError('Error', defaultMsg);
+    }
   }
 }

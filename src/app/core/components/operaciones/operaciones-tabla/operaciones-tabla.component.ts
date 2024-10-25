@@ -88,7 +88,6 @@ export class OperacionesTablaComponent
   }
 
   ngOnInit(): void {
-    console.log("this._loggedUserService.getLoggedUser():=",this._loggedUserService.getLoggedUser());
     this.usuarioAutenticado = this._loggedUserService.getLoggedUser();
     this.buscarTip(this.usuarioAutenticado.tip);
     this.loading = false;
@@ -348,7 +347,6 @@ export class OperacionesTablaComponent
         })
         .subscribe({
           next: (result: User) => {
-            console.log("USer:=",result);
             this.user=result;
           },
           error: (error) => {
