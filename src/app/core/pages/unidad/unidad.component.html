@@ -299,7 +299,7 @@
   </ng-template>
 
   <ng-template #extraTemplateOficial>
-    <div nz-row [nzGutter]="24" nzJustify="end" style="margin-right: 10px;">
+    <div nz-row [nzGutter]="24" nzJustify="end" style="margin-right: 10px !important;">
       <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
         <button *ngIf="!isNotAllowModify()" nz-button nzType="text" nzSize="large" (click)="showModalToAssignOfficcer()" nz-tooltip
           nzTooltipTitle="Asignar usuario">
