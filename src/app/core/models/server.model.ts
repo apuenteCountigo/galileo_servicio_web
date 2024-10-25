@@ -5,6 +5,7 @@ export class Server extends Resource {
   public id!: number;
   public servicio!: string;
   public ipServicio?: string;
+  public mapAddress?: string;
   public puerto?: string;
   public usuario?: string;
   public password?: string;

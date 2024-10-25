@@ -23,6 +23,7 @@
         <th id="serverPort" nzColumnKey="Puerto" [nzSortFn]="true">Puerto</th>
         <th id="serverUsermane" nzColumnKey="usuario" [nzSortFn]="true">Usuario</th>
         <th id="serverPassword" nzColumnKey="password">Contraseña</th>
+        <th id="serverMapAddress" nzColumnKey="mapAddress" [nzSortFn]="true">Mapa</th>
         <th id="serverdmaID" nzColumnKey="dmaID" [nzSortFn]="true">DMA ID</th>
         <th id="serverviewIDs" nzColumnKey="viewIDs" [nzSortFn]="true">ViewIDs</th>
       </tr>
@@ -38,6 +39,7 @@
           <td>{{ server.puerto }}</td>
           <td>{{ server.usuario }}</td>
           <td>{{ server.password! | passwordMask}}</td>
+          <td>{{ server.mapAddress }}</td>
           <td>{{ server.dmaID }}</td>
           <td>{{ server.viewIDs }}</td>
         </tr>
