@@ -300,13 +300,13 @@
 
   <ng-template #extraTemplateOficial>
     <div nz-row [nzGutter]="24" nzJustify="end">
-      <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <div *ngIf="!isNotAllowModify()" nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
         <button nz-button nzType="text" nzSize="large" (click)="showModalToAssignOfficcer()" nz-tooltip
           nzTooltipTitle="Asignar usuario">
           <em nz-icon nzType="container" nzTheme="outline" [class]="'icon-class'"></em>
         </button>
       </div>
-      <div nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
+      <div *ngIf="!isNotAllowModify()" nz-col class="gutter-row" [nzSpan]="6" *ngxPermissionsOnly="[userRoles.SUPER_ADMIN, userRoles.UNIT_ADMIN]">
         <button nz-button nzType="text" nzSize="large" (click)="deleteAssing()" nz-tooltip
           nzTooltipTitle="Eliminar asignación" [disabled]="selectedOffRelation == null">
           <em nz-icon nzType="delete" nzTheme="outline" [class]="setStyleClass(!!selectedOffRelation)"></em>

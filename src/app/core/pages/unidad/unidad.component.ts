@@ -13,7 +13,7 @@ import { UserUnitSearchQuery } from '../../constants/user-unit.query';
 import { FrmActions } from '../../enums/form-acctios';
 import { LoggedUserRole } from '../../enums/user-role.enum';
 import { Estado } from '../../models/estado.model';
-import { UnitSearchCriteria } from '../../models/interfaces';
+import { LoggedUser, UnitSearchCriteria } from '../../models/interfaces';
 import { UnitProvince } from '../../models/province.model';
 import {
   ResumenOper,
@@ -89,6 +89,9 @@ export class UnidadComponent implements OnInit, OnDestroy {
   selectedIndex = 0;
   selectedUnit: any = 0;
 
+  usuarioAutenticado!: LoggedUser;
+  userAuthFull: User | undefined;
+
   searchCriteria: UnitSearchCriteria = {
     perfil: 0,
     idUsuario: 0,
@@ -144,7 +147,7 @@ export class UnidadComponent implements OnInit, OnDestroy {
     private modalService: NzModalService,
     private modalUploadService: NzModalService,
     private unitService: UnitService,
-    private userService: UserService,
+    private _userService: UserService,
     private notificationService: NotificationService,
     private unitOficRelService: UnitUserRelationService,
     private provincesService: UnitProvincesService,
@@ -155,6 +158,8 @@ export class UnidadComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.usuarioAutenticado = this._loggedUserService.getLoggedUser();
+    this.buscarTip(this.usuarioAutenticado.tip);
     //this.selectedUnit = null;
     this.searchUnitForm = this.fb.group({
       denominacion: ['', null],
@@ -917,5 +922,38 @@ export class UnidadComponent implements OnInit, OnDestroy {
 
   setStyleClass(exp: boolean) {
     return exp ? 'icon-class' : 'icon-disabled';
+  }
+
+  buscarTip(tip: String){
+    this.suscriptions.push(
+      this._userService
+        .searchBy("buscarTip", {
+          tip: tip,
+          projection: '',
+        })
+        .subscribe({
+          next: (result: User) => {
+            this.user=result;
+          },
+          error: (error) => {
+            this.handleErrorMessage(
+              error,
+              'Ha ocurrido un error obteniendo los datos del usuario autenticado.'
+            );
+          }
+        }
+      )
+    );
+  }
+
+  isNotAllowModify() {
+    if (!this.userAuthFull || !this.selectedUnit) {
+      return true;
+    }
+
+    if (this.userAuthFull?.unidad?.id != this.selectedUnit.id && this.userAuthFull?.perfil.id==2) {
+      return true;
+    }
+    return false;
   }
 }
