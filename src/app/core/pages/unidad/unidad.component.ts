@@ -933,7 +933,7 @@ export class UnidadComponent implements OnInit, OnDestroy {
         })
         .subscribe({
           next: (result: User) => {
-            this.user=result;
+            this.userAuthFull=result;
           },
           error: (error) => {
             this.handleErrorMessage(
