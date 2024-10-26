@@ -121,7 +121,6 @@ export class DataMinerFormComponent implements OnInit {
     }
 
     if (this.formModalServer.value.servicio == 'TRACCAR') {
-      alert("validando mapAddress");
       this.formModalServer.controls['mapAddress'].setValidators([
         Validators.required,
       ]);
