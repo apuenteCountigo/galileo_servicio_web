@@ -97,6 +97,13 @@ export class JuzgadosComponent extends TableBase implements OnInit {
     });
   }
 
+  checkCriteria(value: any){
+    if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
+      if(this.isNullBusqueda())
+        this.loadData();
+    }
+  }
+
   resetForm() {
     this.searchCriteria.descripcion = '';
     this.loadData();

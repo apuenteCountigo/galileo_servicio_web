@@ -2,7 +2,7 @@
   [nzExtra]="extraTemplateSearch" nzSize="default">
   <div nz-row [nzGutter]="['8', '8']">
     <div nz-col>
-      <input nz-input placeHolder="Nombre del Juzgado" [(ngModel)]="searchCriteria.descripcion" />
+      <input nz-input placeHolder="Nombre del Juzgado" [(ngModel)]="searchCriteria.descripcion" (ngModelChange)="checkCriteria($event)" />
     </div>
   </div>
 </nz-card>
