@@ -199,7 +199,7 @@ export class BalizaFormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.formModalBaliza.controls['puerto'].setValue(
         this.balizaToEdit!.puerto
       );
-      this.formModalBaliza.controls['puerto'].disable();
+      // this.formModalBaliza.controls['puerto'].disable();
       this.formModalBaliza.controls['servidor'].setValue(
         this.serverList!.find((s) => s.id === this.balizaToEdit!.servidor?.id)
       );
