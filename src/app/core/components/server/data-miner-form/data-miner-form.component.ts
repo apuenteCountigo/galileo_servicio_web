@@ -35,7 +35,7 @@ export class DataMinerFormComponent implements OnInit {
       servicio: ['', [Validators.required]],
       ipServicio: ['', [Validators.required]],
       puerto: ['', []],
-      usuario: ['', [Validators.pattern]],
+      usuario: ['', [Validators.pattern, Validators.required]],
       password: ['', [Validators.required]],
       mapAddress: ['', []],
       dmaID: ['', []],
@@ -72,9 +72,8 @@ export class DataMinerFormComponent implements OnInit {
         this.formModalServer.controls['viewIDs'].setValue(
           this.serverToEdit!.viewIDs
         );
+        this.updateValidators();
       });
-
-      this.updateValidators();
     }
   }
 
@@ -122,6 +121,7 @@ export class DataMinerFormComponent implements OnInit {
     }
 
     if (this.formModalServer.value.servicio == 'TRACCAR') {
+      alert("validando mapAddress");
       this.formModalServer.controls['mapAddress'].setValidators([
         Validators.required,
       ]);
