@@ -118,6 +118,13 @@ export class OperacionesTablaComponent
     });
   }
 
+  checkCriteria(value: any){
+    if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
+      if(this.isNullBusqueda())
+        this.onSearchUnitOfOperaciones();
+    }
+  }
+
   isNotAllowModify() {
     if (!this.user || !this.selectedUnit) {
       return true;
