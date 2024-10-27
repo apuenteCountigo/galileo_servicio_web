@@ -142,6 +142,8 @@ export class UnidadComponent implements OnInit, OnDestroy {
 
   suscriptions: Array<any> = [];
 
+  dateFormat = 'dd/MM/yyyy';
+
   constructor(
     private fb: FormBuilder,
     private modalService: NzModalService,
@@ -901,14 +903,34 @@ export class UnidadComponent implements OnInit, OnDestroy {
   }
 
   onDateChange(event: Array<Date>) {
-    event[0].setHours(0, 0, 0, 0);
-    event[1].setHours(23, 59, 59);
+    if (event.length == 0) {
+      this.searchOficerCriteria.fechaInicio = '';
+      this.searchOficerCriteria.fechaFin = '';
 
-    this.searchOficerCriteria.fechaInicio = event[0] ? formatISO(event[0]) : '';
-    this.searchOficerCriteria.fechaFin = event[1] ? formatISO(event[1]) : '';
-    if (event.length == 0 && this.isNullBusqueda()) {
-      this.resetOficerForm();
+      if(this.isNullBusqueda())
+        this.resetOficerForm();
+      return;
     }
+
+    if (event && event[0] && event[1]) {
+      const startDate: Date = event[0];
+      const endDate: Date = event[1];
+
+      startDate.setHours(0, 0, 0, 0);
+      endDate.setHours(23, 59, 59);
+
+      this.searchOficerCriteria.fechaInicio = startDate ? formatISO(startDate) : '';
+      this.searchOficerCriteria.fechaFin = endDate ? formatISO(endDate) : '';
+    }
+
+    // event[0].setHours(0, 0, 0, 0);
+    // event[1].setHours(23, 59, 59);
+
+    // this.searchOficerCriteria.fechaInicio = event[0] ? formatISO(event[0]) : '';
+    // this.searchOficerCriteria.fechaFin = event[1] ? formatISO(event[1]) : '';
+    // if (event.length == 0 && this.isNullBusqueda()) {
+    //   this.resetOficerForm();
+    // }
   }
 
   isNullBusqueda() {

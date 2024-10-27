@@ -130,7 +130,7 @@
               </nz-select>
             </div>
             <div nz-col>
-              <nz-range-picker nzFormat="dd/MM/yyyy" [(ngModel)]="searchOficerCriteria.fechaInicio"
+              <nz-range-picker [nzFormat]="dateFormat" [(ngModel)]="searchOficerCriteria.fechaInicio"
                 (ngModelChange)="onDateChange($event)"></nz-range-picker>
             </div>
           </div>
