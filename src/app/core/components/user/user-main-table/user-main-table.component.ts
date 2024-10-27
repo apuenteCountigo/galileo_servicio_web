@@ -448,6 +448,8 @@ export class UserMainTableComponent
       this.searchCriteria.fechaInicio = '';
       this.searchCriteria.fechaFin = '';
 
+      console.log(this.isNullBusqueda());
+      
       if(this.isNullBusqueda())
         this.loadData();
 
