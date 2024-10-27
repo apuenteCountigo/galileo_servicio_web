@@ -394,6 +394,13 @@ export class UserMainTableComponent
     });
   }
 
+  checkCriteria(value: any){
+    if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
+      if(this.isNullBusqueda())
+        this.loadData();
+    }
+  }
+
   onSearch() {
     if (this.isNullBusqueda()) {
       this.loadData();
