@@ -280,13 +280,13 @@
       <div nz-col class="gutter-row" [nzSpan]="5">
         <button nz-button nzType="text" nzSize="large" (click)="onSearchUnitOficials()" [disabled]="isNullBusqueda()"
           nz-tooltip nzTooltipTitle="Buscar">
-          <em nz-icon nzType="search" nzTheme="outline" [class]="setStyleClass(!isNullSearchForm())"></em>
+          <em nz-icon nzType="search" nzTheme="outline" [class]="setStyleClass(!isNullBusqueda())"></em>
         </button>
       </div>
       <div nz-col class="gutter-row" [nzSpan]="5">
         <button nz-button nzType="text" nzSize="large" (click)="resetOficerForm()" [disabled]="isNullBusqueda()"
           nz-tooltip nzTooltipTitle="Limpiar">
-          <em nz-icon nzType="clear" nzTheme="outline" [class]="setStyleClass(!isNullSearchForm())"></em>
+          <em nz-icon nzType="clear" nzTheme="outline" [class]="setStyleClass(!isNullBusqueda())"></em>
         </button>
       </div>
       <div nz-col class="gutter-row" [nzSpan]="5">

@@ -505,6 +505,8 @@ export class UnidadComponent implements OnInit, OnDestroy {
     this.searchOficerCriteria.nombre = '';
     this.searchOficerCriteria.apellidos = '';
     this.searchOficerCriteria.idEstado = 0;
+    this.searchOficerCriteria.fechaInicio = '';
+    this.searchOficerCriteria.fechaFin = '';
     this.onSearchUnitOficials();
   }
 
