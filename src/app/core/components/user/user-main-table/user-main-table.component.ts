@@ -447,6 +447,10 @@ export class UserMainTableComponent
     if (event.length == 0) {
       this.searchCriteria.fechaInicio = '';
       this.searchCriteria.fechaFin = '';
+
+      if(this.isNullBusqueda())
+        this.loadData();
+
       return;
     }
     event[0].setHours(0, 0, 0, 0);
