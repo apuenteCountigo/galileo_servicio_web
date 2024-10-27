@@ -115,13 +115,13 @@
           [nzExtra]="extraTemplateSearchOficial" nzSize="default">
           <div nz-row [nzGutter]="[24, 16]">
             <div nz-col>
-              <input nz-input placeHolder="TIP" [(ngModel)]="searchOficerCriteria.tip" />
+              <input nz-input placeHolder="TIP" [(ngModel)]="searchOficerCriteria.tip" (ngModelChange)="checkUserCriteria($event)"/>
             </div>
             <div nz-col>
-              <input nz-input placeHolder="Nombre" [(ngModel)]="searchOficerCriteria.nombre" />
+              <input nz-input placeHolder="Nombre" [(ngModel)]="searchOficerCriteria.nombre" (ngModelChange)="checkUserCriteria($event)"/>
             </div>
             <div nz-col>
-              <input nz-input placeHolder="Apellidos" [(ngModel)]="searchOficerCriteria.apellidos" />
+              <input nz-input placeHolder="Apellidos" [(ngModel)]="searchOficerCriteria.apellidos" (ngModelChange)="checkUserCriteria($event)"/>
             </div>
             <div nz-col>
               <nz-select [(ngModel)]="searchOficerCriteria.idEstado" nzPlaceHolder="Perfil" style="width: 180px">

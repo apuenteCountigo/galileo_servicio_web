@@ -922,8 +922,15 @@ export class UnidadComponent implements OnInit, OnDestroy {
 
   checkCriteria(value: any){
     if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
-      if(this.isNullBusqueda())
+      if(this.isNullSearchForm())
         this.loadDataFromService();
+    }
+  }
+
+  checkUserCriteria(value: any){
+    if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
+      if(this.isNullBusqueda())
+        this.onSearchUnitOficials();
     }
   }
 
