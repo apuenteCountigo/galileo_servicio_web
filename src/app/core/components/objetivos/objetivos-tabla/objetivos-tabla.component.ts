@@ -127,6 +127,14 @@ export class ObjetivosTablaComponent extends TableBase implements OnInit {
       return false;
     });
   }
+
+  checkCriteria(value: any){
+    if (value === null || value === undefined || value === '' || value == 0 || value == -2) {
+      if(this.isNullBusqueda())
+        this.onSearchUnitOfObjetivos();
+    }
+  }
+
   resetForm(): void {
     this.searchCriteria.descripcion = '';
     this.searchCriteria.idresponsable = 0;
