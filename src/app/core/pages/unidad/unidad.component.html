@@ -10,7 +10,7 @@
               <div class="inner-box">
                 <nz-form-item>
                   <nz-form-control>
-                    <input nz-input placeHolder="Denominación" formControlName="denominacion" />
+                    <input nz-input placeHolder="Denominación" formControlName="denominacion" (ngModelChange)="checkCriteria($event)" />
                   </nz-form-control>
                 </nz-form-item>
               </div>
@@ -19,7 +19,7 @@
               <div class="inner-box">
                 <nz-form-item>
                   <nz-form-control>
-                    <input nz-input placeHolder="Responsable" formControlName="responsable" />
+                    <input nz-input placeHolder="Responsable" formControlName="responsable" (ngModelChange)="checkCriteria($event)" />
                   </nz-form-control>
                 </nz-form-item>
               </div>
@@ -28,7 +28,7 @@
               <div class="inner-box">
                 <nz-form-item>
                   <nz-form-control>
-                    <input nz-input placeHolder="Localidad" formControlName="localidad" />
+                    <input nz-input placeHolder="Localidad" formControlName="localidad"  (ngModelChange)="checkCriteria($event)"/>
                   </nz-form-control>
                 </nz-form-item>
               </div>
