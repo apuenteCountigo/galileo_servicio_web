@@ -37,7 +37,6 @@ export class DataMinerFormComponent implements OnInit {
       puerto: ['', []],
       usuario: ['', [Validators.pattern, Validators.required]],
       password: ['', [Validators.required]],
-      mapAddress: ['', []],
       dmaID: ['', []],
       viewIDs: ['', []],
     });
@@ -62,9 +61,6 @@ export class DataMinerFormComponent implements OnInit {
         );
         this.formModalServer.controls['password'].setValue(
           this.serverToEdit!.password
-        );
-        this.formModalServer.controls['mapAddress'].setValue(
-          this.serverToEdit!.mapAddress
         );
         this.formModalServer.controls['dmaID'].setValue(
           this.serverToEdit!.dmaID
@@ -94,7 +90,6 @@ export class DataMinerFormComponent implements OnInit {
     newServer.puerto = this.formModalServer.value.puerto;
     newServer.usuario = this.formModalServer.value.usuario;
     newServer.password = this.formModalServer.value.password;
-    newServer.mapAddress = this.formModalServer.value.mapAddress;
     newServer.dmaID = this.formModalServer.value.dmaID;
     newServer.viewIDs = this.formModalServer.value.viewIDs;
 
@@ -120,16 +115,7 @@ export class DataMinerFormComponent implements OnInit {
       this.formModalServer.controls['viewIDs'].clearValidators();
     }
 
-    if (this.formModalServer.value.servicio == 'TRACCAR') {
-      this.formModalServer.controls['mapAddress'].setValidators([
-        Validators.required,
-      ]);
-    } else {
-      this.formModalServer.controls['mapAddress'].clearValidators();
-    }
-
     this.formModalServer.controls['dmaID'].updateValueAndValidity();
     this.formModalServer.controls['viewIDs'].updateValueAndValidity();
-    this.formModalServer.controls['mapAddress'].updateValueAndValidity();
   }
 }
