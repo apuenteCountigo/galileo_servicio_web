@@ -105,14 +105,23 @@ export class WelcomeComponent extends TableBase implements OnInit, OnDestroy {
   loadTraccarUrl() {
     this.traccarService
       .getMapa(localStorage.getItem('auth_token') as string)
-      .subscribe((result: string) => {
-        result = result.slice(1, result.length - 1);
-        const cad2 = `${result.split('=')[0]}=${
-          this._loggedUser.getLoggedUser().traccar
-        }`;
-        this.urlUnSanitized = cad2;
-        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(cad2);
-      });
+      .subscribe({
+        next: (result: string) => {
+          result = result.slice(1, result.length - 1);
+          const cad2 = `${result.split('=')[0]}=${
+            this._loggedUser.getLoggedUser().traccar
+          }`;
+          this.urlUnSanitized = cad2;
+          this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(cad2);
+        },
+        error: (error: any) => {
+          this.handleErrorMessage(
+            error,
+            'Ocurrió un error intentando obtener la url del mapa de Traccar.'
+          );
+        }
+      }
+    );
   }
 
   updateBreadCrumb(valor: any, seleccionado?: any) {
@@ -469,6 +478,34 @@ export class WelcomeComponent extends TableBase implements OnInit, OnDestroy {
       //this.disableConfig = true;
       this.loading = false;
       this.cargaCompletaIncompleta = false;
+    }
+  }
+
+  handleErrorMessage(error: any, defaultMsg: string): void {
+    if (error.status == 400) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 409) {
+      this._notificationService.notificationError(
+        'Error',
+        error.error.message.toLowerCase()
+      );
+    } else if (error.status == 500) {
+      if (
+        error.error.message &&
+        error.error.message.toLowerCase().includes('fallo')
+      ) {
+        this._notificationService.notificationError(
+          'Error',
+          error.error.message
+        );
+      } else {
+        this._notificationService.notificationError('Error', defaultMsg);
+      }
+    } else {
+      this._notificationService.notificationError('Error', defaultMsg);
     }
   }
 }
