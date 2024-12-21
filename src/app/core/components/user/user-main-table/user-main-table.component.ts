@@ -428,7 +428,8 @@ export class UserMainTableComponent
     this.params.page = pageIndex - 1;
     this.params.size = pageSize;
 
-    this.onSearch();
+    this.loadData();
+    // this.onSearch();
   }
 
   updateUnidadesTabInfo(user: User) {
