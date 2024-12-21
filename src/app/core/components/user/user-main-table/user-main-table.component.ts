@@ -460,8 +460,8 @@ export class UserMainTableComponent
     event[1].setHours(23, 59, 59);
     const startDate: Date = event[0];
     const endDate: Date = event[1];
-    this.searchCriteria.fechaInicio = startDate ? formatISO(startDate) : '';
-    this.searchCriteria.fechaFin = endDate ? formatISO(endDate) : '';
+    this.searchCriteria.fechaInicio = startDate ? startDate.toISOString().split('Z')[0] : ''; //formatISO(startDate) : '';
+    this.searchCriteria.fechaFin = endDate ? startDate.toISOString().split('Z')[0] : ''; //formatISO(endDate) : '';
     if (event.length == 0 && this.isNullBusqueda()) {
       this.loadData();
     }
