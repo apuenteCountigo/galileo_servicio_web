@@ -324,6 +324,8 @@ export class UserMainTableComponent
   searchData() {
     this.loading = true;
     this.params.page = 0;
+    console.log("SEARCH DATA::",this.params);
+    
     this.selectedUser = undefined;
     this.expandSet.clear();
     this.updateBreadCrumb('usurioUsuario');
