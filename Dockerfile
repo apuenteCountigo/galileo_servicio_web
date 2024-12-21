@@ -8,7 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Copiar el resto del código fuente
-COPY . .
+# COPY . .
+COPY src/ ./src
 
 # Instalar las dependencias y Construir la aplicación Angular
 RUN npm install && npm run build --prod && cd /app/dist/galileo-frontend && ls
