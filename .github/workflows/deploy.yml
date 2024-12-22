@@ -74,7 +74,6 @@ jobs:
             else
               echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
             fi &&
-            docker compose up web-build -d &&
             docker compose up servicio-${{ secrets.SERVICIO }} -d &&
             while ! docker ps | grep "webapp"; do
               echo "Esperando a que el contenedor esté listo..."
