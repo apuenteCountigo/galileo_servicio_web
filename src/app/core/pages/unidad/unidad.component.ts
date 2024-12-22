@@ -915,14 +915,11 @@ export class UnidadComponent implements OnInit, OnDestroy {
     }
 
     if (event && event[0] && event[1]) {
-      const startDate: Date = event[0];
-      const endDate: Date = event[1];
+      const startDate: string = event[0].toISOString().split('Z')[0].split('T')[0] + "T00:00:00.000";
+      const endDate: string = event[1].toISOString().split('Z')[0].split('T')[0] + "T23:59:59.000";
 
-      startDate.setHours(0, 0, 0, 0);
-      endDate.setHours(23, 59, 59);
-
-      this.searchOficerCriteria.fechaInicio = startDate ? formatISO(startDate) : '';
-      this.searchOficerCriteria.fechaFin = endDate ? formatISO(endDate) : '';
+      this.searchOficerCriteria.fechaInicio = startDate || '';
+      this.searchOficerCriteria.fechaFin = endDate || '';
     }
 
     // event[0].setHours(0, 0, 0, 0);
