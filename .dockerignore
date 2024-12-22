@@ -1,5 +1,4 @@
 .dockerignore
-dist
 .git
 .github
 *.log
