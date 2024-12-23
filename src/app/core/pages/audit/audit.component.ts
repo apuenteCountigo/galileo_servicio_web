@@ -98,7 +98,8 @@ export class AuditComponent implements OnInit {
 
     this.params.page = pageIndex - 1;
     this.params.size = pageSize;
-    this.onSearch();
+    this.loadTraces();
+    // this.onSearch();
   }
 
   onExpandChange(trace: any, checked: boolean): void {
@@ -133,12 +134,12 @@ export class AuditComponent implements OnInit {
       .searchCriterio(
         {
           idTraza: 0,
-          tip: '',
-          descripcion: '',
+          tip: this.searchTraceForm.value.tip || '',
+          descripcion: this.searchTraceForm.value.description || '',
           idTipoEntidad: 0,
-          idAccionEntidad: 0,
-          fechaInicio: '',
-          fechaFin: '',
+          idAccionEntidad: this.searchTraceForm.value.action && this.searchTraceForm.value.action!='' ? this.searchTraceForm.value.action : 0,
+          fechaInicio: this.searchTraceForm.value.startDate || '',
+          fechaFin: this.searchTraceForm.value.endDate || '',
         },
         this.params,
         this.sort
@@ -162,7 +163,7 @@ export class AuditComponent implements OnInit {
 
   onSearchTrace() {
     this.sort = { fecha: 'DESC' };
-
+    this.params.page=0;
     this.loading = true;
     this.tracesService
       .searchCriterio(
@@ -245,13 +246,14 @@ export class AuditComponent implements OnInit {
   }
 
   onDateChange(event: Array<Date>) {
-    event[0] && event[0].setHours(0, 0, 0, 0);
-    event[1] && event[1].setHours(23, 59, 59);
+    const startDate: string = event[0].toISOString().split('Z')[0].split('T')[0] + "T00:00:00.000";
+    const endDate: string = event[1].toISOString().split('Z')[0].split('T')[0] + "T23:59:59.000";
+      
     this.searchTraceForm.controls['startDate'].setValue(
-      event[0] ? formatISO(event[0]) : ''
+      startDate || ''
     );
     this.searchTraceForm.controls['endDate'].setValue(
-      event[1] ? formatISO(event[1]) : ''
+      endDate || ''
     );
   }
 }
