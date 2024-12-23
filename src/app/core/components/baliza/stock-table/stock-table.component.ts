@@ -404,7 +404,8 @@ export class StockTableComponent
 
     this.params.page = pageIndex - 1;
     this.params.size = pageSize;
-    this.onSearch();
+    this.loadData();
+    // this.onSearch();
   }
 
   searchData() {
@@ -540,14 +541,11 @@ export class StockTableComponent
     }
     
     if (event && event[0] && event[1]) {
-      const startDate: Date = event[0];
-      const endDate: Date = event[1];
-
-      startDate.setHours(0, 0, 0, 0);
-      endDate.setHours(23, 59, 59);
-
-      this.searchCriteria.fechaInicio = startDate ? formatISO(startDate) : '';
-      this.searchCriteria.fechaFin = endDate ? formatISO(endDate) : '';
+      const startDate: string = event[0].toISOString().split('Z')[0].split('T')[0] + "T00:00:00.000";
+      const endDate: string = event[1].toISOString().split('Z')[0].split('T')[0] + "T23:59:59.000";
+      
+      this.searchCriteria.fechaInicio = startDate || '';
+      this.searchCriteria.fechaFin = endDate || '';
     }
     // if (event.length == 0 && this.isNullBusqueda()) {
     //   this.loadData();
