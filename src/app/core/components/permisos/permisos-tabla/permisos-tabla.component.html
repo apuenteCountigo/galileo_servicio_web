@@ -30,6 +30,7 @@
             [nzExpand]="expandSet.has(permiso.id)" (nzExpandChange)="onExpandChangePermiso(permiso, $event)"
             [nzDisabled]="expandSet.size > 0 && !expandSet.has(permiso.id)"></td>
 
+          <td *ngIf="permiso?.usuarios?.tipoEntidad?.id==8">OP</td>
           <td>{{ permiso?.usuarios?.tip }}</td>
           <td>{{ permiso?.usuarios?.nombre }}</td>
           <td>{{ permiso?.usuarios?.apellidos }}</td>
