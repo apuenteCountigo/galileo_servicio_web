@@ -53,5 +53,9 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             ls &&
-            scp -i ~/id_rsaalain /home/countigo/dist_galileo/dist.tar.gz mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp
+            scp -i ~/id_rsaalain /home/countigo/dist_galileo/dist.tar.gz mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
+            ssh -i ~/id_rsaalain mome@192.168.0.212 '
+            set -e &&
+            tar -xzvf /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz -C /home/mome/galileo-dev-v1.1/webapp &&
+            rm /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz'
             exit
