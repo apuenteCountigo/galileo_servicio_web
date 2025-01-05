@@ -41,7 +41,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
           source: "dist.tar.gz"                     # Archivo comprimido local
-          target: "/home/countigo/dist.tar.gz"     # Ruta de destino en el servidor
+          target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
 
       - name: executing remote ssh commands using ssh key
         #if: env.start_deploy == 'true'
@@ -52,5 +52,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            ls
+            ls &&
+            scp -i ~/id_rsaalain /home/countigo/dist_galileo/dist.tar.gz mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp
             exit
