@@ -69,5 +69,29 @@ jobs:
             ssh -i ~/id_rsaalain mome@192.168.0.212 '
             set -e &&
             tar -xzvf /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz -C /home/mome/galileo-dev-v1.1/webapp &&
-            rm /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz'
+            rm /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz &&
+            CONTAINER_NAME="webapp" &&
+            CN=$(docker ps -a --filter name="^webapp$" --format "{{.Names}}") &&
+            echo "Nombre del contenedor encontrado: $CN" &&
+            if [[ -n "$CN" ]]; then
+              echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
+              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) || { echo "Error: No se pudo inspeccionar el contenedor $CONTAINER_NAME"; exit 1; }
+              if [[ -n "$IMAGE_NAME" ]]; then
+                echo "Imagen encontrada: $IMAGE_NAME" &&
+                docker stop "$CONTAINER_NAME" &&
+                docker rm "$CONTAINER_NAME" &&
+                docker rmi "$IMAGE_NAME" &&
+                echo "Imagen $IMAGE_NAME eliminada correctamente."
+              else
+                echo "El contenedor $CONTAINER_NAME no existe o no tiene imagen asociada"
+              fi
+            else
+              echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
+            fi &&
+            docker compose up servicio-${{ secrets.SERVICIO }} -d &&
+            while ! docker ps | grep "webapp"; do
+              echo "Esperando a que el contenedor esté listo..."
+              sleep 5
+            done
+            yes | sudo docker builder prune'
             exit
