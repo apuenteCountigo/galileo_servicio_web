@@ -54,6 +54,17 @@ jobs:
           source: "Dockerfile"                     # Archivo comprimido local
           target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
 
+      # 8. Transferir el archivo nginx.conf al servidor remoto usando appleboy/ssh-action
+      - name: Transfer nginx.conf to remote server
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
+          source: "nginx.conf"                     # Archivo comprimido local
+          target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
+
       - name: executing remote ssh commands using ssh key
         #if: env.start_deploy == 'true'
         uses: appleboy/ssh-action@v1.0.0
@@ -66,6 +77,7 @@ jobs:
             ls &&
             scp -i ~/id_rsaalain /home/countigo/dist_galileo/dist.tar.gz mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
             scp -i ~/id_rsaalain /home/countigo/dist_galileo/Dockerfile mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
+            scp -i ~/id_rsaalain /home/countigo/dist_galileo/nginx.conf mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
             ssh -i ~/id_rsaalain mome@192.168.0.212 '
             set -e &&
             tar -xzvf /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz -C /home/mome/galileo-dev-v1.1/webapp &&
