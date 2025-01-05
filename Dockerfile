@@ -1,19 +1,8 @@
-# Etapa 1: Construir la aplicación Angular
-FROM node:14 AS build
-
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-# Copiar los archivos package.json y package-lock.json
-COPY package*.json ./
-
 # Copiar el resto del código fuente
 COPY . .
-# COPY src/ ./src
-
-# Instalar las dependencias y Construir la aplicación Angular
-RUN npm install && npm run build --prod && cd /app/dist && ls
-# RUN npm run build --prod && ls
 
 # Etapa 2: Servir la aplicación con Nginx
 FROM nginx:alpine
