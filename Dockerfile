@@ -1,11 +1,11 @@
+# Etapa 2: Servir la aplicación con Nginx
+FROM nginx:alpine
+
 # Establecer el directorio de trabajo
 WORKDIR /app
 
 # Copiar el resto del código fuente
 COPY . .
-
-# Etapa 2: Servir la aplicación con Nginx
-FROM nginx:alpine
 
 # Copiar el archivo de configuración de Nginx
 COPY nginx.conf /etc/nginx/nginx.conf
