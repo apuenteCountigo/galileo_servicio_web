@@ -15,7 +15,7 @@
     [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChangePermisosOperacion($event)">
     <thead>
       <tr>
-        <th id="permisoSelect" nzWidth="100px" [nzLeft]="true"></th>
+        <th id="permisoSelect" nzWidth="80px" [nzLeft]="true"></th>
         <th id="permisoTip" nzColumnKey="usuarios.tip" [nzSortFn]="true">Tip</th>
         <th id="permisoNombre" nzColumnKey="usuarios.nombre" [nzSortFn]="true">Nombre</th>
         <th id="permisoApellidos" nzColumnKey="usuarios.apellidos" [nzSortFn]="true">Apellidos</th>
@@ -30,7 +30,9 @@
             [nzExpand]="expandSet.has(permiso.id)" (nzExpandChange)="onExpandChangePermiso(permiso, $event)"
             [nzDisabled]="expandSet.size > 0 && !expandSet.has(permiso.id)"></td>
 
-          <td *ngIf="isAllowOperation(permiso)">OP</td>
+          <td *ngIf="isAllowOperation(permiso)">
+            <nz-badge nzShowZero nzStandalone nzCount="OP"></nz-badge>
+          </td>
           <td>{{ permiso?.usuarios?.tip }}</td>
           <td>{{ permiso?.usuarios?.nombre }}</td>
           <td>{{ permiso?.usuarios?.apellidos }}</td>
@@ -38,7 +40,7 @@
           <td>
             <nz-switch class="swich-table" (ngModelChange)="ActualizarPermiso(permiso, $event)"
               [ngModel]="permiso.permisos === 'e' ? true : false" nzCheckedChildren="Escritura"
-              nzUnCheckedChildren="Lectura"></nz-switch>
+              nzUnCheckedChildren="Lectura" [nzDisabled]="isAllowOperation(permiso)"></nz-switch>
           </td>
         </tr>
       </ng-container>
