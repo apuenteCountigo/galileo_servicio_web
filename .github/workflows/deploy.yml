@@ -101,5 +101,11 @@ jobs:
               echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
             fi &&
             yes | sudo docker builder prune &&
-            ls'
+            cd /home/mome/galileo-dev-v1.1 &&
+            docker compose up servicio-${{ secrets.SERVICIO }} -d &&
+            while ! docker ps | grep "webapp"; do
+              echo "Esperando a que el contenedor esté listo..."
+              sleep 5
+            done
+            yes | sudo docker builder prune'
             exit
