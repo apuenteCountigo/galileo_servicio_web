@@ -26,11 +26,11 @@
     <tbody>
       <ng-container *ngFor="let permiso of listOfPermisos">
         <tr>
-          <td *ngIf="permiso?.tipoEntidad?.id == '6'" [nzChecked]="false" (nzCheckedChange)="onExpandChangePermiso(permiso, $event)" [nzShowExpand]="false"
+          <td *ngIf="!isAllowOperation(permiso)" [nzChecked]="false" (nzCheckedChange)="onExpandChangePermiso(permiso, $event)" [nzShowExpand]="false"
             [nzExpand]="expandSet.has(permiso.id)" (nzExpandChange)="onExpandChangePermiso(permiso, $event)"
             [nzDisabled]="expandSet.size > 0 && !expandSet.has(permiso.id)"></td>
 
-          <td *ngIf="permiso?.tipoEntidad?.id == '8'">OP</td>
+          <td *ngIf="isAllowOperation(permiso)">OP</td>
           <td>{{ permiso?.usuarios?.tip }}</td>
           <td>{{ permiso?.usuarios?.nombre }}</td>
           <td>{{ permiso?.usuarios?.apellidos }}</td>
