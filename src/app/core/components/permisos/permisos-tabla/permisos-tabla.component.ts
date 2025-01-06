@@ -173,6 +173,14 @@ export class PermisosTablaComponent
     this.onSearchPermisosOperacion();
   }
 
+  getTitle(): string {
+    if (this.query == 'objetivo') {
+      return "Permisos del objetivo " + this.selectedObj?.descripcion
+    }else{
+      return "Permisos de la operación " + this.selectedOper.descripcion
+    }
+  }
+
   isAllowOperation(permiso: Permiso): boolean {
     if (permiso?.tipoEntidad?.id == '6' && this.query == 'objetivo') {
       return true;
