@@ -9,7 +9,7 @@
     </div>
   </div>
 </nz-card>
-<nz-card nzTitle="getTitle()" [nzExtra]="extraTemplate" nzSize="default">
+<nz-card [nzTitle]="getTitle()" [nzExtra]="extraTemplate" nzSize="default">
   <nz-table #headerTable nzShowSizeChanger [nzData]="listOfPermisos" [nzFrontPagination]="false" [nzLoading]="loading"
     [nzTotal]="total" [nzScroll]="{ x: '500px'}" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
     [nzNoResult]="noResult" (nzQueryParams)="onQueryParamsChangePermisosOperacion($event)">
