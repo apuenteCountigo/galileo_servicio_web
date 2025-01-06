@@ -31,7 +31,7 @@
             [nzDisabled]="expandSet.size > 0 && !expandSet.has(permiso.id)"></td>
 
           <td *ngIf="isAllowOperation(permiso)">
-            <nz-badge nzShowZero nzStandalone nzCount="OP"></nz-badge>
+            <b style="color: brown;">OP</b>
           </td>
           <td>{{ permiso?.usuarios?.tip }}</td>
           <td>{{ permiso?.usuarios?.nombre }}</td>
