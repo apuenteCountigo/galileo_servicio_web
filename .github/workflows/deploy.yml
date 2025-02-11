@@ -32,6 +32,17 @@ jobs:
       - name: Compress dist folder
         run: tar -czvf dist.tar.gz dist/
 
+      - name: TEST SSH 103
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            ls &&
+            exit
+
       # 6. Transferir el archivo comprimido al servidor remoto usando appleboy/ssh-action
       - name: Transfer dist.tar.gz to remote server
         uses: appleboy/scp-action@v0.1.3
