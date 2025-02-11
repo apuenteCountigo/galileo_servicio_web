@@ -3,6 +3,10 @@ on:
     branches:
       - testCompilation
   workflow_dispatch:
+
+env:
+  ACTIONS_STEP_DEBUG: true  # Habilita logs detallados
+
 jobs:
   run_pull:
     name: run pull
