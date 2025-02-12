@@ -81,69 +81,67 @@ jobs:
           source: "dist.tar.gz"                     # Archivo comprimido local
           target: "/home/mome/galileo-dev-v1.1/webapp"     # Ruta de destino en el servidor
 
-      # # 7. Transferir el archivo Dockerfile al servidor remoto usando appleboy/ssh-action
-      # - name: Transfer Dockerfile to remote server
-      #   uses: appleboy/scp-action@v0.1.3
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
-      #     source: "Dockerfile"                     # Archivo comprimido local
-      #     target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
+      # 7. Transferir el archivo Dockerfile al servidor remoto usando appleboy/ssh-action
+      - name: Transfer Dockerfile to remote server
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          # key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
+          source: "Dockerfile"                     # Archivo comprimido local
+          target: "/home/mome/galileo-dev-v1.1/webapp"     # Ruta de destino en el servidor
 
-      # # 8. Transferir el archivo nginx.conf al servidor remoto usando appleboy/ssh-action
-      # - name: Transfer nginx.conf to remote server
-      #   uses: appleboy/scp-action@v0.1.3
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
-      #     source: "nginx.conf"                     # Archivo comprimido local
-      #     target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
+      # 8. Transferir el archivo nginx.conf al servidor remoto usando appleboy/ssh-action
+      - name: Transfer nginx.conf to remote server
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          # key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
+          source: "nginx.conf"                     # Archivo comprimido local
+          target: "/home/mome/galileo-dev-v1.1/webapp"     # Ruta de destino en el servidor
 
       # - name: executing remote ssh commands using ssh key
-      #   #if: env.start_deploy == 'true'
-      #   uses: appleboy/ssh-action@v1.0.0
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: ${{ secrets.SSH_PORT }}
-      #     script: |
-      #       ls &&
-      #       scp -i ~/id_rsaalain /home/countigo/dist_galileo/dist.tar.gz mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
-      #       scp -i ~/id_rsaalain /home/countigo/dist_galileo/Dockerfile mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
-      #       scp -i ~/id_rsaalain /home/countigo/dist_galileo/nginx.conf mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
-      #       ssh -i ~/id_rsaalain mome@192.168.0.212 '
-      #       set -e &&
-      #       tar -xzvf /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz -C /home/mome/galileo-dev-v1.1/webapp &&
-      #       rm /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz &&
-      #       CONTAINER_NAME="webapp" &&
-      #       CN=$(docker ps -a --filter name="^webapp$" --format "{{.Names}}") &&
-      #       echo "Nombre del contenedor encontrado: $CN" &&
-      #       if [[ -n "$CN" ]]; then
-      #         echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
-      #         IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) || { echo "Error: No se pudo inspeccionar el contenedor $CONTAINER_NAME"; exit 1; }
-      #         if [[ -n "$IMAGE_NAME" ]]; then
-      #           echo "Imagen encontrada: $IMAGE_NAME" &&
-      #           docker stop "$CONTAINER_NAME" &&
-      #           docker rm "$CONTAINER_NAME" &&
-      #           docker rmi "$IMAGE_NAME" &&
-      #           echo "Imagen $IMAGE_NAME eliminada correctamente."
-      #         else
-      #           echo "El contenedor $CONTAINER_NAME no existe o no tiene imagen asociada"
-      #         fi
-      #       else
-      #         echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
-      #       fi &&
-      #       yes | sudo docker builder prune &&
-      #       cd /home/mome/galileo-dev-v1.1 &&
-      #       docker compose up servicio-${{ secrets.SERVICIO }} -d &&
-      #       while ! docker ps | grep "webapp"; do
-      #         echo "Esperando a que el contenedor esté listo..."
-      #         sleep 5
-      #       done
-      #       yes | sudo docker builder prune'
-      #       exit
+        #if: env.start_deploy == 'true'
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          # key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -e &&
+            tar -xzvf /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz -C /home/mome/galileo-dev-v1.1/webapp &&
+            rm /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz &&
+            CONTAINER_NAME="webapp" &&
+            CN=$(docker ps -a --filter name="^webapp$" --format "{{.Names}}") &&
+            echo "Nombre del contenedor encontrado: $CN" &&
+            if [[ -n "$CN" ]]; then
+              echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
+              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) || { echo "Error: No se pudo inspeccionar el contenedor $CONTAINER_NAME"; exit 1; }
+              if [[ -n "$IMAGE_NAME" ]]; then
+                echo "Imagen encontrada: $IMAGE_NAME" &&
+                docker stop "$CONTAINER_NAME" &&
+                docker rm "$CONTAINER_NAME" &&
+                docker rmi "$IMAGE_NAME" &&
+                echo "Imagen $IMAGE_NAME eliminada correctamente."
+              else
+                echo "El contenedor $CONTAINER_NAME no existe o no tiene imagen asociada"
+              fi
+            else
+              echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
+            fi &&
+            yes | sudo docker builder prune &&
+            cd /home/mome/galileo-dev-v1.1 &&
+            docker compose up servicio-${{ secrets.SERVICIO }} -d &&
+            while ! docker ps | grep "webapp"; do
+              echo "Esperando a que el contenedor esté listo..."
+              sleep 5
+            done
+            yes | sudo docker builder prune
+            exit
