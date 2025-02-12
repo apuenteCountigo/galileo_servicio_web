@@ -39,30 +39,31 @@ jobs:
           ping -c 3 8.8.8.8 # Prueba la conectividad a través de la VPN
 
       # Configurar Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'  # Cambia a la versión que necesite tu proyecto
-          cache: 'npm'
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '16'  # Cambia a la versión que necesite tu proyecto
+      #     cache: 'npm'
 
       # Instalar dependencias
-      - name: Install dependencies
-        run: npm install
+      # - name: Install dependencies
+      #   run: npm install
 
-      # Compilar la aplicación Angular
-      - name: Build Angular app
-        run: npm run build -- --configuration=production
+      # # Compilar la aplicación Angular
+      # - name: Build Angular app
+      #   run: npm run build -- --configuration=production
 
-      # 5. Comprimir la carpeta dist localmente
-      - name: Compress dist folder
-        run: tar -czvf dist.tar.gz dist/
+      # # 5. Comprimir la carpeta dist localmente
+      # - name: Compress dist folder
+      #   run: tar -czvf dist.tar.gz dist/
 
       - name: TEST SSH 103
         uses: appleboy/ssh-action@master
         with:
           host: 192.168.0.212 #${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: M0M3!admin
+          #key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
             ls &&
