@@ -19,15 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Connect to Cisco AnyConnect VPN
-      #   uses: goto-actions/connect-vpn@v1
-      #   with:
-      #     vpn-type: cisco-anyconnect
-      #     server: mome.es:8443 #${{ secrets.VPN_SERVER }}
-      #     username: apuente #${{ secrets.VPN_USERNAME }}
-      #     password: InternetPa$$01 #${{ secrets.VPN_PASSWORD }}
-      #     options: "--no-cert-check"
-
       - name: Install OpenConnect
         run: sudo apt-get update && sudo apt-get install -y openconnect
 
@@ -46,16 +37,6 @@ jobs:
           echo "Verificando la conexión VPN..."
           ip addr # Muestra las interfaces de red
           ping -c 3 8.8.8.8 # Prueba la conectividad a través de la VPN
-      
-      # - name: Instalar dependencias openconnect
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y openconnect
-      #     echo "Conectando a la VPN..."
-      #     sudo openconnect --background --user=apuente --servercert pin-sha256:NduQ2UphG38krSVOantp2M5C5rrF8naaxGdY/5JqZ3o= mome.es:8443 <<EOF
-      #     InternetPa$$01
-      #     EOF
-      #     echo "VPN conectada."
 
       # Configurar Node.js
       - name: Set up Node.js
@@ -79,7 +60,7 @@ jobs:
       - name: TEST SSH 103
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
+          host: 192.168.0.212 #${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
@@ -88,79 +69,79 @@ jobs:
             exit
 
       # 6. Transferir el archivo comprimido al servidor remoto usando appleboy/ssh-action
-      - name: Transfer dist.tar.gz to remote server
-        uses: appleboy/scp-action@v0.1.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
-          source: "dist.tar.gz"                     # Archivo comprimido local
-          target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
+      # - name: Transfer dist.tar.gz to remote server
+      #   uses: appleboy/scp-action@v0.1.3
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
+      #     source: "dist.tar.gz"                     # Archivo comprimido local
+      #     target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
 
-      # 7. Transferir el archivo Dockerfile al servidor remoto usando appleboy/ssh-action
-      - name: Transfer Dockerfile to remote server
-        uses: appleboy/scp-action@v0.1.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
-          source: "Dockerfile"                     # Archivo comprimido local
-          target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
+      # # 7. Transferir el archivo Dockerfile al servidor remoto usando appleboy/ssh-action
+      # - name: Transfer Dockerfile to remote server
+      #   uses: appleboy/scp-action@v0.1.3
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
+      #     source: "Dockerfile"                     # Archivo comprimido local
+      #     target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
 
-      # 8. Transferir el archivo nginx.conf al servidor remoto usando appleboy/ssh-action
-      - name: Transfer nginx.conf to remote server
-        uses: appleboy/scp-action@v0.1.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
-          source: "nginx.conf"                     # Archivo comprimido local
-          target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
+      # # 8. Transferir el archivo nginx.conf al servidor remoto usando appleboy/ssh-action
+      # - name: Transfer nginx.conf to remote server
+      #   uses: appleboy/scp-action@v0.1.3
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
+      #     source: "nginx.conf"                     # Archivo comprimido local
+      #     target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
 
-      - name: executing remote ssh commands using ssh key
-        #if: env.start_deploy == 'true'
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            ls &&
-            scp -i ~/id_rsaalain /home/countigo/dist_galileo/dist.tar.gz mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
-            scp -i ~/id_rsaalain /home/countigo/dist_galileo/Dockerfile mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
-            scp -i ~/id_rsaalain /home/countigo/dist_galileo/nginx.conf mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
-            ssh -i ~/id_rsaalain mome@192.168.0.212 '
-            set -e &&
-            tar -xzvf /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz -C /home/mome/galileo-dev-v1.1/webapp &&
-            rm /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz &&
-            CONTAINER_NAME="webapp" &&
-            CN=$(docker ps -a --filter name="^webapp$" --format "{{.Names}}") &&
-            echo "Nombre del contenedor encontrado: $CN" &&
-            if [[ -n "$CN" ]]; then
-              echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
-              IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) || { echo "Error: No se pudo inspeccionar el contenedor $CONTAINER_NAME"; exit 1; }
-              if [[ -n "$IMAGE_NAME" ]]; then
-                echo "Imagen encontrada: $IMAGE_NAME" &&
-                docker stop "$CONTAINER_NAME" &&
-                docker rm "$CONTAINER_NAME" &&
-                docker rmi "$IMAGE_NAME" &&
-                echo "Imagen $IMAGE_NAME eliminada correctamente."
-              else
-                echo "El contenedor $CONTAINER_NAME no existe o no tiene imagen asociada"
-              fi
-            else
-              echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
-            fi &&
-            yes | sudo docker builder prune &&
-            cd /home/mome/galileo-dev-v1.1 &&
-            docker compose up servicio-${{ secrets.SERVICIO }} -d &&
-            while ! docker ps | grep "webapp"; do
-              echo "Esperando a que el contenedor esté listo..."
-              sleep 5
-            done
-            yes | sudo docker builder prune'
-            exit
+      # - name: executing remote ssh commands using ssh key
+      #   #if: env.start_deploy == 'true'
+      #   uses: appleboy/ssh-action@v1.0.0
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     port: ${{ secrets.SSH_PORT }}
+      #     script: |
+      #       ls &&
+      #       scp -i ~/id_rsaalain /home/countigo/dist_galileo/dist.tar.gz mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
+      #       scp -i ~/id_rsaalain /home/countigo/dist_galileo/Dockerfile mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
+      #       scp -i ~/id_rsaalain /home/countigo/dist_galileo/nginx.conf mome@192.168.0.212:/home/mome/galileo-dev-v1.1/webapp &&
+      #       ssh -i ~/id_rsaalain mome@192.168.0.212 '
+      #       set -e &&
+      #       tar -xzvf /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz -C /home/mome/galileo-dev-v1.1/webapp &&
+      #       rm /home/mome/galileo-dev-v1.1/webapp/dist.tar.gz &&
+      #       CONTAINER_NAME="webapp" &&
+      #       CN=$(docker ps -a --filter name="^webapp$" --format "{{.Names}}") &&
+      #       echo "Nombre del contenedor encontrado: $CN" &&
+      #       if [[ -n "$CN" ]]; then
+      #         echo "Dentro: Contenedor encontrado - $CONTAINER_NAME" &&
+      #         IMAGE_NAME=$(docker inspect --format='{{.Config.Image}}' "$CONTAINER_NAME" 2>/dev/null) || { echo "Error: No se pudo inspeccionar el contenedor $CONTAINER_NAME"; exit 1; }
+      #         if [[ -n "$IMAGE_NAME" ]]; then
+      #           echo "Imagen encontrada: $IMAGE_NAME" &&
+      #           docker stop "$CONTAINER_NAME" &&
+      #           docker rm "$CONTAINER_NAME" &&
+      #           docker rmi "$IMAGE_NAME" &&
+      #           echo "Imagen $IMAGE_NAME eliminada correctamente."
+      #         else
+      #           echo "El contenedor $CONTAINER_NAME no existe o no tiene imagen asociada"
+      #         fi
+      #       else
+      #         echo "No se encontró ningún contenedor llamado $CONTAINER_NAME"
+      #       fi &&
+      #       yes | sudo docker builder prune &&
+      #       cd /home/mome/galileo-dev-v1.1 &&
+      #       docker compose up servicio-${{ secrets.SERVICIO }} -d &&
+      #       while ! docker ps | grep "webapp"; do
+      #         echo "Esperando a que el contenedor esté listo..."
+      #         sleep 5
+      #       done
+      #       yes | sudo docker builder prune'
+      #       exit
