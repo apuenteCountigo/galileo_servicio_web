@@ -39,23 +39,23 @@ jobs:
       #     ping -c 3 8.8.8.8 # Prueba la conectividad a través de la VPN
 
       # Configurar Node.js
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '16'  # Cambia a la versión que necesite tu proyecto
-      #     cache: 'npm'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Cambia a la versión que necesite tu proyecto
+          cache: 'npm'
 
       # Instalar dependencias
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      # # Compilar la aplicación Angular
-      # - name: Build Angular app
-      #   run: npm run build -- --configuration=production
+      # Compilar la aplicación Angular
+      - name: Build Angular app
+        run: npm run build -- --configuration=production
 
-      # # 5. Comprimir la carpeta dist localmente
-      # - name: Compress dist folder
-      #   run: tar -czvf dist.tar.gz dist/
+      # 5. Comprimir la carpeta dist localmente
+      - name: Compress dist folder
+        run: tar -czvf dist.tar.gz dist/
 
       - name: TEST SSH 103
         uses: appleboy/ssh-action@master
@@ -70,15 +70,16 @@ jobs:
             exit
 
       # 6. Transferir el archivo comprimido al servidor remoto usando appleboy/ssh-action
-      # - name: Transfer dist.tar.gz to remote server
-      #   uses: appleboy/scp-action@v0.1.3
-      #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER }}
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
-      #     source: "dist.tar.gz"                     # Archivo comprimido local
-      #     target: "/home/countigo/dist_galileo"     # Ruta de destino en el servidor
+      - name: Transfer dist.tar.gz to remote server
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          # key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}             # Cambia el puerto si es diferente
+          source: "dist.tar.gz"                     # Archivo comprimido local
+          target: "/home/mome/galileo-dev-v1.1/webapp"     # Ruta de destino en el servidor
 
       # # 7. Transferir el archivo Dockerfile al servidor remoto usando appleboy/ssh-action
       # - name: Transfer Dockerfile to remote server
