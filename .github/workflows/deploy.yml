@@ -3,6 +3,12 @@ on:
     branches:
       - testCompilation
   workflow_dispatch:
+
+env:
+  VPN_SERVER: mome.es:8443
+  VPN_USERNAME: apuente
+  VPN_PASSWORD: InternetPa$$01 #${{ secrets.VPN_PASSWORD }}
+
 jobs:
   run_pull:
     name: run pull
@@ -13,14 +19,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Connect to Cisco AnyConnect VPN
-        uses: goto-actions/connect-vpn@v1
-        with:
-          vpn-type: cisco-anyconnect
-          server: mome.es:8443 #${{ secrets.VPN_SERVER }}
-          username: apuente #${{ secrets.VPN_USERNAME }}
-          password: InternetPa$$01 #${{ secrets.VPN_PASSWORD }}
-          options: "--no-cert-check"
+      # - name: Connect to Cisco AnyConnect VPN
+      #   uses: goto-actions/connect-vpn@v1
+      #   with:
+      #     vpn-type: cisco-anyconnect
+      #     server: mome.es:8443 #${{ secrets.VPN_SERVER }}
+      #     username: apuente #${{ secrets.VPN_USERNAME }}
+      #     password: InternetPa$$01 #${{ secrets.VPN_PASSWORD }}
+      #     options: "--no-cert-check"
+
+      - name: Install OpenConnect
+        run: sudo apt-get update && sudo apt-get install -y openconnect
+
+      - name: Connect to Cisco VPN
+        run: |
+          echo "$VPN_PASSWORD" | sudo openconnect \
+            --protocol=anyconnect \
+            --user=$VPN_USERNAME \
+            --passwd-on-stdin \
+            --no-cert-check \
+            --background \
+            $VPN_SERVER
 
       - name: Verificar conexión VPN
         run: |
