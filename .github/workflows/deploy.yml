@@ -37,7 +37,7 @@ jobs:
             --protocol=anyconnect \
             --user=$VPN_USERNAME \
             --passwd-on-stdin \
-            --no-cert-check \
+            --servercert pin-sha256:NduQ2UphG38krSVOantp2M5C5rrF8naaxGdY/5JqZ3o= \
             --background \
             $VPN_SERVER
 
