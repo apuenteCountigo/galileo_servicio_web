@@ -5,9 +5,9 @@ on:
   workflow_dispatch:
 
 env:
-  VPN_SERVER: mome.es:8443
-  VPN_USERNAME: apuente
-  VPN_PASSWORD: InternetPa$$01 #${{ secrets.VPN_PASSWORD }}
+  VPN_SERVER: ${{ secrets.VPN_SERVER }}
+  VPN_USERNAME: ${{ secrets.VPN_USERNAME }}
+  VPN_PASSWORD: ${{ secrets.VPN_PASSWORD }}
 
 jobs:
   run_pull:
@@ -32,11 +32,11 @@ jobs:
             --background \
             $VPN_SERVER
 
-      - name: Verificar conexión VPN
-        run: |
-          echo "Verificando la conexión VPN..."
-          ip addr # Muestra las interfaces de red
-          ping -c 3 8.8.8.8 # Prueba la conectividad a través de la VPN
+      # - name: Verificar conexión VPN
+      #   run: |
+      #     echo "Verificando la conexión VPN..."
+      #     ip addr # Muestra las interfaces de red
+      #     ping -c 3 8.8.8.8 # Prueba la conectividad a través de la VPN
 
       # Configurar Node.js
       # - name: Set up Node.js
