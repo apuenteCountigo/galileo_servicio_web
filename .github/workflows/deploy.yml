@@ -18,7 +18,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y openconnect
           echo "Conectando a la VPN..."
-          sudo openconnect --background --user=apuente mome.es:8443 <<EOF
+          yes | sudo openconnect --background --user=apuente mome.es:8443 <<EOF
           InternetPa$$01
           EOF
           echo "VPN conectada."
