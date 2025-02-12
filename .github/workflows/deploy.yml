@@ -60,11 +60,11 @@ jobs:
       - name: TEST SSH 103
         uses: appleboy/ssh-action@master
         with:
-          host: 192.168.0.212 #${{ secrets.SSH_HOST }}
-          username: mome #${{ secrets.SSH_USER }}
-          password: M0M3!admin
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
           #key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22 #${{ secrets.SSH_PORT }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
             ls &&
             exit
