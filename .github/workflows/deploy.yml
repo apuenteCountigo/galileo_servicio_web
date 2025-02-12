@@ -12,6 +12,16 @@ jobs:
       # Checkout el código fuente
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - name: Instalar dependencias openconnect
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openconnect
+          echo "Conectando a la VPN..."
+          sudo openconnect --background --user=apuente mome.es:8443 <<EOF
+          InternetPa$$01
+          EOF
+          echo "VPN conectada."
 
       # Configurar Node.js
       - name: Set up Node.js
