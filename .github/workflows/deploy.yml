@@ -61,7 +61,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: 192.168.0.212 #${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
+          username: mome #${{ secrets.SSH_USER }}
           password: M0M3!admin
           #key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
