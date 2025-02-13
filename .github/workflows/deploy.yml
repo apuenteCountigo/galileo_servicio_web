@@ -145,3 +145,11 @@ jobs:
             done
             yes | sudo docker builder prune
             exit
+
+      - name: Desconectar VPN
+        if: always()
+        run: |
+          if [ -f /tmp/openconnect.pid ]; then
+            sudo kill $(cat /tmp/openconnect.pid)
+            sudo rm /tmp/openconnect.pid
+          fi
